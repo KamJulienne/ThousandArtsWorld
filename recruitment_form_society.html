@@ -120,7 +120,7 @@ textarea.txt-input { resize:vertical; min-height:80px; }
       <div class="card-body">
         <div class="q-item required" data-field="applicant_name" style="border-bottom:none">
           <div class="q-label"><span class="q-num" style="background:#e74c3c">*</span>姓名<span class="req-star">*</span><span class="q-type">必填</span></div>
-          <input class="txt-input" name="applicant_name" placeholder="请输入您的姓名" required autocomplete="name">
+          <input class="txt-input" name="applicant_name" required autocomplete="name">
           <div class="field-error">请填写姓名</div>
         </div>
       </div>
@@ -178,10 +178,10 @@ textarea.txt-input { resize:vertical; min-height:80px; }
         <div class="q-item required" data-field="q25"><div class="q-label"><span class="q-num">25</span>出生年份？<span class="req-star">*</span><span class="q-type">下拉选择</span></div><select class="sel-input" name="q25"></select><div class="field-error">请选择出生年份</div></div>
         <div class="q-item required" data-field="q26"><div class="q-label"><span class="q-num">26</span>婚姻状况？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q26"></div><div class="field-error">请选择婚姻状况</div></div>
         <div class="q-item required" data-field="q27"><div class="q-label"><span class="q-num">27</span>目前有男/女朋友吗？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q27"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q28"><div class="q-label"><span class="q-num">28</span>目前居住在哪个城市/区域？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q28" placeholder="如：北京朝阳"><div class="field-error">请填写居住城市/区域</div></div>
+        <div class="q-item required" data-field="q28"><div class="q-label"><span class="q-num">28</span>目前居住在哪个城市/区域？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q28"><div class="field-error">请填写居住城市/区域</div></div>
         <div class="q-item required" data-field="q29"><div class="q-label"><span class="q-num">29</span>到公司的通勤时间大约是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q29"></div><div class="field-error">请选择通勤时间</div></div>
-        <div class="q-item required" data-field="q30"><div class="q-label"><span class="q-num">30</span>期望薪资（税前月薪，元）？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q30" placeholder="如：8000" type="number" min="0"><div class="field-error">请填写期望薪资（数字）</div></div>
-        <div class="q-item" data-field="q31" data-optional="true"><div class="q-label"><span class="q-num" style="background:#aaa">31</span>上一份工作的税前月薪大约是多少？<span class="q-type">选填</span></div><input class="txt-input" name="q31" placeholder="选填，如：6000" type="number" min="0"></div>
+        <div class="q-item required" data-field="q30"><div class="q-label"><span class="q-num">30</span>期望薪资（税前月薪，元）？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q30" type="number" min="0"><div class="field-error">请填写期望薪资（数字）</div></div>
+        <div class="q-item" data-field="q31" data-optional="true"><div class="q-label"><span class="q-num" style="background:#aaa">31</span>上一份工作的税前月薪大约是多少？<span class="q-type">选填</span></div><input class="txt-input" name="q31" type="number" min="0"></div>
         <div class="q-item required" data-field="q32"><div class="q-label"><span class="q-num">32</span>最快多久能到岗？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q32"></div><div class="field-error">请选择到岗时间</div></div>
         <div class="q-item required" data-field="q33"><div class="q-label"><span class="q-num">33</span>能否接受短期出差或驻场？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q33"></div><div class="field-error">请选择此项</div></div>
         <div class="q-item required" data-field="q34"><div class="q-label"><span class="q-num">34</span>是否有自己的客户资源或过往老客户愿意介绍项目？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q34"></div><div class="field-error">请选择此项</div></div>
@@ -220,10 +220,10 @@ textarea.txt-input { resize:vertical; min-height:80px; }
     <div class="card step" data-step="7" style="display:none">
       <div class="card-header"><h2>开放题<span>4 题 · 自由作答</span></h2></div>
       <div class="card-body">
-        <div class="q-item required" data-field="q43"><div class="q-label"><span class="q-num">43</span>作品集链接（百度网盘、站酷、Behance、个人网页等）<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q43" placeholder="请输入链接（http:// 或 https:// 开头）"><div class="field-error">请填写作品集链接</div></div>
-        <div class="q-item required" data-field="q44"><div class="q-label"><span class="q-num">44</span>选一个最有代表性的作品，200字以内说明：设计思路、最大困难、如何解决。<span class="req-star">*</span><span class="q-type">填空</span></div><textarea class="txt-input" name="q44" placeholder="限200字以内" maxlength="200" rows="4"></textarea><div class="txt-hint"><span></span><span class="char-count">0/200</span></div><div class="field-error">请填写代表性作品说明</div></div>
-        <div class="q-item required" data-field="q45"><div class="q-label"><span class="q-num">45</span>对新工作的期望？（团队、项目类型、设计方向等，150字以内）<span class="req-star">*</span><span class="q-type">填空</span></div><textarea class="txt-input" name="q45" placeholder="限150字以内" maxlength="150" rows="3"></textarea><div class="txt-hint"><span></span><span class="char-count">0/150</span></div><div class="field-error">请填写工作期望</div></div>
-        <div class="q-item" data-field="q46" data-optional="true"><div class="q-label"><span class="q-num" style="background:#aaa">46</span>其他补充内容（证书、获奖、特殊技能等）<span class="q-type">选填</span></div><textarea class="txt-input" name="q46" placeholder="选填"></textarea></div>
+        <div class="q-item required" data-field="q43"><div class="q-label"><span class="q-num">43</span>作品集链接（百度网盘、站酷、Behance、个人网页等）<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q43"><div class="field-error">请填写作品集链接</div></div>
+        <div class="q-item required" data-field="q44"><div class="q-label"><span class="q-num">44</span>选一个最有代表性的作品，200字以内说明：设计思路、最大困难、如何解决。<span class="req-star">*</span><span class="q-type">填空</span></div><textarea class="txt-input" name="q44" maxlength="200" rows="4"></textarea><div class="field-error">请填写代表性作品说明</div></div>
+        <div class="q-item required" data-field="q45"><div class="q-label"><span class="q-num">45</span>对新工作的期望？（团队、项目类型、设计方向等，150字以内）<span class="req-star">*</span><span class="q-type">填空</span></div><textarea class="txt-input" name="q45" maxlength="150" rows="3"></textarea><div class="field-error">请填写工作期望</div></div>
+        <div class="q-item" data-field="q46" data-optional="true"><div class="q-label"><span class="q-num" style="background:#aaa">46</span>其他补充内容（证书、获奖、特殊技能等）<span class="q-type">选填</span></div><textarea class="txt-input" name="q46"></textarea></div>
       </div>
     </div>
 

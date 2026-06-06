@@ -121,7 +121,7 @@ textarea.txt-input { resize:vertical; min-height:80px; }
       <div class="card-body">
         <div class="q-item required" data-field="applicant_name">
           <div class="q-label"><span class="q-num" style="background:#e74c3c">*</span>你的姓名是？<span class="req-star">*</span><span class="q-type">必填</span></div>
-          <input class="txt-input" name="applicant_name" placeholder="请填写你的姓名" required autocomplete="name">
+          <input class="txt-input" name="applicant_name" required autocomplete="name">
           <div class="field-error">请填写姓名</div>
         </div>
       </div>
@@ -181,9 +181,9 @@ textarea.txt-input { resize:vertical; min-height:80px; }
       <div class="card-body">
         <div class="q-item required" data-field="q21"><div class="q-label"><span class="q-num">21</span>出生年份？<span class="req-star">*</span><span class="q-type">下拉选择</span></div><select class="sel-input" name="q21"></select><div class="field-error">请选择出生年份</div></div>
         <div class="q-item required" data-field="q22"><div class="q-label"><span class="q-num">22</span>目前有男/女朋友吗？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q22"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q23"><div class="q-label"><span class="q-num">23</span>目前居住在哪个城市/区域？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q23" placeholder="如：北京海淀"><div class="field-error">请填写居住城市/区域</div></div>
+        <div class="q-item required" data-field="q23"><div class="q-label"><span class="q-num">23</span>目前居住在哪个城市/区域？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q23"><div class="field-error">请填写居住城市/区域</div></div>
         <div class="q-item required" data-field="q24"><div class="q-label"><span class="q-num">24</span>到公司的通勤时间大约是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q24"></div><div class="field-error">请选择通勤时间</div></div>
-        <div class="q-item required" data-field="q25"><div class="q-label"><span class="q-num">25</span>期望薪资（税前月薪，元）？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q25" placeholder="如：5000" type="number" min="0"><div class="field-error">请填写期望薪资（数字）</div></div>
+        <div class="q-item required" data-field="q25"><div class="q-label"><span class="q-num">25</span>期望薪资（税前月薪，元）？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q25" type="number" min="0"><div class="field-error">请填写期望薪资（数字）</div></div>
         <div class="q-item required" data-field="q26"><div class="q-label"><span class="q-num">26</span>最快多久能到岗？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q26"></div><div class="field-error">请选择到岗时间</div></div>
       </div>
     </div>
@@ -218,10 +218,10 @@ textarea.txt-input { resize:vertical; min-height:80px; }
     <div class="card step" data-step="8" style="display:none">
       <div class="card-header"><h2>开放题<span>4 题 · 自由作答</span></h2></div>
       <div class="card-body">
-        <div class="q-item required" data-field="q33"><div class="q-label"><span class="q-num">33</span>作品集链接（百度网盘、站酷、Behance等）<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q33" placeholder="请输入链接（http:// 或 https:// 开头）"><div class="field-error">请填写作品集链接</div></div>
-        <div class="q-item required" data-field="q34"><div class="q-label"><span class="q-num">34</span>200字以内介绍毕业设计：设计主题、核心思路、最满意的部分。<span class="req-star">*</span><span class="q-type">填空</span></div><textarea class="txt-input" name="q34" placeholder="限200字以内" maxlength="200" rows="4"></textarea><div class="txt-hint"><span></span><span class="char-count">0/200</span></div><div class="field-error">请填写毕业设计介绍</div></div>
-        <div class="q-item required" data-field="q35"><div class="q-label"><span class="q-num">35</span>有没有特别欣赏的设计师或设计作品？简单说说为什么。（150字以内）<span class="req-star">*</span><span class="q-type">填空</span></div><textarea class="txt-input" name="q35" placeholder="限150字以内" maxlength="150" rows="3"></textarea><div class="txt-hint"><span></span><span class="char-count">0/150</span></div><div class="field-error">请填写此项</div></div>
-        <div class="q-item" data-field="q36" data-optional="true"><div class="q-label"><span class="q-num" style="background:#aaa">36</span>其他补充内容（竞赛获奖、证书、自学经历等）<span class="q-type">选填</span></div><textarea class="txt-input" name="q36" placeholder="选填"></textarea></div>
+        <div class="q-item required" data-field="q33"><div class="q-label"><span class="q-num">33</span>作品集链接（百度网盘、站酷、Behance等）<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q33"><div class="field-error">请填写作品集链接</div></div>
+        <div class="q-item required" data-field="q34"><div class="q-label"><span class="q-num">34</span>200字以内介绍毕业设计：设计主题、核心思路、最满意的部分。<span class="req-star">*</span><span class="q-type">填空</span></div><textarea class="txt-input" name="q34" maxlength="200" rows="4"></textarea><div class="field-error">请填写毕业设计介绍</div></div>
+        <div class="q-item required" data-field="q35"><div class="q-label"><span class="q-num">35</span>有没有特别欣赏的设计师或设计作品？简单说说为什么。（150字以内）<span class="req-star">*</span><span class="q-type">填空</span></div><textarea class="txt-input" name="q35" maxlength="150" rows="3"></textarea><div class="field-error">请填写此项</div></div>
+        <div class="q-item" data-field="q36" data-optional="true"><div class="q-label"><span class="q-num" style="background:#aaa">36</span>其他补充内容（竞赛获奖、证书、自学经历等）<span class="q-type">选填</span></div><textarea class="txt-input" name="q36"></textarea></div>
       </div>
     </div>
 
