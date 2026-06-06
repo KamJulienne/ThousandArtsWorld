@@ -277,9 +277,11 @@ if(!already)coreTraits.push({t:tt2[0],type:dimOk[d]?'high':'mid'});
 }
 // 限制最多8条
 if(coreTraits.length>8)coreTraits=coreTraits.slice(0,8);
-rep+='<div style="background:#f8f9fa;border-radius:8px;padding:18px;margin-bottom:16px"><h4 style="margin:0 0 14px;font-size:14px;color:#2c3e50;border-bottom:1px solid #e9ecef;padding-bottom:8px">核心特征</h4><ul style="margin:0;padding:0 0 0 18px;font-size:13px;line-height:1.8;color:#495057">';
+rep+='<div style="background:#f8f9fa;border-radius:8px;padding:18px;margin-bottom:16px"><h4 style="margin:0 0 14px;font-size:14px;color:#2c3e50;border-bottom:1px solid #e9ecef;padding-bottom:8px">核心特征</h4>';
+rep+='<div style="margin-bottom:10px;font-size:11px;color:#6c757d">&#x1F7E2; 优势维度（得分&ge;80%） | &#x26AB; 中等维度（得分41%-79%） | &#x1F534; 待提升维度（得分&le;40%）</div>';
+rep+='<ul style="margin:0;padding:0 0 0 18px;font-size:13px;line-height:1.8;color:#495057">';
 for(var ci=0;ci<coreTraits.length;ci++){
-var icon=coreTraits[ci].type==='high'?'&#x1F7E2; ':(coreTraits[ci].type==='low'?'&#x1F534; ':'');
+var icon=coreTraits[ci].type==='high'?'&#x1F7E2; ':(coreTraits[ci].type==='low'?'&#x1F534; ':'&#x26AB; ');
 rep+='<li>'+icon+coreTraits[ci].t+'</li>';
 }
 rep+='</ul></div>';
