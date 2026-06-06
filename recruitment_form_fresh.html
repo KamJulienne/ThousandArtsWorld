@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>千艺界 · 室内设计师面试筛选（应届生版）</title>
+<style>
+:root {
+  --primary: #00a884;
+  --primary-light: #2ac0a0;
+  --primary-dark: #008c6c;
+  --surface: #ffffff;
+  --bg: #f0f7f5;
+  --text: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --border: #d0e0d8;
+  --success: #34a853;
+  --error: #e74c3c;
+  --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.04);
+  --radius: 12px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); line-height:1.6; min-height:100vh; }
+.header { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); padding:24px 0; text-align:center; color:#fff; }
+.header h1 { font-size:22px; font-weight:600; letter-spacing:.5px; }
+.header p { font-size:13px; opacity:.85; margin-top:4px; }
+.container { max-width:760px; margin:0 auto; padding:20px 16px 60px; }
+
+.progress-wrap { background: var(--surface); border-radius: var(--radius); padding:20px 28px; margin-bottom:20px; box-shadow: var(--shadow); }
+.progress-bar { height:6px; background:var(--border); border-radius:3px; overflow:hidden; margin-bottom:12px; }
+.progress-fill { height:100%; background: linear-gradient(90deg, var(--primary), var(--primary-light)); border-radius:3px; transition:width .35s ease; }
+.progress-text { font-size:13px; color: var(--text-secondary); display:flex; justify-content:space-between; }
+.step-indicators { display:flex; justify-content:center; gap:6px; margin-bottom:16px; flex-wrap:wrap; }
+.step-dot { width:28px; height:4px; border-radius:2px; background:var(--border); transition:all .3s; cursor:pointer; }
+.step-dot.active { background:var(--primary); width:36px; }
+.step-dot.done { background:var(--success); }
+
+.card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom:20px; overflow:hidden; }
+.card-header { padding:24px 28px 16px; border-bottom:1px solid var(--border); }
+.card-header h2 { font-size:18px; font-weight:600; color:var(--primary-dark); }
+.card-header h2 span { font-size:13px; font-weight:400; color:var(--text-secondary); margin-left:8px; }
+.card-body { padding:12px 28px 20px; }
+
+.q-item { padding:16px 0; border-bottom:1px solid #f0f0f0; position:relative; }
+.q-item:last-child { border-bottom:none; }
+.q-label { font-size:15px; font-weight:500; margin-bottom:10px; display:flex; align-items:baseline; flex-wrap:wrap; }
+.q-label .req-star { color:var(--error); font-weight:bold; margin-left:2px; font-size:16px; }
+.q-num { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; background:var(--primary); color:#fff; border-radius:50%; font-size:12px; font-weight:600; margin-right:10px; flex-shrink:0; }
+.q-num.opt { background:#aaa; }
+.q-type { font-size:11px; color:var(--text-secondary); margin-left:8px; background:#f0f0f0; padding:1px 8px; border-radius:10px; }
+
+.opt-group { display:flex; flex-wrap:wrap; gap:8px; }
+.opt-pill { display:inline-flex; align-items:center; padding:8px 18px; border:2px solid var(--border); border-radius:24px; cursor:pointer; font-size:14px; transition:all .2s; user-select:none; background:#fff; }
+.opt-pill:hover { border-color:var(--primary-light); background:#f6f8fc; }
+.opt-pill input { display:none; }
+.opt-pill.checked { border-color:var(--primary); background:#eef9f5; color:var(--primary-dark); font-weight:500; }
+
+/* Validation errors */
+.q-item.has-error .opt-group { border:2px dashed var(--error); border-radius:8px; padding:6px; }
+.q-item.has-error .txt-input, .q-item.has-error .sel-input { border-color:var(--error); background:#fff5f5; }
+.q-item.has-error .rank-row .sel-input { border-color:var(--error); background:#fff5f5; }
+.field-error { color:var(--error); font-size:12px; margin-top:6px; display:none; }
+.q-item.has-error .field-error { display:block; }
+
+.txt-input { width:100%; padding:12px 16px; border:2px solid var(--border); border-radius:8px; font-size:15px; transition:all .2s; font-family:inherit; background:#fafafa; }
+.txt-input:focus { outline:none; border-color:var(--primary); background:#fff; box-shadow:0 0 0 3px rgba(0,168,132,.1); }
+textarea.txt-input { resize:vertical; min-height:80px; }
+.txt-hint { font-size:12px; color:var(--text-secondary); margin-top:4px; display:flex; justify-content:space-between; }
+
+.sel-input { width:100%; padding:12px 16px; border:2px solid var(--border); border-radius:8px; font-size:15px; background:#fafafa; cursor:pointer; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 16px center; padding-right:40px; }
+.sel-input:focus { outline:none; border-color:var(--primary); background:#fff; box-shadow:0 0 0 3px rgba(0,168,132,.1); }
+
+.rank-row { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.rank-label { font-size:14px; color:var(--text-secondary); min-width:50px; }
+.rank-select { flex:1; }
+
+.btn-row { display:flex; justify-content:space-between; align-items:center; padding:20px 28px; gap:12px; }
+.btn { padding:12px 28px; border-radius:8px; font-size:15px; font-weight:500; cursor:pointer; border:none; transition:all .2s; }
+.btn-prev { background:#f0f0f0; color:var(--text); }
+.btn-prev:hover { background:#e0e0e0; }
+.btn-next { background:var(--primary); color:#fff; }
+.btn-next:hover { background:var(--primary-dark); transform:translateY(-1px); }
+.btn-submit { background:var(--success); color:#fff; }
+.btn-submit:hover { background:#2d9249; transform:translateY(-1px); }
+.btn:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+
+.toast { position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#1d1d1f; color:#fff; padding:14px 28px; border-radius:8px; font-size:14px; z-index:999; opacity:0; transition:opacity .3s; pointer-events:none; }
+.toast.show { opacity:1; }
+.toast.error { background:#d93025; }
+.toast.success { background:var(--success); }
+
+@keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+@media (max-width:600px) {
+  .container { padding:12px 10px 40px; }
+  .card-header, .card-body { padding-left:16px; padding-right:16px; }
+  .opt-group { flex-direction:column; }
+  .opt-pill { justify-content:center; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>千艺界 · 室内设计师面试筛选</h1>
+  <p>应届生版 · 共 8 步 · 约 6 分钟</p>
+</div>
+
+<div class="container">
+  <div class="progress-wrap">
+    <div class="step-indicators" id="stepDots"></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text"><span id="stepLabel">步骤 1/8</span><span id="completeLabel"></span></div>
+  </div>
+
+  <form id="mainForm" novalidate>
+
+    <!-- 应聘者信息 -->
+    <div class="card info-card">
+      <div class="card-header"><h2>应聘者信息<span>必填</span></h2></div>
+      <div class="card-body">
+        <div class="q-item required" data-field="applicant_name">
+          <div class="q-label"><span class="q-num" style="background:#e74c3c">*</span>你的姓名是？<span class="req-star">*</span><span class="q-type">必填</span></div>
+          <input class="txt-input" name="applicant_name" required autocomplete="name">
+          <div class="field-error">请填写姓名</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 1: 软件技能 -->
+    <div class="card step" data-step="1">
+      <div class="card-header"><h2>软件技能<span>6 题 · 全部必选</span></h2></div>
+      <div class="card-body">
+        <div class="q-item required" data-field="q1"><div class="q-label"><span class="q-num">1</span>AutoCAD（CAD）掌握程度？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q1"></div><div class="field-error">请选择 CAD 掌握程度</div></div>
+        <div class="q-item required" data-field="q2"><div class="q-label"><span class="q-num">2</span>SketchUp（SU）掌握程度？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q2"></div><div class="field-error">请选择 SU 掌握程度</div></div>
+        <div class="q-item required" data-field="q3"><div class="q-label"><span class="q-num">3</span>3ds Max（3D Max）掌握程度？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q3"></div><div class="field-error">请选择 3ds Max 掌握程度</div></div>
+        <div class="q-item required" data-field="q4"><div class="q-label"><span class="q-num">4</span>Adobe Photoshop（PS）掌握程度？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q4"></div><div class="field-error">请选择 PS 掌握程度</div></div>
+        <div class="q-item required" data-field="q5"><div class="q-label"><span class="q-num">5</span>D5 Render（D5）掌握程度？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q5"></div><div class="field-error">请选择 D5 掌握程度</div></div>
+        <div class="q-item required" data-field="q6"><div class="q-label"><span class="q-num">6</span>WPS Office（WPS）掌握程度？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q6"></div><div class="field-error">请选择 WPS 掌握程度</div></div>
+      </div>
+    </div>
+
+    <!-- STEP 2: 专业技能 -->
+    <div class="card step" data-step="2" style="display:none">
+      <div class="card-header"><h2>专业技能<span>6 题 · 全部必选</span></h2></div>
+      <div class="card-body">
+        <div class="q-item required" data-field="q7"><div class="q-label"><span class="q-num">7</span>量房与现场勘测？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q7"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q8"><div class="q-label"><span class="q-num">8</span>家装设计（住宅空间）？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q8"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q9"><div class="q-label"><span class="q-num">9</span>工装设计（商业/办公/餐饮等）？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q9"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q10"><div class="q-label"><span class="q-num">10</span>施工图绘制与深化？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q10"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q11"><div class="q-label"><span class="q-num">11</span>效果图表现（静帧/全景/动画）？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q11"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q12"><div class="q-label"><span class="q-num">12</span>软装搭配与摆场？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q12"></div><div class="field-error">请选择此项</div></div>
+      </div>
+    </div>
+
+    <!-- STEP 3: 专业背景 -->
+    <div class="card step" data-step="3" style="display:none">
+      <div class="card-header"><h2>专业背景<span>4 题</span></h2></div>
+      <div class="card-body">
+        <div class="q-item required" data-field="q13"><div class="q-label"><span class="q-num">13</span>最高学历？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q13"></div><div class="field-error">请选择学历</div></div>
+        <div class="q-item required" data-field="q14"><div class="q-label"><span class="q-num">14</span>所学专业是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q14"></div><div class="field-error">请选择专业</div></div>
+        <div class="q-item required" data-field="q15"><div class="q-label"><span class="q-num">15</span>是否有过室内设计相关的实习经历？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q15"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q16"><div class="q-label"><span class="q-num">16</span>实习中主要接触了哪些环节？<span class="req-star">*</span><span class="q-type">多选（至少选1项）</span></div><div class="opt-group" data-name="q16"></div><div class="field-error">请至少选择 1 项</div></div>
+      </div>
+    </div>
+
+    <!-- STEP 4: 对学校与实习的思考 -->
+    <div class="card step" data-step="4" style="display:none">
+      <div class="card-header"><h2>对学校与实习的思考<span>4 题</span></h2></div>
+      <div class="card-body">
+        <div class="q-item required" data-field="q17"><div class="q-label"><span class="q-num">17</span>学校学的知识对实际工作有用吗？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q17"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q18"><div class="q-label"><span class="q-num">18</span>学校最欠缺教的是什么？<span class="req-star">*</span><span class="q-type">多选（最多3项，至少1项）</span></div><div class="opt-group" data-name="q18"></div><div class="field-error">请选择 1-3 项</div></div>
+        <div class="q-item required" data-field="q19"><div class="q-label"><span class="q-num">19</span>如果有一段实习机会，最希望从中获得什么？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q19"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q20"><div class="q-label"><span class="q-num">20</span>平时通过哪些渠道自学设计？<span class="req-star">*</span><span class="q-type">多选（至少选1项）</span></div><div class="opt-group" data-name="q20"></div><div class="field-error">请至少选择 1 项</div></div>
+      </div>
+    </div>
+
+    <!-- STEP 5: 个人基本情况 -->
+    <div class="card step" data-step="5" style="display:none">
+      <div class="card-header"><h2>个人基本情况<span>6 题</span></h2></div>
+      <div class="card-body">
+        <div class="q-item required" data-field="q21"><div class="q-label"><span class="q-num">21</span>出生年份？<span class="req-star">*</span><span class="q-type">下拉选择</span></div><select class="sel-input" name="q21"></select><div class="field-error">请选择出生年份</div></div>
+        <div class="q-item required" data-field="q22"><div class="q-label"><span class="q-num">22</span>目前有男/女朋友吗？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q22"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q23"><div class="q-label"><span class="q-num">23</span>目前居住在哪个城市/区域？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q23"><div class="field-error">请填写居住城市/区域</div></div>
+        <div class="q-item required" data-field="q24"><div class="q-label"><span class="q-num">24</span>到公司的通勤时间大约是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q24"></div><div class="field-error">请选择通勤时间</div></div>
+        <div class="q-item required" data-field="q25"><div class="q-label"><span class="q-num">25</span>期望薪资（税前月薪，元）？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q25" type="number" min="0"><div class="field-error">请填写期望薪资（数字）</div></div>
+        <div class="q-item required" data-field="q26"><div class="q-label"><span class="q-num">26</span>最快多久能到岗？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q26"></div><div class="field-error">请选择到岗时间</div></div>
+      </div>
+    </div>
+
+    <!-- STEP 6: 职业态度与价值观 -->
+    <div class="card step" data-step="6" style="display:none">
+      <div class="card-header"><h2>职业态度与价值观<span>3 题</span></h2></div>
+      <div class="card-body">
+        <div class="q-item required" data-field="q27_1">
+          <div class="q-label"><span class="q-num">27</span>选择第一份工作时，最看重的三个因素排序<span class="req-star">*</span><span class="q-type">排序（123位都要选）</span></div>
+          <div class="rank-row"><span class="rank-label">第1位</span><select class="sel-input rank-select" name="q27_1"></select></div>
+          <div class="rank-row"><span class="rank-label">第2位</span><select class="sel-input rank-select" name="q27_2"></select></div>
+          <div class="rank-row"><span class="rank-label">第3位</span><select class="sel-input rank-select" name="q27_3"></select></div>
+          <div class="field-error">请完整填写第1、2、3位排序（不能重复）</div>
+        </div>
+        <div class="q-item required" data-field="q28"><div class="q-label"><span class="q-num">28</span>对加班的态度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q28"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q29"><div class="q-label"><span class="q-num">29</span>以下哪种描述最符合你对未来3年的职业规划？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q29"></div><div class="field-error">请选择此项</div></div>
+      </div>
+    </div>
+
+    <!-- STEP 7: 情景判断 -->
+    <div class="card step" data-step="7" style="display:none">
+      <div class="card-header"><h2>情景判断<span>3 题 · 全部必选</span></h2></div>
+      <div class="card-body">
+        <div class="q-item required" data-field="q30"><div class="q-label"><span class="q-num">30</span>师傅让你反复改同一张施工图到第5遍？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q30"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q31"><div class="q-label"><span class="q-num">31</span>在工地上被施工师傅怼「大学生什么都不懂」？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q31"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q32"><div class="q-label"><span class="q-num">32</span>不熟悉风格（如新中式）三天内出概念方案？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q32"></div><div class="field-error">请选择此项</div></div>
+      </div>
+    </div>
+
+    <!-- STEP 8: 开放题 -->
+    <div class="card step" data-step="8" style="display:none">
+      <div class="card-header"><h2>开放题<span>4 题 · 自由作答</span></h2></div>
+      <div class="card-body">
+        <div class="q-item required" data-field="q33"><div class="q-label"><span class="q-num">33</span>作品集链接（百度网盘、站酷、Behance等）<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q33"><div class="field-error">请填写作品集链接</div></div>
+        <div class="q-item required" data-field="q34"><div class="q-label"><span class="q-num">34</span>200字以内介绍毕业设计：设计主题、核心思路、最满意的部分。<span class="req-star">*</span><span class="q-type">填空</span></div><textarea class="txt-input" name="q34" maxlength="200" rows="4"></textarea><div class="field-error">请填写毕业设计介绍</div></div>
+        <div class="q-item required" data-field="q35"><div class="q-label"><span class="q-num">35</span>有没有特别欣赏的设计师或设计作品？简单说说为什么。（150字以内）<span class="req-star">*</span><span class="q-type">填空</span></div><textarea class="txt-input" name="q35" maxlength="150" rows="3"></textarea><div class="field-error">请填写此项</div></div>
+        <div class="q-item" data-field="q36" data-optional="true"><div class="q-label"><span class="q-num" style="background:#aaa">36</span>其他补充内容（竞赛获奖、证书、自学经历等）<span class="q-type">选填</span></div><textarea class="txt-input" name="q36"></textarea></div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="card"><div class="btn-row">
+      <button type="button" class="btn btn-prev" id="btnPrev" disabled>上一步</button>
+      <button type="button" class="btn btn-next" id="btnNext">下一步</button>
+      <button type="submit" class="btn btn-submit" id="btnSubmit" style="display:none">提交问卷</button>
+    </div></div>
+  </form>
+</div>
+
+<div id="successPage" style="display:none; text-align:center; padding:60px 24px; animation:fadeIn 0.5s ease;">
+  <div style="font-size:72px; margin-bottom:20px; color:#00a884;">&#10003;</div>
+  <h2 style="color:#00a884; margin-bottom:12px;">提交成功</h2>
+  <p style="font-size:16px; color:#555; margin-bottom:8px;"><strong class="success-name"></strong>，感谢你完成面试筛选问卷。</p>
+  <p style="font-size:14px; color:#888;">我们会在 3-5 个工作日内与你联系，请留意电话或邮件。</p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── 选项数据 ──
+const FRESH_OPTIONS = {
+  skill5: ["精通","熟悉","略懂","不会","正在学"],
+  skill6: ["精通","熟悉","略懂","不会","正在学"],
+  q13: ["中专","高中","大专","本科","硕士及以上"],
+  q14: ["A.室内设计","B.环境艺术设计","C.建筑设计","D.美术/工业设计等相关专业","E.完全无关，自学转行"],
+  q15: ["A.有，3个月以上","B.有，1-3个月","C.有，不足1个月","D.暂无实习经历"],
+  q16: ["A.量房/勘测","B.施工图绘制","C.效果图制作","D.材料市场跑腿/选材","E.工地跟进","F.客户沟通/旁听谈单","G.软装搭配协助","H.暂无实习"],
+  q17: ["A.非常有用，理论和基础打得很扎实","B.有些用，但和行业实际差距较大","C.没什么用，全靠自学和实践","D.说不清楚，还没实际验证过"],
+  q18: ["A.施工工艺与材料知识","B.与客户沟通谈单技巧","C.施工图规范与深化能力","D.预算报价与成本控制","E.行业规范和标准","F.项目管理与流程","G.软装搭配实战","H.设计思维的商业落地"],
+  q19: ["A.完整跟完一个项目从方案到落地","B.施工工艺和材料的实战认知","C.施工图深化能力","D.和客户沟通谈单的经验","E.搞清楚自己到底适不适合这行"],
+  q20: ["A.B站/抖音/小红书等平台的设计类内容","B.设计类书籍或杂志","C.在线课程（慕课/腾讯课堂/站酷高高手等）","D.临摹大师作品或实景案例","E.逛建材市场/家具展厅/看展","F.关注设计公众号/网站（谷德、ArchDaily、DINZ等）","G.参加设计竞赛","H.基本不自学"],
+  q22: ["有","没有"],
+  q24: ["30分钟以内","30-60分钟","60-90分钟","90分钟以上","可以搬家"],
+  q26: ["随时/一周内","两周内","一个月内","一个月以上"],
+  rank27: ["A.能学到东西/成长速度","B.薪资待遇","C.公司项目质量","D.团队氛围与带教制度","E.公司品牌与履历价值"],
+  q28: ["A.入行阶段无所谓能学东西就好","B.可以接受但希望有调休或补偿","C.偶尔可以，常态不接受","D.不接受加班"],
+  q29: ["A.先踏实学1-2年施工图和工艺打好基础再往上走","B.尽快上手做方案争取早日独立接项目","C.先跟着师傅看全流程再决定往哪个方向深耕","D.还没想清楚走一步看一步"],
+  q30: ["A.主动找师傅问清楚问题出在哪记下来避免再犯","B.继续改到合格为止不想给人添麻烦","C.觉得自己可能不适合这行开始自我怀疑","D.先放一放自己找网上的规范对照自查再改"],
+  q31: ["A.承认经验不足虚心请教师傅","B.不当场争辩回去后补施工知识用专业赢尊重","C.笑笑不说话心里不舒服但忍了","D.据理力争理论和实践各有价值"],
+  q32: ["A.大量搜集该风格的案例参考快速模仿学习","B.找公司里擅长该风格的同事请教思路","C.按自己的理解做边做边调整","D.以上都会，组合推进"]
+};
+
+var currentStep = 1;
+var totalSteps = 8;
+
+// ── 每步必填字段定义 ──
+var STEP_FIELDS = {
+  1: { radios: ['q1','q2','q3','q4','q5','q6'], texts: [], selects: [], checkboxes: [], ranking: [] },
+  2: { radios: ['q7','q8','q9','q10','q11','q12'], texts: [], selects: [], checkboxes: [], ranking: [] },
+  3: { radios: ['q13','q14','q15'], texts: [], selects: [], checkboxes: ['q16'], ranking: [] },
+  4: { radios: ['q17','q19'], texts: [], selects: [], checkboxes: ['q18','q20'], ranking: [] },
+  5: { radios: ['q22','q24','q26'], texts: ['q23','q25'], selects: ['q21'], checkboxes: [], ranking: [] },
+  6: { radios: ['q28','q29'], texts: [], selects: [], checkboxes: [], ranking: [['q27_1','q27_2','q27_3']] },
+  7: { radios: ['q30','q31','q32'], texts: [], selects: [], checkboxes: [], ranking: [] },
+  8: { radios: [], texts: ['q33','q34','q35'], selects: [], checkboxes: [], ranking: [] }
+};
+
+function buildOptions() {
+  for(var i=1;i<=6;i++) buildRadio('q'+i, FRESH_OPTIONS.skill5);
+  for(var i=7;i<=12;i++) buildRadio('q'+i, FRESH_OPTIONS.skill6);
+  buildRadio('q13', FRESH_OPTIONS.q13);
+  buildRadio('q14', FRESH_OPTIONS.q14);
+  buildRadio('q15', FRESH_OPTIONS.q15);
+  buildRadio('q16', FRESH_OPTIONS.q16, true);
+  buildRadio('q17', FRESH_OPTIONS.q17);
+  buildRadio('q18', FRESH_OPTIONS.q18, true);
+  buildRadio('q19', FRESH_OPTIONS.q19);
+  buildRadio('q20', FRESH_OPTIONS.q20, true);
+  buildRadio('q22', FRESH_OPTIONS.q22);
+  buildRadio('q24', FRESH_OPTIONS.q24);
+  buildRadio('q26', FRESH_OPTIONS.q26);
+  buildRankSelect('q27_1', FRESH_OPTIONS.rank27);
+  buildRankSelect('q27_2', FRESH_OPTIONS.rank27);
+  buildRankSelect('q27_3', FRESH_OPTIONS.rank27);
+  buildRadio('q28', FRESH_OPTIONS.q28);
+  buildRadio('q29', FRESH_OPTIONS.q29);
+  buildRadio('q30', FRESH_OPTIONS.q30);
+  buildRadio('q31', FRESH_OPTIONS.q31);
+  buildRadio('q32', FRESH_OPTIONS.q32);
+  buildYearSelect('q21', 1980, 2006);
+}
+
+function buildRadio(name, options, isMulti) {
+  var group = document.querySelector('.opt-group[data-name="'+name+'"]');
+  if(!group) return;
+  options.forEach(function(opt) {
+    var label = document.createElement('label');
+    label.className = 'opt-pill';
+    var inp = document.createElement('input');
+    inp.type = isMulti ? 'checkbox' : 'radio';
+    inp.name = name;
+    inp.value = opt;
+    label.appendChild(inp);
+    label.appendChild(document.createTextNode(opt));
+    label.addEventListener('click', function(e) {
+      if(isMulti) {
+        if(name==='q18') {
+          var allChecks = group.querySelectorAll('input:checked');
+          if(!inp.checked && allChecks.length >= 3) {
+            showToast('最多可选 3 项', 'error');
+            return;
+          }
+        }
+        inp.checked = !inp.checked;
+        label.classList.toggle('checked', inp.checked);
+      } else {
+        group.querySelectorAll('.opt-pill').forEach(function(l){ l.classList.remove('checked'); });
+        label.classList.add('checked');
+      }
+      clearFieldError(name);
+    });
+    group.appendChild(label);
+  });
+}
+
+function buildYearSelect(name, start, end) {
+  var sel = document.querySelector('select[name="'+name+'"]');
+  if(!sel) return;
+  sel.innerHTML = '<option value="">请选择出生年份</option>';
+  for(var y=end; y>=start; y--) {
+    sel.innerHTML += '<option value="'+y+'">'+y+'年</option>';
+  }
+  sel.addEventListener('change', function(){ clearFieldError(name); });
+}
+
+function buildRankSelect(name, options) {
+  var sel = document.querySelector('select[name="'+name+'"]');
+  if(!sel) return;
+  sel.innerHTML = '<option value="">请选择</option>';
+  options.forEach(function(opt) {
+    sel.innerHTML += '<option value="'+opt+'">'+opt+'</option>';
+  });
+  sel.addEventListener('change', function(){ clearFieldError('q27_1'); });
+}
+
+// ── 清除字段错误状态 ──
+function clearFieldError(fieldName) {
+  var item = document.querySelector('.q-item[data-field="'+fieldName+'"]');
+  if(item) item.classList.remove('has-error');
+}
+
+function clearAllErrors() {
+  document.querySelectorAll('.q-item.has-error').forEach(function(el){ el.classList.remove('has-error'); });
+}
+
+// ── 校验当前步骤 ──
+function validateStep(n) {
+  clearAllErrors();
+  var cfg = STEP_FIELDS[n];
+  if(!cfg) return true;
+  var valid = true;
+  var firstError = null;
+
+  (cfg.radios||[]).forEach(function(name) {
+    if(!document.querySelector('[name="'+name+'"]:checked')) {
+      var item = document.querySelector('.q-item[data-field="'+name+'"]');
+      if(item) { item.classList.add('has-error'); if(!firstError) firstError = item; }
+      valid = false;
+    }
+  });
+
+  (cfg.checkboxes||[]).forEach(function(name) {
+    if(!document.querySelector('[name="'+name+'"]:checked')) {
+      var item = document.querySelector('.q-item[data-field="'+name+'"]');
+      if(item) { item.classList.add('has-error'); if(!firstError) firstError = item; }
+      valid = false;
+    }
+  });
+
+  (cfg.texts||[]).forEach(function(name) {
+    var el = document.querySelector('[name="'+name+'"]');
+    if(el && !el.value.trim()) {
+      var item = document.querySelector('.q-item[data-field="'+name+'"]');
+      if(item) { item.classList.add('has-error'); if(!firstError) firstError = item; }
+      valid = false;
+    }
+  });
+
+  (cfg.selects||[]).forEach(function(name) {
+    var el = document.querySelector('[name="'+name+'"]');
+    if(el && !el.value) {
+      var item = document.querySelector('.q-item[data-field="'+name+'"]');
+      if(item) { item.classList.add('has-error'); if(!firstError) firstError = item; }
+      valid = false;
+    }
+  });
+
+  (cfg.ranking||[]).forEach(function(group) {
+    var vals = group.map(function(name) {
+      return document.querySelector('[name="'+name+'"]').value;
+    });
+    var hasEmpty = vals.some(function(v){ return !v; });
+    var hasDup = (new Set(vals.filter(Boolean))).size !== vals.filter(Boolean).length;
+    if(hasEmpty || hasDup) {
+      var item = document.querySelector('.q-item[data-field="'+group[0]+'"]');
+      if(item) { item.classList.add('has-error'); if(!firstError) firstError = item; }
+      valid = false;
+    }
+  });
+
+  if(!valid && firstError) {
+    firstError.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+  return valid;
+}
+
+function validateStepSilent(n) {
+  var cfg = STEP_FIELDS[n];
+  if(!cfg) return true;
+  var allOk = true;
+  (cfg.radios||[]).forEach(function(name) {
+    if(!document.querySelector('[name="'+name+'"]:checked')) allOk = false;
+  });
+  (cfg.checkboxes||[]).forEach(function(name) {
+    if(!document.querySelector('[name="'+name+'"]:checked')) allOk = false;
+  });
+  (cfg.texts||[]).forEach(function(name) {
+    var el = document.querySelector('[name="'+name+'"]');
+    if(el && !el.value.trim()) allOk = false;
+  });
+  (cfg.selects||[]).forEach(function(name) {
+    var el = document.querySelector('[name="'+name+'"]');
+    if(el && !el.value) allOk = false;
+  });
+  (cfg.ranking||[]).forEach(function(group) {
+    var vals = group.map(function(name){ return document.querySelector('[name="'+name+'"]').value; });
+    if(vals.some(function(v){ return !v; })) allOk = false;
+    if((new Set(vals.filter(Boolean))).size !== vals.filter(Boolean).length) allOk = false;
+  });
+  return allOk;
+}
+
+// ── Step navigation ──
+function showStep(n) {
+  document.querySelectorAll('.step').forEach(function(s){ s.style.display='none'; });
+  var step = document.querySelector('.step[data-step="'+n+'"]');
+  if(step) step.style.display='';
+  currentStep = n;
+  document.getElementById('stepLabel').textContent = '步骤 '+n+'/'+totalSteps;
+  document.getElementById('progressFill').style.width = (n/totalSteps*100)+'%';
+  document.getElementById('btnPrev').disabled = (n===1);
+  document.getElementById('btnNext').style.display = (n===totalSteps) ? 'none' : '';
+  document.getElementById('btnSubmit').style.display = (n===totalSteps) ? '' : 'none';
+  updateDots();
+}
+
+function updateDots() {
+  var dots = document.getElementById('stepDots');
+  dots.innerHTML = '';
+  for(var i=1; i<=totalSteps; i++) {
+    var dot = document.createElement('span');
+    dot.className = 'step-dot';
+    if(i===currentStep) dot.classList.add('active');
+    if(isStepAllComplete(i)) dot.classList.add('done');
+    dot.title = '步骤 '+i;
+    (function(s){ dot.addEventListener('click', function(){ showStep(s); }); })(i);
+    dots.appendChild(dot);
+  }
+}
+
+function isStepAllComplete(n) {
+  return validateStepSilent(n);
+}
+
+// ── Collect data ──
+function collectAnswers() {
+  var data = { form_type: 'fresh' };
+  var fd = new FormData(document.getElementById('mainForm'));
+  fd.forEach(function(v, k) { data[k] = v; });
+  ['q16','q18','q20'].forEach(function(name) {
+    var checks = document.querySelectorAll('[name="'+name+'"]:checked');
+    if(checks.length) data[name] = Array.from(checks).map(function(c){ return c.value; }).join(', ');
+  });
+  return data;
+}
+
+// ── Submit ──
+document.getElementById('mainForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  clearAllErrors();
+  var name = document.querySelector('[name="applicant_name"]').value.trim();
+  if(!name) {
+    var nameItem = document.querySelector('.q-item[data-field="applicant_name"]');
+    if(nameItem) nameItem.classList.add('has-error');
+    nameItem.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  for(var s=1; s<=totalSteps; s++) {
+    if(!validateStep(s)) {
+      showStep(s);
+      showToast('第 '+s+' 步有必填项未完成，请检查红色标记', 'error');
+      return;
+    }
+  }
+
+  var data = collectAnswers();
+  showToast('正在提交...', '');
+
+  fetch('/fresh/send', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  }).then(function(r){ return r.json(); }).then(function(res) {
+    if(res.status==='sent') {
+      document.querySelector('.info-card').style.display='none';
+      document.querySelectorAll('.step').forEach(function(s){ s.style.display='none'; });
+      document.querySelector('.progress-wrap').style.display='none';
+      document.getElementById('btnPrev').parentElement.parentElement.style.display='none';
+      document.getElementById('toast').style.display='none';
+      var successEl = document.getElementById('successPage');
+      successEl.style.display='';
+      successEl.querySelector('.success-name').textContent = name;
+      window.scrollTo({top:0, behavior:'smooth'});
+    } else {
+      showToast('提交失败：'+ (res.error||'未知错误'), 'error');
+    }
+  }).catch(function(err) {
+    showToast('网络错误，请重试', 'error');
+  });
+});
+
+document.getElementById('btnNext').addEventListener('click', function(){
+  if(!validateStep(currentStep)) {
+    showToast('当前步骤有必填项未完成', 'error');
+    return;
+  }
+  if(currentStep<totalSteps) showStep(currentStep+1);
+});
+document.getElementById('btnPrev').addEventListener('click', function(){ if(currentStep>1) showStep(currentStep-1); });
+
+// Char counters
+document.querySelectorAll('textarea[maxlength]').forEach(function(ta) {
+  ta.addEventListener('input', function() {
+    var cnt = ta.parentElement.querySelector('.char-count');
+    if(cnt) cnt.textContent = ta.value.length+'/'+ta.maxlength;
+  });
+});
+
+// Text input change clears error
+document.querySelectorAll('.txt-input').forEach(function(el) {
+  el.addEventListener('input', function() {
+    var item = el.closest('.q-item');
+    if(item) { var f = item.getAttribute('data-field'); if(f) clearFieldError(f); }
+  });
+});
+
+// Toast
+function showToast(msg, cls) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast '+(cls||'');
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function(){ t.classList.remove('show'); }, 3000);
+}
+
+buildOptions();
+showStep(1);
+</script>
+</body>
+</html>
