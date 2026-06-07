@@ -54,7 +54,7 @@ window.QD=
   _d(43)
 ],
 "scoring":{
-  "dim_max":[
+  "SC_MAX_ARR":[
     6,
     6,
     6,
@@ -66,7 +66,7 @@ window.QD=
     6,
     6
   ],
-  "threshold":[
+  "SC_THRESH_ARR":[
     5,
     5,
     5,
