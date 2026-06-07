@@ -82,8 +82,8 @@ body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:#f0f2f5;c
 var U=QD.ui;
 var DIMS_LABEL=QD.dim_labels;
 var DIMS_LABEL_LOW=QD.dim_labels_low;
-var SC_THRESH=QD.scoring.threshold;
-var SC_MAX=QD.scoring.dim_max;
+var SC_THRESH=QD.scoring.SC_THRESH_ARR;
+var SC_MAX=QD.scoring.SC_MAX_ARR||[6,6,6,6,6,6,6,6,6,6];
 var ND=DIMS_LABEL.length;
 
 // Set UI text
@@ -324,8 +324,8 @@ rep+='</ul></div>';
 
 // --- Section 6: 详细特征（可折叠）---
 rep+='<div style="background:#f8f9fa;border-radius:8px;padding:18px;margin-bottom:16px">';
-rep+='<h4 style="margin:0 0 14px;font-size:14px;color:#2c3e50;border-bottom:1px solid #e9ecef;padding-bottom:8px;cursor:pointer" onclick="var p=this.nextElementSibling;var s=p.style.display;p.style.display=s===\'none\'?\'block\':\'none\';">'+U.report_traits_title+' <span style="font-size:11px;color:#6c757d">&#x25BC; 点击展开/收起</span></h4>';
-rep+='<div style="display:none"><ul style="margin:0;padding:0 0 0 18px;font-size:13px;line-height:1.8;color:#495057">';
+rep+='<h4 style="margin:0 0 14px;font-size:14px;color:#2c3e50;border-bottom:1px solid #e9ecef;padding-bottom:8px">'+U.report_traits_title+'</h4>';
+rep+='<div style="display:block"><ul style="margin:0;padding:0 0 0 18px;font-size:13px;line-height:1.8;color:#495057">';
 for(var d=0;d<ND;d++){
 var tt=dimOk[d]?QD.traits_high[d]:QD.traits_mid[d];
 for(var k=0;k<tt.length;k++)rep+='<li>'+tt[k]+'</li>';
