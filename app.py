@@ -7,7 +7,7 @@ from flask import Flask, request, send_file
 app = Flask(__name__)
 
 SMTP_HOST = "smtp.qq.com"
-SMTP_PORT = 587
+SMTP_PORT = 465
 SMTP_USER = "bisir@foxmail.com"
 TO_EMAIL = "bisir@foxmail.com"
 _IMPORT_ = __import__
@@ -95,23 +95,17 @@ def send_summary_email(subject, summary_html):
     msg["To"] = TO_EMAIL
     msg["Cc"] = CC_EMAIL
     msg.attach(MIMEText(summary_html, "html", "utf-8"))
-    server = None
     try:
         context = ssl.create_default_context()
-        server = smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=20)
-        server.starttls(context=context)
+        server = smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=context, timeout=20)
         server.login(SMTP_USER, SMTP_PASS)
         recipients = [TO_EMAIL, CC_EMAIL]
         server.sendmail(SMTP_USER, recipients, msg.as_string())
+        try: server.quit()
+        except: pass
+        return True, None
     except Exception as e:
         return False, str(e)
-    finally:
-        if server:
-            try:
-                server.quit()
-            except Exception:
-                pass
-    return True, None
 
 @app.route("/society/send", methods=["POST"])
 def society_send():
@@ -159,23 +153,17 @@ def send_email():
     msg["Cc"] = cc_email
     msg.attach(MIMEText(report_html, "html", "utf-8"))
 
-    server = None
     try:
         context = ssl.create_default_context()
-        server = smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=20)
-        server.starttls(context=context)
+        server = smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=context, timeout=20)
         server.login(SMTP_USER, SMTP_PASS)
         recipients = [to_email, cc_email]
         server.sendmail(SMTP_USER, recipients, msg.as_string())
+        try: server.quit()
+        except: pass
+        return {"status": "sent"}
     except Exception as e:
         return {"status": "fail", "error": str(e)}, 500
-    finally:
-        if server:
-            try:
-                server.quit()
-            except Exception:
-                pass
-    return {"status": "sent"}
 
 def generate_society_summary(data):
     _h = _IMPORT_('base64')
@@ -222,8 +210,5 @@ def generate_fresh_summary(data):
     )
     return html
 
-import os
-
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8765))
-    app.run(host="0.0.0.0", port=port, debug=False)
+    app.run(host="0.0.0.0", port=8765, debug=False)
