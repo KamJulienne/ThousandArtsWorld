@@ -53,8 +53,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC"
 .opt-pill { display:inline-flex; align-items:center; padding:8px 18px; border:2px solid var(--border); border-radius:24px; cursor:pointer; font-size:14px; transition:all .2s; user-select:none; background:#fff; }
 .opt-pill:hover { border-color:var(--primary-light); background:#f6f8fc; }
 .opt-pill input { display:none; }
-.opt-pill.checked { border-color:var(--primary); background:#eef2f8; color:var(--primary-dark); font-weight:500; }
+.opt-pill.checked { border-color:var(--primary); background:#eef2f9; color:var(--primary-dark); font-weight:500; }
 
+/* Validation errors */
 .q-item.has-error .opt-group { border:2px dashed var(--error); border-radius:8px; padding:6px; }
 .q-item.has-error .txt-input, .q-item.has-error .sel-input { border-color:var(--error); background:#fff5f5; }
 .q-item.has-error .rank-row .sel-input { border-color:var(--error); background:#fff5f5; }
@@ -102,7 +103,7 @@ textarea.txt-input { resize:vertical; min-height:80px; }
 
 <div class="header">
   <h1>千艺界 · 室内设计师面试筛选</h1>
-  <p>社招版 · 共 7 步 · 约 10 分钟</p>
+  <p>社招版 · 共 7 步 · 约 8 分钟</p>
 </div>
 
 <div class="container">
@@ -113,14 +114,13 @@ textarea.txt-input { resize:vertical; min-height:80px; }
   </div>
 
   <form id="mainForm" novalidate>
-
     <!-- 应聘者信息 -->
     <div class="card info-card">
       <div class="card-header"><h2>应聘者信息<span>必填</span></h2></div>
       <div class="card-body">
-        <div class="q-item required" data-field="applicant_name">
-          <div class="q-label"><span class="q-num" style="background:#e74c3c">*</span>你的姓名是？<span class="req-star">*</span><span class="q-type">必填</span></div>
-          <input class="txt-input" name="applicant_name" required autocomplete="name">
+        <div class="q-item required" data-field="applicant_name" style="border-bottom:none">
+          <div class="q-label"><span class="q-num" style="background:#e74c3c">*</span>姓名<span class="req-star">*</span><span class="q-type">必填</span></div>
+          <input class="txt-input" name="applicant_name" placeholder="请输入您的姓名" required autocomplete="name">
           <div class="field-error">请填写姓名</div>
         </div>
       </div>
@@ -130,12 +130,12 @@ textarea.txt-input { resize:vertical; min-height:80px; }
     <div class="card step" data-step="1">
       <div class="card-header"><h2>软件技能<span>6 题 · 全部必选</span></h2></div>
       <div class="card-body">
-        <div class="q-item required" data-field="q1"><div class="q-label"><span class="q-num">1</span>你对 AutoCAD（CAD）的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q1"></div><div class="field-error">请选择 CAD 掌握程度</div></div>
-        <div class="q-item required" data-field="q2"><div class="q-label"><span class="q-num">2</span>你对 SketchUp（SU）的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q2"></div><div class="field-error">请选择 SU 掌握程度</div></div>
-        <div class="q-item required" data-field="q3"><div class="q-label"><span class="q-num">3</span>你对 3ds Max（3D Max）的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q3"></div><div class="field-error">请选择 3ds Max 掌握程度</div></div>
-        <div class="q-item required" data-field="q4"><div class="q-label"><span class="q-num">4</span>你对 Adobe Photoshop（PS）的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q4"></div><div class="field-error">请选择 PS 掌握程度</div></div>
-        <div class="q-item required" data-field="q5"><div class="q-label"><span class="q-num">5</span>你对 D5 Render（D5）的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q5"></div><div class="field-error">请选择 D5 掌握程度</div></div>
-        <div class="q-item required" data-field="q6"><div class="q-label"><span class="q-num">6</span>你对 WPS Office（WPS）的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q6"></div><div class="field-error">请选择 WPS 掌握程度</div></div>
+        <div class="q-item required" data-field="q1"><div class="q-label"><span class="q-num">1</span>AutoCAD（CAD）掌握程度？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q1"></div><div class="field-error">请选择 AutoCAD 掌握程度</div></div>
+        <div class="q-item required" data-field="q2"><div class="q-label"><span class="q-num">2</span>SketchUp（SU）掌握程度？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q2"></div><div class="field-error">请选择 SketchUp 掌握程度</div></div>
+        <div class="q-item required" data-field="q3"><div class="q-label"><span class="q-num">3</span>3ds Max（3D Max）掌握程度？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q3"></div><div class="field-error">请选择 3ds Max 掌握程度</div></div>
+        <div class="q-item required" data-field="q4"><div class="q-label"><span class="q-num">4</span>Adobe Photoshop（PS）掌握程度？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q4"></div><div class="field-error">请选择 Photoshop 掌握程度</div></div>
+        <div class="q-item required" data-field="q5"><div class="q-label"><span class="q-num">5</span>D5 Render（D5）掌握程度？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q5"></div><div class="field-error">请选择 D5 Render 掌握程度</div></div>
+        <div class="q-item required" data-field="q6"><div class="q-label"><span class="q-num">6</span>WPS Office（WPS）掌握程度？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q6"></div><div class="field-error">请选择 WPS Office 掌握程度</div></div>
       </div>
     </div>
 
@@ -143,18 +143,18 @@ textarea.txt-input { resize:vertical; min-height:80px; }
     <div class="card step" data-step="2" style="display:none">
       <div class="card-header"><h2>专业技能<span>12 题 · 全部必选</span></h2></div>
       <div class="card-body">
-        <div class="q-item required" data-field="q7"><div class="q-label"><span class="q-num">7</span>你对「量房与现场勘测」的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q7"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q8"><div class="q-label"><span class="q-num">8</span>你对「家装设计（住宅空间）」的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q8"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q9"><div class="q-label"><span class="q-num">9</span>你对「工装设计（商业/办公/餐饮等）」的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q9"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q10"><div class="q-label"><span class="q-num">10</span>你对「施工图绘制与深化」的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q10"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q11"><div class="q-label"><span class="q-num">11</span>你对「效果图表现（静帧/全景/动画）」的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q11"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q12"><div class="q-label"><span class="q-num">12</span>你对「软装搭配与摆场」的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q12"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q13"><div class="q-label"><span class="q-num">13</span>你对「预算报价编制」的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q13"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q14"><div class="q-label"><span class="q-num">14</span>你对「材料选型与供应商对接」的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q14"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q15"><div class="q-label"><span class="q-num">15</span>你对「施工现场跟进与交底」的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q15"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q16"><div class="q-label"><span class="q-num">16</span>你对「客户沟通与谈单」的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q16"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q17"><div class="q-label"><span class="q-num">17</span>你对「方案汇报与提案」的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q17"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q18"><div class="q-label"><span class="q-num">18</span>你对「项目管理与进度把控」的掌握程度是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q18"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q7"><div class="q-label"><span class="q-num">7</span>量房与现场勘测？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q7"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q8"><div class="q-label"><span class="q-num">8</span>家装设计（住宅空间）？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q8"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q9"><div class="q-label"><span class="q-num">9</span>工装设计（商业/办公/餐饮等）？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q9"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q10"><div class="q-label"><span class="q-num">10</span>施工图绘制与深化？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q10"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q11"><div class="q-label"><span class="q-num">11</span>效果图表现（静帧/全景/动画）？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q11"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q12"><div class="q-label"><span class="q-num">12</span>软装搭配与摆场？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q12"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q13"><div class="q-label"><span class="q-num">13</span>预算报价编制？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q13"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q14"><div class="q-label"><span class="q-num">14</span>材料选型与供应商对接？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q14"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q15"><div class="q-label"><span class="q-num">15</span>施工现场跟进与交底？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q15"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q16"><div class="q-label"><span class="q-num">16</span>客户沟通与谈单？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q16"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q17"><div class="q-label"><span class="q-num">17</span>方案汇报与提案？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q17"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q18"><div class="q-label"><span class="q-num">18</span>项目管理与进度把控？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q18"></div><div class="field-error">请选择此项</div></div>
       </div>
     </div>
 
@@ -162,10 +162,10 @@ textarea.txt-input { resize:vertical; min-height:80px; }
     <div class="card step" data-step="3" style="display:none">
       <div class="card-header"><h2>设计能力与经验<span>4 题 · 单选/多选</span></h2></div>
       <div class="card-body">
-        <div class="q-item required" data-field="q19"><div class="q-label"><span class="q-num">19</span>你独立主导过的室内设计项目数量是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q19"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q20"><div class="q-label"><span class="q-num">20</span>你主要擅长的项目类型是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q20"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q21"><div class="q-label"><span class="q-num">21</span>你在项目中的角色通常是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q21"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q22"><div class="q-label"><span class="q-num">22</span>你对接过以下哪些环节？<span class="req-star">*</span><span class="q-type">多选（至少选1项）</span></div><div class="opt-group" data-name="q22"></div><div class="field-error">请至少选择 1 项</div></div>
+        <div class="q-item required" data-field="q19"><div class="q-label"><span class="q-num">19</span>独立主导过的室内设计项目数量？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q19"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q20"><div class="q-label"><span class="q-num">20</span>主要擅长的项目类型？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q20"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q21"><div class="q-label"><span class="q-num">21</span>在项目中的角色通常是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q21"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q22"><div class="q-label"><span class="q-num">22</span>对接过以下哪些环节？<span class="req-star">*</span><span class="q-type">多选（至少选1项）</span></div><div class="opt-group" data-name="q22"></div><div class="field-error">请至少选择 1 项</div></div>
       </div>
     </div>
 
@@ -173,66 +173,57 @@ textarea.txt-input { resize:vertical; min-height:80px; }
     <div class="card step" data-step="4" style="display:none">
       <div class="card-header"><h2>个人基本情况<span>13 题</span></h2></div>
       <div class="card-body">
-        <div class="q-item required" data-field="q23"><div class="q-label"><span class="q-num">23</span>你的最高学历是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q23"></div><div class="field-error">请选择学历</div></div>
-        <div class="q-item required" data-field="q24"><div class="q-label"><span class="q-num">24</span>你所学的专业是否与室内设计/建筑/环艺相关？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q24"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q25"><div class="q-label"><span class="q-num">25</span>你的出生年份是？<span class="req-star">*</span><span class="q-type">下拉选择</span></div><select class="sel-input" name="q25"></select><div class="field-error">请选择出生年份</div></div>
-        <div class="q-item required" data-field="q26"><div class="q-label"><span class="q-num">26</span>你的婚姻状况是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q26"></div><div class="field-error">请选择婚姻状况</div></div>
-        <div class="q-item required" data-field="q27"><div class="q-label"><span class="q-num">27</span>你目前是否单身？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q27"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q28"><div class="q-label"><span class="q-num">28</span>你目前居住在哪个城市/区域？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q28"><div class="field-error">请填写居住城市/区域</div></div>
-        <div class="q-item required" data-field="q29"><div class="q-label"><span class="q-num">29</span>你到公司的通勤时间大约是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q29"></div><div class="field-error">请选择通勤时间</div></div>
-        <div class="q-item required" data-field="q30"><div class="q-label"><span class="q-num">30</span>你的期望薪资是（税前月薪，元）？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q30" type="number" min="0"><div class="field-error">请填写期望薪资（数字）</div></div>
-        <div class="q-item" data-field="q31" data-optional="true"><div class="q-label"><span class="q-num" style="background:#aaa">31</span>你上一份工作的税前月薪大约是多少？<span class="q-type">选填</span></div><input class="txt-input" name="q31" type="number" min="0"></div>
-        <div class="q-item required" data-field="q32"><div class="q-label"><span class="q-num">32</span>你最快多久能到岗？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q32"></div><div class="field-error">请选择到岗时间</div></div>
+        <div class="q-item required" data-field="q23"><div class="q-label"><span class="q-num">23</span>最高学历？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q23"></div><div class="field-error">请选择学历</div></div>
+        <div class="q-item required" data-field="q24"><div class="q-label"><span class="q-num">24</span>专业是否与室内设计/建筑/环艺相关？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q24"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q25"><div class="q-label"><span class="q-num">25</span>出生年份？<span class="req-star">*</span><span class="q-type">下拉选择</span></div><select class="sel-input" name="q25"></select><div class="field-error">请选择出生年份</div></div>
+        <div class="q-item required" data-field="q26"><div class="q-label"><span class="q-num">26</span>婚姻状况？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q26"></div><div class="field-error">请选择婚姻状况</div></div>
+        <div class="q-item required" data-field="q27"><div class="q-label"><span class="q-num">27</span>目前有男/女朋友吗？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q27"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q28"><div class="q-label"><span class="q-num">28</span>目前居住在哪个城市/区域？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q28" placeholder="如：北京朝阳"><div class="field-error">请填写居住城市/区域</div></div>
+        <div class="q-item required" data-field="q29"><div class="q-label"><span class="q-num">29</span>到公司的通勤时间大约是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q29"></div><div class="field-error">请选择通勤时间</div></div>
+        <div class="q-item required" data-field="q30"><div class="q-label"><span class="q-num">30</span>期望薪资（税前月薪，元）？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q30" placeholder="如：8000" type="number" min="0"><div class="field-error">请填写期望薪资（数字）</div></div>
+        <div class="q-item" data-field="q31" data-optional="true"><div class="q-label"><span class="q-num" style="background:#aaa">31</span>上一份工作的税前月薪大约是多少？<span class="q-type">选填</span></div><input class="txt-input" name="q31" placeholder="选填，如：6000" type="number" min="0"></div>
+        <div class="q-item required" data-field="q32"><div class="q-label"><span class="q-num">32</span>最快多久能到岗？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q32"></div><div class="field-error">请选择到岗时间</div></div>
         <div class="q-item required" data-field="q33"><div class="q-label"><span class="q-num">33</span>能否接受短期出差或驻场？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q33"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q34"><div class="q-label"><span class="q-num">34</span>你是否有自己的客户资源或过往老客户愿意介绍项目？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q34"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q35"><div class="q-label"><span class="q-num">35</span>上一家公司的规模和类型是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q35"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q34"><div class="q-label"><span class="q-num">34</span>是否有自己的客户资源或过往老客户愿意介绍项目？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q34"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q35"><div class="q-label"><span class="q-num">35</span>上一家公司的规模和类型？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q35"></div><div class="field-error">请选择此项</div></div>
       </div>
     </div>
 
-    <!-- STEP 5: 自我展示 -->
+    <!-- STEP 5: 职业态度与背景 -->
     <div class="card step" data-step="5" style="display:none">
-      <div class="card-header"><h2>自我展示<span>3 题 · 含多选</span></h2></div>
+      <div class="card-header"><h2>职业态度与背景<span>4 题</span></h2></div>
       <div class="card-body">
-        <div class="q-item required" data-field="q36"><div class="q-label"><span class="q-num">36</span>请用3-5句话简要介绍自己或进行自我评价。<span class="req-star">*</span><span class="q-type">填空（限150字）</span></div><textarea class="txt-input" name="q36" maxlength="150" rows="3"></textarea><div class="txt-hint"><span>请简要介绍自己</span><span class="char-count">0/150</span></div><div class="field-error">请填写自我评价</div></div>
-        <div class="q-item required" data-field="q37"><div class="q-label"><span class="q-num">37</span>你的兴趣爱好有哪些？请简要罗列。<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q37"><div class="field-error">请填写兴趣爱好</div></div>
-        <div class="q-item required" data-field="q38"><div class="q-label"><span class="q-num">38</span>你擅长或偏好的设计风格有哪些？<span class="req-star">*</span><span class="q-type">多选（至少选1项）</span></div><div class="opt-group" data-name="q38"></div><div class="field-error">请至少选择 1 项</div></div>
-      </div>
-    </div>
-
-    <!-- STEP 6: 职业态度与背景 -->
-    <div class="card step" data-step="6" style="display:none">
-      <div class="card-header"><h2>职业态度与背景<span>5 题 · 含排序</span></h2></div>
-      <div class="card-body">
-        <div class="q-item required" data-field="q39_1">
-          <div class="q-label"><span class="q-num">39</span>选择一家设计公司时，你最看重的三个因素排序（1-2-3）？<span class="req-star">*</span><span class="q-type">排序（123位都要选，不能重复）</span></div>
-          <div class="rank-row"><span class="rank-label">第1位</span><select class="sel-input rank-select" name="q39_1"></select></div>
-          <div class="rank-row"><span class="rank-label">第2位</span><select class="sel-input rank-select" name="q39_2"></select></div>
-          <div class="rank-row"><span class="rank-label">第3位</span><select class="sel-input rank-select" name="q39_3"></select></div>
+        <div class="q-item required" data-field="q36_1">
+          <div class="q-label"><span class="q-num">36</span>选择一家设计公司时，最看重的三个因素排序<span class="req-star">*</span><span class="q-type">排序（123位都要选）</span></div>
+          <div class="rank-row"><span class="rank-label">第1位</span><select class="sel-input rank-select" name="q36_1"></select></div>
+          <div class="rank-row"><span class="rank-label">第2位</span><select class="sel-input rank-select" name="q36_2"></select></div>
+          <div class="rank-row"><span class="rank-label">第3位</span><select class="sel-input rank-select" name="q36_3"></select></div>
           <div class="field-error">请完整填写第1、2、3位排序（不能重复）</div>
         </div>
-        <div class="q-item required" data-field="q40"><div class="q-label"><span class="q-num">40</span>当客户提出的修改意见明显不符合你的设计判断时，你通常会？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q40"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q41"><div class="q-label"><span class="q-num">41</span>如何看待加班赶方案？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q41"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q42"><div class="q-label"><span class="q-num">42</span>你最近一次离职/考虑离职的主要原因是什么？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q42"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q43"><div class="q-label"><span class="q-num">43</span>你对未来3-5年的职业规划更接近哪种？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q43"></div><div class="field-error">请选择此项</div></div>
-      
+        <div class="q-item required" data-field="q37"><div class="q-label"><span class="q-num">37</span>客户提出的修改意见明显不符合你的设计判断时？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q37"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q38"><div class="q-label"><span class="q-num">38</span>如何看待加班赶方案？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q38"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q39"><div class="q-label"><span class="q-num">39</span>最近一次离职/考虑离职的主要原因？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q39"></div><div class="field-error">请选择此项</div></div>
       </div>
-    </div></div>
     </div>
 
-    <!-- STEP 7: 情景判断 + 开放题 -->
-    <div class="card step" data-step="7" style="display:none">
-      <div class="card-header"><h2>情景判断 + 开放题<span>7 题 · 含选填</span></h2></div>
+    <!-- STEP 6: 情景判断 -->
+    <div class="card step" data-step="6" style="display:none">
+      <div class="card-header"><h2>情景判断<span>3 题 · 全部必选</span></h2></div>
       <div class="card-body">
-        <div class="q-item required" data-field="q44"><div class="q-label"><span class="q-num">44</span>客户预算20万，但你评估效果最好的方案需要28万，你会？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q44"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q45"><div class="q-label"><span class="q-num">45</span>施工过程中发现图纸与现场冲突，工期又很紧，你会怎么做？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q45"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q46"><div class="q-label"><span class="q-num">46</span>客户给了模糊的设计需求（例如「要高级一点」），你会怎么推进？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q46"></div><div class="field-error">请选择此项</div></div>
-      
-        
-        <div class="q-item required" data-field="q47"><div class="q-label"><span class="q-num">47</span>请附上你的作品集链接（百度网盘、站酷、Behance、个人网页等）。<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q47"><div class="field-error">请填写作品集链接</div></div>
-        <div class="q-item required" data-field="q48"><div class="q-label"><span class="q-num">48</span>选一个最有代表性的作品，200字以内说明：设计思路、最大困难、如何解决。<span class="req-star">*</span><span class="q-type">填空（限200字）</span></div><textarea class="txt-input" name="q48" maxlength="200" rows="4"></textarea><div class="txt-hint"><span></span><span class="char-count">0/200</span></div><div class="field-error">请填写代表性作品说明</div></div>
-        <div class="q-item required" data-field="q49"><div class="q-label"><span class="q-num">49</span>你对新工作的期望是什么？（团队、项目类型、设计方向等，150字以内）<span class="req-star">*</span><span class="q-type">填空（限150字）</span></div><textarea class="txt-input" name="q49" maxlength="150" rows="3"></textarea><div class="txt-hint"><span></span><span class="char-count">0/150</span></div><div class="field-error">请填写工作期望</div></div>
-        <div class="q-item" data-field="q50" data-optional="true"><div class="q-label"><span class="q-num" style="background:#aaa">50</span>如有其他想补充的内容，请在此填写（证书、获奖、特殊技能等）。<span class="q-type">选填</span></div><textarea class="txt-input" name="q50" rows="3"></textarea></div>
-      
+        <div class="q-item required" data-field="q40"><div class="q-label"><span class="q-num">40</span>客户预算20万但最优方案需28万？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q40"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q41"><div class="q-label"><span class="q-num">41</span>施工中发现图纸与现场冲突且工期紧？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q41"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q42"><div class="q-label"><span class="q-num">42</span>客户给模糊需求（如「要高级一点」）？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q42"></div><div class="field-error">请选择此项</div></div>
+      </div>
+    </div>
+
+    <!-- STEP 7: 开放题 -->
+    <div class="card step" data-step="7" style="display:none">
+      <div class="card-header"><h2>开放题<span>4 题 · 自由作答</span></h2></div>
+      <div class="card-body">
+        <div class="q-item required" data-field="q43"><div class="q-label"><span class="q-num">43</span>作品集链接（百度网盘、站酷、Behance、个人网页等）<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q43" placeholder="请输入链接（http:// 或 https:// 开头）"><div class="field-error">请填写作品集链接</div></div>
+        <div class="q-item required" data-field="q44"><div class="q-label"><span class="q-num">44</span>选一个最有代表性的作品，200字以内说明：设计思路、最大困难、如何解决。<span class="req-star">*</span><span class="q-type">填空</span></div><textarea class="txt-input" name="q44" placeholder="限200字以内" maxlength="200" rows="4"></textarea><div class="txt-hint"><span></span><span class="char-count">0/200</span></div><div class="field-error">请填写代表性作品说明</div></div>
+        <div class="q-item required" data-field="q45"><div class="q-label"><span class="q-num">45</span>对新工作的期望？（团队、项目类型、设计方向等，150字以内）<span class="req-star">*</span><span class="q-type">填空</span></div><textarea class="txt-input" name="q45" placeholder="限150字以内" maxlength="150" rows="3"></textarea><div class="txt-hint"><span></span><span class="char-count">0/150</span></div><div class="field-error">请填写工作期望</div></div>
+        <div class="q-item" data-field="q46" data-optional="true"><div class="q-label"><span class="q-num" style="background:#aaa">46</span>其他补充内容（证书、获奖、特殊技能等）<span class="q-type">选填</span></div><textarea class="txt-input" name="q46" placeholder="选填"></textarea></div>
       </div>
     </div>
 
@@ -258,28 +249,27 @@ textarea.txt-input { resize:vertical; min-height:80px; }
 // ── 选项数据 ──
 const SOCIETY_OPTIONS = {
   skill4: ["精通","熟悉","略懂","不会"],
+  skill12: ["精通","熟悉","略懂","不会"],
   q19: ["A.不足3个","B.3-10个","C.10-30个","D.30个以上"],
   q20: ["A.住宅/家装为主","B.商业空间（餐饮/零售/办公）为主","C.酒店/民宿为主","D.家装和工装各一半","E.展览/展厅/其他"],
   q21: ["A.独立设计师，从谈单到完工全流程","B.负责方案设计，施工图由他人深化","C.负责施工图深化，方案由主案出","D.只做效果图表现"],
   q22: ["A.客户沟通与需求挖掘","B.现场量房与勘测","C.施工图绘制与深化","D.材料选型与供应商对接","E.施工现场跟进与交底","F.软装搭配与摆场","G.预算报价编制"],
-  q23: ["A.中专","B.高中","C.大专","D.本科","E.硕士及以上"],
+  q23: ["中专","高中","大专","本科","硕士及以上"],
   q24: ["A.是，科班出身","B.相关专业（美术、工业设计等）","C.完全无关，转行自学"],
-  q26: ["A.未婚","B.已婚，无子女","C.已婚，有1个子女","D.已婚，有2个及以上子女","E.离异","F.其他","G.不想透露"],
-  q27: ["A.是","B.否","C.不想透露"],
-  q29: ["A.30分钟以内","B.30-60分钟","C.60-90分钟","D.90分钟以上","E.可以搬家/可接受远程"],
-  q32: ["A.随时/一周内","B.两周内","C.一个月内","D.一个月以上"],
-  q33: ["A.完全接受","B.可以接受，但希望频率不高","C.不太接受","D.完全不接受"],
-  q34: ["A.有较稳定的老客户资源","B.偶尔有老客户转介绍","C.没有，但愿意学习谈单","D.没有，更希望专注做设计","E.不想透露"],
+  q26: ["未婚","已婚无子女","已婚有1个子女","已婚有2个及以上子女","离异","其他"],
+  q27: ["有","没有"],
+  q29: ["30分钟以内","30-60分钟","60-90分钟","90分钟以上","可以搬家/可接受远程"],
+  q32: ["随时/一周内","两周内","一个月内","一个月以上"],
+  q33: ["完全接受","可以接受但希望频率不高","不太接受","完全不接受"],
+  q34: ["A.有较稳定的老客户资源","B.偶尔有老客户转介绍","C.没有，但愿意学习谈单","D.没有，更希望专注做设计"],
   q35: ["A.小型家装公司（20人以下）","B.中型设计公司（20-100人）","C.大型设计院/连锁品牌（100人以上）","D.个人工作室","E.非设计行业公司（内部设计岗）","F.自由职业/独立接单"],
-  q38: ["A.现代简约","B.极简","C.新中式","D.轻奢","E.工业风","F.侘寂","G.日式/北欧","H.法式/美式","I.混搭","J.其他"],
-  rank39: ["A.项目质量与设计调性","B.薪资待遇","C.成长空间与学习机会","D.团队氛围与协作方式","E.公司品牌与客户资源"],
-  q40: ["A.直接说明专业理由，坚持方案","B.给出两个方案：客户想要的+你认为更好的，让客户对比","C.先按客户要求改，过程中再引导","D.完全按客户要求来，不纠结"],
-  q41: ["A.设计行业难免，项目节点全力配合","B.可以接受，但希望有调休或补偿","C.偶尔可以，常态不接受","D.不接受加班"],
-  q42: ["A.项目质量低，无法发挥设计能力","B.薪资待遇不匹配","C.团队氛围或管理方式不适应","D.个人发展空间受限","E.公司经营状况不佳/裁员","F.通勤/家庭等个人原因","G.仍在职，暂无离职经历","H.其他（请在开放题中补充）"],
-  q43: ["A.成为独立主案设计师，独立负责项目全流程","B.往设计总监/管理方向发展，带团队","C.深耕某一细分领域（酒店/餐饮/办公等）","D.自己创业或开工作室","E.走一步看一步，先积累再说"],
-  q44: ["A.先出效果最大化的方案，再根据反馈砍预算","B.严格按20万做，在有限预算内找最优解","C.出两版：20万和28万，让客户自己选","D.跟客户沟通，说明差异，争取提高预算"],
-  q45: ["A.第一时间到现场，跟施工方一起确定调整方案","B.远程给施工方出修改图纸，电话沟通","C.报告项目经理，由项目经理协调","D.先让施工方暂停，等全套方案调整完再继续"],
-  q46: ["A.让客户提供5-10张喜欢的参考图，先对齐审美","B.根据自己理解先出一版，让客户在此基础上反馈","C.给客户看不同风格案例，边讨论边锁定方向","D.以上都会，灵活组合"]
+  rank36: ["A.项目质量与设计调性","B.薪资待遇","C.成长空间与学习机会","D.团队氛围与协作方式","E.公司品牌与客户资源"],
+  q37: ["A.直接说明专业理由坚持方案","B.给出两个方案让客户对比","C.先按客户要求改过程中再引导","D.完全按客户要求来"],
+  q38: ["A.设计行业难免，项目节点全力配合","B.可以接受但希望有调休或补偿","C.偶尔可以，常态不接受","D.不接受加班"],
+  q39: ["A.项目质量低无法发挥","B.薪资不匹配","C.团队氛围或管理方式","D.个人发展空间受限","E.公司经营不佳/裁员","F.通勤/家庭等个人原因","G.仍在职，暂无离职经历","H.其他"],
+  q40: ["A.先出效果最大化方案再根据反馈砍预算","B.严格按20万做找最优解","C.出两版让客户自己选","D.跟客户沟通说明差异争取提高预算"],
+  q41: ["A.第一时间到现场跟施工方一起确定调整方案","B.远程出修改图纸电话沟通","C.报告项目经理由项目经理协调","D.先让施工方暂停等全套方案调整完再继续"],
+  q42: ["A.让客户提供5-10张参考图先对齐审美","B.根据自己理解先出一版让客户反馈","C.给客户看不同风格案例边讨论边锁定方向","D.以上都会，灵活组合"]
 };
 
 var currentStep = 1;
@@ -291,13 +281,14 @@ var STEP_FIELDS = {
   2: { radios: ['q7','q8','q9','q10','q11','q12','q13','q14','q15','q16','q17','q18'], texts: [], selects: [], checkboxes: [], ranking: [] },
   3: { radios: ['q19','q20','q21'], texts: [], selects: [], checkboxes: ['q22'], ranking: [] },
   4: { radios: ['q23','q24','q26','q27','q29','q32','q33','q34','q35'], texts: ['q28','q30'], selects: ['q25'], checkboxes: [], ranking: [] },
-  5: { radios: [], texts: ['q36','q37'], selects: [], checkboxes: ['q38'], ranking: [] },
-  6: { radios: ['q40','q41','q42','q43'], texts: [], selects: [], checkboxes: [], ranking: [['q39_1','q39_2','q39_3']] },
-  7: { radios: ['q44','q45','q46'], texts: ['q47','q48','q49'], selects: [], checkboxes: [], ranking: [] }
+  5: { radios: ['q37','q38','q39'], texts: [], selects: [], checkboxes: [], ranking: [['q36_1','q36_2','q36_3']] },
+  6: { radios: ['q40','q41','q42'], texts: [], selects: [], checkboxes: [], ranking: [] },
+  7: { radios: [], texts: ['q43','q44','q45'], selects: [], checkboxes: [], ranking: [] }
 };
 
 function buildOptions() {
-  for(var i=1;i<=18;i++) buildRadio('q'+i, SOCIETY_OPTIONS.skill4);
+  for(var i=1;i<=6;i++) buildRadio('q'+i, SOCIETY_OPTIONS.skill4);
+  for(var i=7;i<=18;i++) buildRadio('q'+i, SOCIETY_OPTIONS.skill12);
   buildRadio('q19', SOCIETY_OPTIONS.q19);
   buildRadio('q20', SOCIETY_OPTIONS.q20);
   buildRadio('q21', SOCIETY_OPTIONS.q21);
@@ -312,17 +303,15 @@ function buildOptions() {
   buildRadio('q33', SOCIETY_OPTIONS.q33);
   buildRadio('q34', SOCIETY_OPTIONS.q34);
   buildRadio('q35', SOCIETY_OPTIONS.q35);
-  buildRadio('q38', SOCIETY_OPTIONS.q38, true);
-  buildRankSelect('q39_1', SOCIETY_OPTIONS.rank39);
-  buildRankSelect('q39_2', SOCIETY_OPTIONS.rank39);
-  buildRankSelect('q39_3', SOCIETY_OPTIONS.rank39);
+  buildRankSelect('q36_1', SOCIETY_OPTIONS.rank36);
+  buildRankSelect('q36_2', SOCIETY_OPTIONS.rank36);
+  buildRankSelect('q36_3', SOCIETY_OPTIONS.rank36);
+  buildRadio('q37', SOCIETY_OPTIONS.q37);
+  buildRadio('q38', SOCIETY_OPTIONS.q38);
+  buildRadio('q39', SOCIETY_OPTIONS.q39);
   buildRadio('q40', SOCIETY_OPTIONS.q40);
   buildRadio('q41', SOCIETY_OPTIONS.q41);
   buildRadio('q42', SOCIETY_OPTIONS.q42);
-  buildRadio('q43', SOCIETY_OPTIONS.q43);
-  buildRadio('q44', SOCIETY_OPTIONS.q44);
-  buildRadio('q45', SOCIETY_OPTIONS.q45);
-  buildRadio('q46', SOCIETY_OPTIONS.q46);
 }
 
 function buildRadio(name, options, isMulti) {
@@ -345,6 +334,7 @@ function buildRadio(name, options, isMulti) {
         group.querySelectorAll('.opt-pill').forEach(function(l){ l.classList.remove('checked'); });
         label.classList.add('checked');
       }
+      // 清除该字段的错误状态
       clearFieldError(name);
     });
     group.appendChild(label);
@@ -368,9 +358,10 @@ function buildRankSelect(name, options) {
   options.forEach(function(opt) {
     sel.innerHTML += '<option value="'+opt+'">'+opt+'</option>';
   });
-  sel.addEventListener('change', function(){ clearFieldError('q39_1'); });
+  sel.addEventListener('change', function(){ clearFieldError('q36_1'); });
 }
 
+// ── 清除字段错误状态 ──
 function clearFieldError(fieldName) {
   var item = document.querySelector('.q-item[data-field="'+fieldName+'"]');
   if(item) item.classList.remove('has-error');
@@ -380,6 +371,7 @@ function clearAllErrors() {
   document.querySelectorAll('.q-item.has-error').forEach(function(el){ el.classList.remove('has-error'); });
 }
 
+// ── 校验当前步骤 ──
 function validateStep(n) {
   clearAllErrors();
   var cfg = STEP_FIELDS[n];
@@ -387,6 +379,7 @@ function validateStep(n) {
   var valid = true;
   var firstError = null;
 
+  // Radio groups
   (cfg.radios||[]).forEach(function(name) {
     if(!document.querySelector('[name="'+name+'"]:checked')) {
       var item = document.querySelector('.q-item[data-field="'+name+'"]');
@@ -395,6 +388,7 @@ function validateStep(n) {
     }
   });
 
+  // Checkbox groups (at least 1)
   (cfg.checkboxes||[]).forEach(function(name) {
     if(!document.querySelector('[name="'+name+'"]:checked')) {
       var item = document.querySelector('.q-item[data-field="'+name+'"]');
@@ -403,6 +397,7 @@ function validateStep(n) {
     }
   });
 
+  // Text inputs
   (cfg.texts||[]).forEach(function(name) {
     var el = document.querySelector('[name="'+name+'"]');
     if(el && !el.value.trim()) {
@@ -412,6 +407,7 @@ function validateStep(n) {
     }
   });
 
+  // Selects
   (cfg.selects||[]).forEach(function(name) {
     var el = document.querySelector('[name="'+name+'"]');
     if(el && !el.value) {
@@ -421,6 +417,7 @@ function validateStep(n) {
     }
   });
 
+  // Ranking groups (all 3 must be filled, no duplicates)
   (cfg.ranking||[]).forEach(function(group) {
     var vals = group.map(function(name) {
       return document.querySelector('[name="'+name+'"]').value;
@@ -440,6 +437,7 @@ function validateStep(n) {
   return valid;
 }
 
+// ── 校验全部步骤 ──
 function validateAll() {
   for(var s=1; s<=totalSteps; s++) {
     if(!validateStep(s)) {
@@ -447,6 +445,7 @@ function validateAll() {
       return false;
     }
   }
+  // 校验姓名
   var nameEl = document.querySelector('[name="applicant_name"]');
   if(!nameEl.value.trim()) {
     var nameItem = document.querySelector('.q-item[data-field="applicant_name"]');
@@ -457,6 +456,7 @@ function validateAll() {
   return true;
 }
 
+// ── Step navigation ──
 function showStep(n) {
   document.querySelectorAll('.step').forEach(function(s){ s.style.display='none'; });
   var step = document.querySelector('.step[data-step="'+n+'"]');
@@ -514,18 +514,17 @@ function validateStepSilent(n) {
   return allOk;
 }
 
+// ── Collect data ──
 function collectAnswers() {
   var data = { form_type: 'society', applicant_name: document.querySelector('[name="applicant_name"]').value.trim() };
   var fd = new FormData(document.getElementById('mainForm'));
   fd.forEach(function(v, k) { if(k!=='applicant_name') data[k] = v; });
-  // 多选字段合并
-  ['q22','q38'].forEach(function(name) {
-    var checks = document.querySelectorAll('[name="'+name+'"]:checked');
-    if(checks.length) data[name] = Array.from(checks).map(function(c){ return c.value; }).join(', ');
-  });
+  var checks = document.querySelectorAll('[name="q22"]:checked');
+  if(checks.length) data.q22 = Array.from(checks).map(function(c){ return c.value; }).join(', ');
   return data;
 }
 
+// ── Submit ──
 document.getElementById('mainForm').addEventListener('submit', function(e) {
   e.preventDefault();
   clearAllErrors();
@@ -536,6 +535,7 @@ document.getElementById('mainForm').addEventListener('submit', function(e) {
     nameItem.scrollIntoView({behavior:'smooth', block:'center'});
     return;
   }
+  // 校验全部步骤
   for(var s=1; s<=totalSteps; s++) {
     if(!validateStep(s)) {
       showStep(s);
@@ -547,7 +547,7 @@ document.getElementById('mainForm').addEventListener('submit', function(e) {
   var data = collectAnswers();
   showToast('正在提交...', '');
 
-  fetch('https://thousand-arts-world.onrender.com/society/send', {
+  fetch('/society/send', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(data)
@@ -583,7 +583,7 @@ document.getElementById('btnPrev').addEventListener('click', function(){ if(curr
 document.querySelectorAll('textarea[maxlength]').forEach(function(ta) {
   ta.addEventListener('input', function() {
     var cnt = ta.parentElement.querySelector('.char-count');
-    if(cnt) cnt.textContent = ta.value.length+'/'+ta.maxLength;
+    if(cnt) cnt.textContent = ta.value.length+'/'+ta.maxlength;
   });
 });
 
@@ -595,6 +595,7 @@ document.querySelectorAll('.txt-input').forEach(function(el) {
   });
 });
 
+// Toast
 function showToast(msg, cls) {
   var t = document.getElementById('toast');
   t.textContent = msg;
