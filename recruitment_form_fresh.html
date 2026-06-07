@@ -182,7 +182,7 @@ textarea.txt-input { resize:vertical; min-height:80px; }
         <div class="q-item required" data-field="q22"><div class="q-label"><span class="q-num">22</span>你目前有男/女朋友吗？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q22"></div><div class="field-error">请选择此项</div></div>
         <div class="q-item required" data-field="q23"><div class="q-label"><span class="q-num">23</span>你目前居住在哪个城市/区域？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q23"><div class="field-error">请填写居住城市/区域</div></div>
         <div class="q-item required" data-field="q24"><div class="q-label"><span class="q-num">24</span>你到公司的通勤时间大约是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q24"></div><div class="field-error">请选择通勤时间</div></div>
-        <div class="q-item required" data-field="q25"><div class="q-label"><span class="q-num">25</span>你的期望薪资是（税前月薪，元）？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q25" type="number" min="0" placeholder="如：6000"><div class="field-error">请填写期望薪资（数字）</div></div>
+        <div class="q-item required" data-field="q25"><div class="q-label"><span class="q-num">25</span>你的期望薪资是（税前月薪，元）？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q25" type="number" min="0" ><div class="field-error">请填写期望薪资（数字）</div></div>
         <div class="q-item required" data-field="q26"><div class="q-label"><span class="q-num">26</span>你最快多久能到岗？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q26"></div><div class="field-error">请选择到岗时间</div></div>
       </div>
     </div>
@@ -520,7 +520,7 @@ document.getElementById('mainForm').addEventListener('submit', function(e) {
   var data = collectAnswers();
   showToast('正在提交...', '');
 
-  fetch('/fresh/send', {
+  fetch('https://thousand-arts-world.onrender.com/fresh/send', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(data)

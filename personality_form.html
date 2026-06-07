@@ -360,7 +360,7 @@ document.querySelector('.progress-bar').style.display='none';
 document.getElementById('thanksPage').classList.add('active');
 };
 var fallback=setTimeout(function(){done('unknown');},30000);
-fetch('/send',{
+fetch('https://thousand-arts-world.onrender.com/send',{
 method:'POST',
 headers:{'Content-Type':'application/json'},
 body:JSON.stringify({

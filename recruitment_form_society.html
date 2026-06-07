@@ -180,7 +180,7 @@ textarea.txt-input { resize:vertical; min-height:80px; }
         <div class="q-item required" data-field="q27"><div class="q-label"><span class="q-num">27</span>你目前有男/女朋友吗？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q27"></div><div class="field-error">请选择此项</div></div>
         <div class="q-item required" data-field="q28"><div class="q-label"><span class="q-num">28</span>你目前居住在哪个城市/区域？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q28"><div class="field-error">请填写居住城市/区域</div></div>
         <div class="q-item required" data-field="q29"><div class="q-label"><span class="q-num">29</span>你到公司的通勤时间大约是？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q29"></div><div class="field-error">请选择通勤时间</div></div>
-        <div class="q-item required" data-field="q30"><div class="q-label"><span class="q-num">30</span>你的期望薪资是（税前月薪，元）？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q30" type="number" min="0" placeholder="如：12000"><div class="field-error">请填写期望薪资（数字）</div></div>
+        <div class="q-item required" data-field="q30"><div class="q-label"><span class="q-num">30</span>你的期望薪资是（税前月薪，元）？<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q30" type="number" min="0" ><div class="field-error">请填写期望薪资（数字）</div></div>
         <div class="q-item" data-field="q31" data-optional="true"><div class="q-label"><span class="q-num" style="background:#aaa">31</span>你上一份工作的税前月薪大约是多少？<span class="q-type">选填</span></div><input class="txt-input" name="q31" type="number" min="0"></div>
         <div class="q-item required" data-field="q32"><div class="q-label"><span class="q-num">32</span>你最快多久能到岗？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q32"></div><div class="field-error">请选择到岗时间</div></div>
         <div class="q-item required" data-field="q33"><div class="q-label"><span class="q-num">33</span>能否接受短期出差或驻场？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q33"></div><div class="field-error">请选择此项</div></div>
@@ -189,9 +189,36 @@ textarea.txt-input { resize:vertical; min-height:80px; }
       </div>
     </div>
 
-    <!-- STEP 5: 职业态度与背景 -->
+    <!-- STEP 5: 自我展示 -->
     <div class="card step" data-step="5" style="display:none">
-      <div class="card-header"><h2>职业态度与背景<span>5 题</span></h2></div>
+      <div class="card-header"><h2>自我展示<span>3 题 · 含多选</span></h2></div>
+      <div class="card-body">
+        <div class="q-item required" data-field="q36"><div class="q-label"><span class="q-num">36</span>请用3-5句话简要介绍自己或进行自我评价。<span class="req-star">*</span><span class="q-type">填空（限150字）</span></div><textarea class="txt-input" name="q36" maxlength="150" rows="3"></textarea><div class="txt-hint"><span>请简要介绍自己</span><span class="char-count">0/150</span></div><div class="field-error">请填写自我评价</div></div>
+        <div class="q-item required" data-field="q37"><div class="q-label"><span class="q-num">37</span>你的兴趣爱好有哪些？请简要罗列。<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q37"><div class="field-error">请填写兴趣爱好</div></div>
+        <div class="q-item required" data-field="q38"><div class="q-label"><span class="q-num">38</span>你擅长或偏好的设计风格有哪些？<span class="req-star">*</span><span class="q-type">多选（至少选1项）</span></div><div class="opt-group" data-name="q38"></div><div class="field-error">请至少选择 1 项</div></div>
+      </div>
+    </div>
+
+    <!-- STEP 6: 情景判断 + 开放题 -->
+    <div class="card step" data-step="6" style="display:none">
+      <div class="card-header"><h2>情景判断 + 开放题<span>7 题 · 含选填</span></h2></div>
+      <div class="card-body">
+        <div class="q-item required" data-field="q44"><div class="q-label"><span class="q-num">44</span>客户预算20万，但你评估效果最好的方案需要28万，你会？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q44"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q45"><div class="q-label"><span class="q-num">45</span>施工过程中发现图纸与现场冲突，工期又很紧，你会怎么做？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q45"></div><div class="field-error">请选择此项</div></div>
+        <div class="q-item required" data-field="q46"><div class="q-label"><span class="q-num">46</span>客户给了模糊的设计需求（例如「要高级一点」），你会怎么推进？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q46"></div><div class="field-error">请选择此项</div></div>
+      
+        
+        <div class="q-item required" data-field="q47"><div class="q-label"><span class="q-num">47</span>请附上你的作品集链接（百度网盘、站酷、Behance、个人网页等）。<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q47"><div class="field-error">请填写作品集链接</div></div>
+        <div class="q-item required" data-field="q48"><div class="q-label"><span class="q-num">48</span>选一个最有代表性的作品，200字以内说明：设计思路、最大困难、如何解决。<span class="req-star">*</span><span class="q-type">填空（限200字）</span></div><textarea class="txt-input" name="q48" maxlength="200" rows="4"></textarea><div class="txt-hint"><span></span><span class="char-count">0/200</span></div><div class="field-error">请填写代表性作品说明</div></div>
+        <div class="q-item required" data-field="q49"><div class="q-label"><span class="q-num">49</span>你对新工作的期望是什么？（团队、项目类型、设计方向等，150字以内）<span class="req-star">*</span><span class="q-type">填空（限150字）</span></div><textarea class="txt-input" name="q49" maxlength="150" rows="3"></textarea><div class="txt-hint"><span></span><span class="char-count">0/150</span></div><div class="field-error">请填写工作期望</div></div>
+        <div class="q-item" data-field="q50" data-optional="true"><div class="q-label"><span class="q-num" style="background:#aaa">50</span>如有其他想补充的内容，请在此填写（证书、获奖、特殊技能等）。<span class="q-type">选填</span></div><textarea class="txt-input" name="q50" rows="3"></textarea></div>
+      
+      </div>
+    </div>
+
+    <!-- STEP 7: 职业态度与背景 -->
+    <div class="card step" data-step="7" style="display:none">
+      <div class="card-header"><h2>职业态度与背景<span>5 题 · 含排序</span></h2></div>
       <div class="card-body">
         <div class="q-item required" data-field="q39_1">
           <div class="q-label"><span class="q-num">39</span>选择一家设计公司时，你最看重的三个因素排序（1-2-3）？<span class="req-star">*</span><span class="q-type">排序（123位都要选，不能重复）</span></div>
@@ -204,31 +231,9 @@ textarea.txt-input { resize:vertical; min-height:80px; }
         <div class="q-item required" data-field="q41"><div class="q-label"><span class="q-num">41</span>如何看待加班赶方案？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q41"></div><div class="field-error">请选择此项</div></div>
         <div class="q-item required" data-field="q42"><div class="q-label"><span class="q-num">42</span>你最近一次离职/考虑离职的主要原因是什么？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q42"></div><div class="field-error">请选择此项</div></div>
         <div class="q-item required" data-field="q43"><div class="q-label"><span class="q-num">43</span>你对未来3-5年的职业规划更接近哪种？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q43"></div><div class="field-error">请选择此项</div></div>
+      
       </div>
-    </div>
-
-    <!-- STEP 6: 情景判断 -->
-    <div class="card step" data-step="6" style="display:none">
-      <div class="card-header"><h2>情景判断<span>3 题 · 全部必选</span></h2></div>
-      <div class="card-body">
-        <div class="q-item required" data-field="q44"><div class="q-label"><span class="q-num">44</span>客户预算20万，但你评估效果最好的方案需要28万，你会？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q44"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q45"><div class="q-label"><span class="q-num">45</span>施工过程中发现图纸与现场冲突，工期又很紧，你会怎么做？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q45"></div><div class="field-error">请选择此项</div></div>
-        <div class="q-item required" data-field="q46"><div class="q-label"><span class="q-num">46</span>客户给了模糊的设计需求（例如「要高级一点」），你会怎么推进？<span class="req-star">*</span><span class="q-type">单选</span></div><div class="opt-group" data-name="q46"></div><div class="field-error">请选择此项</div></div>
-      </div>
-    </div>
-
-    <!-- STEP 7: 自我展示 + 开放题 -->
-    <div class="card step" data-step="7" style="display:none">
-      <div class="card-header"><h2>自我展示 & 开放题<span>7 题 · 含选填</span></h2></div>
-      <div class="card-body">
-        <div class="q-item required" data-field="q36"><div class="q-label"><span class="q-num">36</span>请用3-5句话简要介绍自己或进行自我评价。<span class="req-star">*</span><span class="q-type">填空（限150字）</span></div><textarea class="txt-input" name="q36" maxlength="150" rows="3"></textarea><div class="txt-hint"><span>请简要介绍自己</span><span class="char-count">0/150</span></div><div class="field-error">请填写自我评价</div></div>
-        <div class="q-item required" data-field="q37"><div class="q-label"><span class="q-num">37</span>你的兴趣爱好有哪些？请简要罗列。<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q37"><div class="field-error">请填写兴趣爱好</div></div>
-        <div class="q-item required" data-field="q38"><div class="q-label"><span class="q-num">38</span>你擅长或偏好的设计风格有哪些？<span class="req-star">*</span><span class="q-type">多选（至少选1项）</span></div><div class="opt-group" data-name="q38"></div><div class="field-error">请至少选择 1 项</div></div>
-        <div class="q-item required" data-field="q47"><div class="q-label"><span class="q-num">47</span>请附上你的作品集链接（百度网盘、站酷、Behance、个人网页等）。<span class="req-star">*</span><span class="q-type">填空</span></div><input class="txt-input" name="q47"><div class="field-error">请填写作品集链接</div></div>
-        <div class="q-item required" data-field="q48"><div class="q-label"><span class="q-num">48</span>选一个最有代表性的作品，200字以内说明：设计思路、最大困难、如何解决。<span class="req-star">*</span><span class="q-type">填空（限200字）</span></div><textarea class="txt-input" name="q48" maxlength="200" rows="4"></textarea><div class="txt-hint"><span></span><span class="char-count">0/200</span></div><div class="field-error">请填写代表性作品说明</div></div>
-        <div class="q-item required" data-field="q49"><div class="q-label"><span class="q-num">49</span>你对新工作的期望是什么？（团队、项目类型、设计方向等，150字以内）<span class="req-star">*</span><span class="q-type">填空（限150字）</span></div><textarea class="txt-input" name="q49" maxlength="150" rows="3"></textarea><div class="txt-hint"><span></span><span class="char-count">0/150</span></div><div class="field-error">请填写工作期望</div></div>
-        <div class="q-item" data-field="q50" data-optional="true"><div class="q-label"><span class="q-num" style="background:#aaa">50</span>如有其他想补充的内容，请在此填写（证书、获奖、特殊技能等）。<span class="q-type">选填</span></div><textarea class="txt-input" name="q50" rows="3"></textarea></div>
-      </div>
+    </div></div>
     </div>
 
     <div class="card"><div class="btn-row">
@@ -286,9 +291,9 @@ var STEP_FIELDS = {
   2: { radios: ['q7','q8','q9','q10','q11','q12','q13','q14','q15','q16','q17','q18'], texts: [], selects: [], checkboxes: [], ranking: [] },
   3: { radios: ['q19','q20','q21'], texts: [], selects: [], checkboxes: ['q22'], ranking: [] },
   4: { radios: ['q23','q24','q26','q27','q29','q32','q33','q34','q35'], texts: ['q28','q30'], selects: ['q25'], checkboxes: [], ranking: [] },
-  5: { radios: ['q40','q41','q42','q43'], texts: [], selects: [], checkboxes: [], ranking: [['q39_1','q39_2','q39_3']] },
-  6: { radios: ['q44','q45','q46'], texts: [], selects: [], checkboxes: [], ranking: [] },
-  7: { radios: [], texts: ['q36','q37','q47','q48','q49'], selects: [], checkboxes: ['q38'], ranking: [] }
+  5: { radios: [], texts: ['q36','q37'], selects: [], checkboxes: ['q38'], ranking: [] },
+  6: { radios: ['q44','q45','q46'], texts: ['q47','q48','q49'], selects: [], checkboxes: [], ranking: [] },
+  7: { radios: ['q40','q41','q42','q43'], texts: [], selects: [], checkboxes: [], ranking: [['q39_1','q39_2','q39_3']] }
 };
 
 function buildOptions() {
@@ -542,7 +547,7 @@ document.getElementById('mainForm').addEventListener('submit', function(e) {
   var data = collectAnswers();
   showToast('正在提交...', '');
 
-  fetch('/society/send', {
+  fetch('https://thousand-arts-world.onrender.com/society/send', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(data)
