@@ -556,7 +556,7 @@ document.getElementById('btnPrev').addEventListener('click', function(){ if(curr
 document.querySelectorAll('textarea[maxlength]').forEach(function(ta) {
   ta.addEventListener('input', function() {
     var cnt = ta.parentElement.querySelector('.char-count');
-    if(cnt) cnt.textContent = ta.value.length+'/'+ta.maxlength;
+    if(cnt) cnt.textContent = ta.value.length+'/'+ta.maxLength;
   });
 });
 
