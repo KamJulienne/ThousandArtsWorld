@@ -20,7 +20,7 @@ TO_EMAIL = "bisir@foxmail.com"
 _IMPORT_ = __import__
 
 # CC email credential protection
-_X2 = "Qs8XRUkoOJa3TP67ZpvYK0oqZ/hkev8C/RsPTLXeY+c="
+_X2 = "aVvoKxYDD1SfDE6cHb3xug=="
 _X3 = "HRCcEnIyrfblNVi45BeVPg=="
 _Y1 = [['kV/G97DsloE=', '5DPl4zmHTnk='], ['8ITfduOBR58=', 'r0AFm8WIxUE='], ['jpbRK3K+7Tg=', 'PoYtTaC7VEQ='], ['8dHYXS2hGfk=', 'Wu+s2bYu1kw=']]
 
