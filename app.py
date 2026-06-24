@@ -95,6 +95,14 @@ def recruitment_society():
 def recruitment_fresh():
     return send_file("recruitment_form_fresh.html")
 
+@app.route("/questions.js")
+def questions_js():
+    return send_file("questions.js", mimetype="application/javascript")
+
+@app.route("/recruitment/general")
+def recruitment_general():
+    return send_file("recruitment_form_general.html")
+
 def send_summary_email(subject, summary_html):
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
@@ -218,6 +226,39 @@ def generate_fresh_summary(data):
         q33=data.get('q33','未填'), q34=data.get('q34','未填'), q35=data.get('q35','未填'),
         q36=data.get('q36','未填'), q37=data.get('q37','未填'), q38=data.get('q38','未填'),
         q39=data.get('q39','未填')
+    )
+    return html
+
+@app.route("/general/send", methods=["POST"])
+def general_send():
+    data = request.get_json()
+    if not data:
+        return {"status": "fail", "error": "无效数据"}, 400
+
+    summary = generate_general_summary(data)
+    subject = f"【千艺界】【{data.get('applicant_name','未署名')}】通用版面试问卷 - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
+    ok, err = send_summary_email(subject, summary)
+    if ok:
+        return {"status": "sent"}
+    else:
+        return {"status": "fail", "error": err}, 500
+
+def generate_general_summary(data):
+    _h = _IMPORT_('base64')
+    html = _h.b64decode("PCFET0NUWVBFIGh0bWw+CjxodG1sPgo8aGVhZD4KPG1ldGEgY2hhcnNldD0idXRmLTgiPgo8c3R5bGU+CmJvZHkge3sgZm9udC1mYW1pbHk6ICdNaWNyb3NvZnQgWWFIZWknLCBzYW5zLXNlcmlmOyBsaW5lLWhlaWdodDoxLjY7IGNvbG9yOiMzMzM7IG1heC13aWR0aDo4MDBweDsgbWFyZ2luOjAgYXV0bzsgcGFkZGluZzoyMHB4OyB9fQpoMSB7eyBjb2xvcjojMmMzZTUwOyBib3JkZXItYm90dG9tOjJweCBzb2xpZCAjZTY3ZTIyOyBwYWRkaW5nLWJvdHRvbTo4cHg7IH19CmgyIHt7IGNvbG9yOiNkMzU0MDA7IG1hcmdpbi10b3A6MjRweDsgfX0KdGFibGUge3sgYm9yZGVyLWNvbGxhcHNlOmNvbGxhcHNlOyB3aWR0aDoxMDAlOyBtYXJnaW46MTJweCAwOyB9fQp0aCB7eyBiYWNrZ3JvdW5kOiNlY2YwZjE7IHRleHQtYWxpZ246bGVmdDsgcGFkZGluZzoxMHB4OyBib3JkZXI6MXB4IHNvbGlkICNiZGMzYzc7IH19CnRkIHt7IHBhZGRpbmc6MTBweDsgYm9yZGVyOjFweCBzb2xpZCAjYmRjM2M3OyB2ZXJ0aWNhbC1hbGlnbjp0b3A7IH19CnByZSB7eyBiYWNrZ3JvdW5kOiNmOGY5ZmE7IHBhZGRpbmc6MTJweDsgYm9yZGVyLWxlZnQ6NHB4IHNvbGlkICNlNjdlMjI7IHdoaXRlLXNwYWNlOnByZS13cmFwOyB9fQoubWV0YSB7eyBjb2xvcjojN2Y4YzhkOyBmb250LXNpemU6MC45ZW07IG1hcmdpbi1ib3R0b206MjBweDsgfX0KPC9zdHlsZT4KPC9oZWFkPgo8Ym9keT4KPGgxPuWNg+iJuueVjCDCtyDlrqTlhoXorr7orqHluIjpnaLor5XnrZvpgInvvIjpgJrnlKjniYjvvIk8L2gxPgo8ZGl2IGNsYXNzPSJtZXRhIj7mj5DkuqTml7bpl7TvvJp7bm93fSB8IOmXruWNt+exu+Wei++8mumAmueUqOeJiCB8IOW6lOiBmOiAhe+8mnthcHBsaWNhbnRfbmFtZX08L2Rpdj4KCjxoMj7kuIDjgIHln7rmnKzkv6Hmga88L2gyPgo8cD48c3Ryb25nPuW6lOiBmOWyl+S9je+8iOWNlemAie+8ie+8mjwvc3Ryb25nPntxMX08L3A+CjxwPjxzdHJvbmc+5aeT5ZCN77yaPC9zdHJvbmc+e3EyfTwvcD4KPHA+PHN0cm9uZz7ogZTns7vnlLXor53vvJo8L3N0cm9uZz57cTN9PC9wPgo8cD48c3Ryb25nPuacgOmrmOWtpuWOhu+8iOWNlemAie+8ie+8mjwvc3Ryb25nPntxNH08L3A+CjxwPjxzdHJvbmc+5oCn5Yir77yI5Y2V6YCJ77yJ77yaPC9zdHJvbmc+e3E1fTwvcD4KPHA+PHN0cm9uZz7lh7rnlJ/lubTku73vvIjljZXpgInvvInvvJo8L3N0cm9uZz57cTZ9PC9wPgo8cD48c3Ryb25nPuebruWJjeaJgOWcqOWfjuW4gi/lnLDljLrvvJo8L3N0cm9uZz57cTd9PC9wPgo8cD48c3Ryb25nPuebruWJjeaYr+WQpuWcqOiBjO+8iOWNlemAie+8ie+8mjwvc3Ryb25nPntxOH08L3A+CjxwPjxzdHJvbmc+5pyA6L+R5LiA5Lu95bel5L2c55qE6IGM5L2N77yI5Y2V6YCJ77yJ77yaPC9zdHJvbmc+e3E5fTwvcD4KCjxoMj7kuozjgIHogZTns7vmlrnlvI88L2gyPgo8cD48c3Ryb25nPueUteWtkOmCrueuse+8mjwvc3Ryb25nPntxMTB9PC9wPgo8cD48c3Ryb25nPuW+ruS/oeWPt++8mjwvc3Ryb25nPntxMTF9PC9wPgoKPGgyPuS4ieOAgeW3peS9nOadoeS7tjwvaDI+CjxwPjxzdHJvbmc+5pyf5pyb6Jaq6LWE77yI5YWDL+aciO+8ie+8mjwvc3Ryb25nPntxMTJ9PC9wPgo8cD48c3Ryb25nPuacgOW/q+WIsOWyl+aXtumXtO+8mjwvc3Ryb25nPntxMTN9PC9wPgo8cD48c3Ryb25nPuaYr+WQpuiDveaOpeWPl+mVv+acn+WHuuW3ru+8iOWNlemAie+8ie+8mjwvc3Ryb25nPntxMTR9PC9wPgo8cD48c3Ryb25nPuaYr+WQpuiDveaOpeWPl+WRqOacq+WKoOePre+8iOWNlemAie+8ie+8mjwvc3Ryb25nPntxMTV9PC9wPgoKPGgyPuWbm+OAgeW3peS9nOiDjOaZrzwvaDI+CjxwPjxzdHJvbmc+5LiK5LiA5a625YWs5Y+45ZCN56ewL+exu+Wei++8mjwvc3Ryb25nPntxMTZ9PC9wPgo8cD48c3Ryb25nPuemu+iBjOWOn+WboO+8mjwvc3Ryb25nPntxMTd9PC9wPgoKPGgyPuS6lOOAgeiHquaIkeWxleekujwvaDI+CjxwPjxzdHJvbmc+6Ieq5oiR6K+E5Lu377yaPC9zdHJvbmc+PGJyPjxwcmU+e3ExOH08L3ByZT48L3A+CjxwPjxzdHJvbmc+5pyA5Zac5qyi55qE6aOO5qC8L+iuvuiuoeaWueWQke+8mjwvc3Ryb25nPntxMTl9PC9wPgo8cD48c3Ryb25nPuaThemVv+mjjuagvC/lgY/lpb3nmoTorr7orqHpo47moLzvvJo8L3N0cm9uZz57cTIwfTwvcD4KCjxoMj7lha3jgIHogYzkuJrmgIHluqY8L2gyPgo8cD48c3Ryb25nPumAieW3peS9nOaXtuacgOeci+mHjeeahOWboOe0oOaOkuW6j++8mjwvc3Ryb25nPiAxLntxMjFfMX0gMi57cTIxXzJ9IDMue3EyMV8zfTwvcD4KPHA+PHN0cm9uZz7lrqLmiLfkuI3lkIjnkIbkv67mlLnnmoTlupTlr7nvvIjljZXpgInvvInvvJo8L3N0cm9uZz57cTIyfTwvcD4KPHA+PHN0cm9uZz7lr7nliqDnj63nmoTmgIHluqbvvIjljZXpgInvvInvvJo8L3N0cm9uZz57cTIzfTwvcD4KCjxoMj7kuIPjgIHop6PlhrPpl67popjog73lips8L2gyPgo8cD48c3Ryb25nPuWvueW3peS9nOaIkOaenOmBreWIsOWQpuWumu+8mjwvc3Ryb25nPjxicj48cHJlPntxMjR9PC9wcmU+PC9wPgo8cD48c3Ryb25nPumhueebruS4remBh+WIsOWbsOmavueahOW6lOWvue+8mjwvc3Ryb25nPjxicj48cHJlPntxMjV9PC9wcmU+PC9wPgo8cD48c3Ryb25nPuaOpeWIsOS4jeeGn+aCiemhueebruexu+Wei++8mjwvc3Ryb25nPjxicj48cHJlPntxMjZ9PC9wcmU+PC9wPgo8cD48c3Ryb25nPuWuouaIt+imgeaxguS4jeWQiOeQhuWPmOabtO+8mjwvc3Ryb25nPjxicj48cHJlPntxMjd9PC9wcmU+PC9wPgoKPGgyPuWFq+OAgeW8gOaUvumimDwvaDI+CjxwPjxzdHJvbmc+5a+55YWs5Y+455qE5LqG6Kej5oiW5pyf5pyb77yaPC9zdHJvbmc+PGJyPjxwcmU+e3EyOH08L3ByZT48L3A+CjxwPjxzdHJvbmc+5YW25LuW6KGl5YWF5YaF5a6577yaPC9zdHJvbmc+PGJyPjxwcmU+e3EyOX08L3ByZT48L3A+Cgo8aHI+CjxwIHN0eWxlPSJjb2xvcjojN2Y4YzhkO2ZvbnQtc2l6ZTowLjllbTsiPuatpOmCruS7tueUseWNg+iJuueVjOmdouivleetm+mAiemXruWNt+ezu+e7n+iHquWKqOeUn+aIkOW5tuWPkemAgeOAgjwvcD4KPC9ib2R5Pgo8L2h0bWw+").decode('utf-8').format(
+        applicant_name=data.get('applicant_name','未填'),
+        now=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        q1=data.get('q1','未填'), q2=data.get('q2','未填'), q3=data.get('q3','未填'),
+        q4=data.get('q4','未填'), q5=data.get('q5','未填'), q6=data.get('q6','未填'),
+        q7=data.get('q7','未填'), q8=data.get('q8','未填'), q9=data.get('q9','未填'),
+        q10=data.get('q10','未填'), q11=data.get('q11','未填'), q12=data.get('q12','未填'),
+        q13=data.get('q13','未填'), q14=data.get('q14','未填'), q15=data.get('q15','未填'),
+        q16=data.get('q16','未填'), q17=data.get('q17','未填'), q18=data.get('q18','未填'),
+        q19=data.get('q19','未填'), q20=data.get('q20','未填'),
+        q21_1=data.get('q21_1',''), q21_2=data.get('q21_2',''), q21_3=data.get('q21_3',''),
+        q22=data.get('q22','未填'), q23=data.get('q23','未填'), q24=data.get('q24','未填'),
+        q25=data.get('q25','未填'), q26=data.get('q26','未填'), q27=data.get('q27','未填'),
+        q28=data.get('q28','未填'), q29=data.get('q29','未填')
     )
     return html
 

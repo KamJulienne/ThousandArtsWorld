@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>千艺界 · 室内设计师面试筛选（社招版）</title>
+<title>千艺界 · 室内设计师面试筛选（通用版）</title>
 <style>
 :root {
   --primary: #3b5998;
@@ -101,7 +101,7 @@ textarea.txt-input { resize:vertical; min-height:80px; }
 
 <div class="header">
   <h1>千艺界 · 室内设计师面试筛选</h1>
-  <p>社招版 · 共 <span id="stepCount">-</span> 步 · 约 10 分钟</p>
+  <p>通用版 · 共 <span id="stepCount">-</span> 步 · 约 5 分钟</p>
 </div>
 
 <div class="container">
@@ -143,9 +143,9 @@ textarea.txt-input { resize:vertical; min-height:80px; }
 
 <script src="questions.js"></script>
 <script>
-var VERSION = 'society';
-var SEND_PATH = '/society/send';
-var Q = QS.society;
+var VERSION = 'general';
+var SEND_PATH = '/general/send';
+var Q = QS.general;
 
 var totalSteps = Q.steps.length;
 var currentStep = 1;
