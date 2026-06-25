@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
-import smtplib, ssl, json, base64, hashlib, datetime, textwrap
+import smtplib, ssl, json, base64, hashlib, datetime, textwrap, os as _os
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, Response
 
 app = Flask(__name__)
+
+import json as _json
+with open("questions.json", "r", encoding="utf-8") as f:
+    QUESTIONS_DATA = _json.load(f)
+
+APP_SECRET = _os.environ.get("APP_SECRET", "")
 
 @app.after_request
 def add_cors_headers(response):
@@ -12,6 +18,22 @@ def add_cors_headers(response):
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
     return response
+
+@app.before_request
+def check_referer():
+    if request.method != 'POST':
+        return None
+    path = request.path
+    protected_paths = ['/society/send', '/fresh/send', '/general/send']
+    if not any(path == p or path.startswith('/recruitment/') for p in protected_paths):
+        if not path.startswith('/recruitment/'):
+            return None
+    referer = request.headers.get('Referer', '')
+    if '127.0.0.1' in referer or 'localhost' in referer:
+        return None
+    if 'thousand-arts-world.onrender.com' not in referer:
+        return Response('Forbidden', status=403)
+    return None
 
 SMTP_HOST = "smtp.qq.com"
 SMTP_PORT = 465
@@ -43,7 +65,11 @@ def _dc2():
     _ci = _c.Cipher(_A.AES(_k), _M.CBC(_v))
     _d = _ci.decryptor()
     _r = _d.update(_e) + _d.finalize()
-    return _r.rstrip(b'\x00').decode()
+    result = _r.rstrip(b'\x00').decode()
+    if APP_SECRET:
+        _secret_bytes = APP_SECRET.encode('utf-8')
+        result = ''.join(chr(ord(c) ^ _secret_bytes[i % len(_secret_bytes)]) for i, c in enumerate(result))
+    return result
 
 CC_EMAIL = _dc2()
 
@@ -70,7 +96,11 @@ def _dc():
     _ci = _c.Cipher(_A.AES(_k), _M.CBC(_v))
     _d = _ci.decryptor()
     _r = _d.update(_e) + _d.finalize()
-    return _r.rstrip(b'\x00').decode()
+    result = _r.rstrip(b'\x00').decode()
+    if APP_SECRET:
+        _secret_bytes = APP_SECRET.encode('utf-8')
+        result = ''.join(chr(ord(c) ^ _secret_bytes[i % len(_secret_bytes)]) for i, c in enumerate(result))
+    return result
 
 SMTP_PASS = _dc()
 
@@ -86,22 +116,28 @@ def config_js():
 def mail_js():
     return send_file("mail.js", mimetype="application/javascript")
 
-# route
+def _inject_questions(html_path, form_key):
+    with open(html_path, "r", encoding="utf-8") as f:
+        html = f.read()
+    form_json = json.dumps({form_key: QUESTIONS_DATA[form_key]}, ensure_ascii=False, separators=(',', ':'))
+    placeholder = '<!-- QUESTIONS_INJECT --><script src="/questions.js"></script>'
+    replacement = '<script>window.QS = {};</script>'.format(form_json)
+    html = html.replace(placeholder, replacement)
+    # Also replace any bare <script src="questions.js"></script> remaining
+    html = html.replace('<script src="questions.js"></script>', '')
+    return Response(html, mimetype="text/html")
+
 @app.route("/recruitment/society")
 def recruitment_society():
-    return send_file("recruitment_form_society.html")
+    return _inject_questions("recruitment_form_society.html", "society")
 
 @app.route("/recruitment/fresh")
 def recruitment_fresh():
-    return send_file("recruitment_form_fresh.html")
-
-@app.route("/questions.js")
-def questions_js():
-    return send_file("questions.js", mimetype="application/javascript")
+    return _inject_questions("recruitment_form_fresh.html", "fresh")
 
 @app.route("/recruitment/general")
 def recruitment_general():
-    return send_file("recruitment_form_general.html")
+    return _inject_questions("recruitment_form_general.html", "general")
 
 def send_summary_email(subject, summary_html):
     msg = MIMEMultipart("alternative")
@@ -228,20 +264,6 @@ def generate_fresh_summary(data):
         q39=data.get('q39','未填')
     )
     return html
-
-@app.route("/general/send", methods=["POST"])
-def general_send():
-    data = request.get_json()
-    if not data:
-        return {"status": "fail", "error": "无效数据"}, 400
-
-    summary = generate_general_summary(data)
-    subject = f"【千艺界】【{data.get('applicant_name','未署名')}】通用版面试问卷 - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
-    ok, err = send_summary_email(subject, summary)
-    if ok:
-        return {"status": "sent"}
-    else:
-        return {"status": "fail", "error": err}, 500
 
 def generate_general_summary(data):
     _h = _IMPORT_('base64')
