@@ -54,6 +54,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC"
 .opt-pill:hover { border-color:var(--primary-light); background:#f6f8fc; }
 .opt-pill input { display:none; }
 .opt-pill.checked { border-color:var(--primary); background:#eef2f8; color:var(--primary-dark); font-weight:500; }
+.opt-pill.disabled { opacity:.45; cursor:not-allowed; border-color:#ddd; background:#f8f8f8; }
 
 .q-item.has-error .opt-group { border:2px dashed var(--error); border-radius:8px; padding:6px; }
 .q-item.has-error .txt-input, .q-item.has-error .sel-input { border-color:var(--error); background:#fff5f5; }
@@ -278,11 +279,16 @@ function buildForm() {
           label.addEventListener('click', function() {
             var inp = label.querySelector('input');
             if (isMulti) {
+              if (label.classList.contains('disabled') && !inp.checked) {
+                showToast('最多选'+maxSel+'项', 'error'); return;
+              }
               if (!inp.checked && maxSel > 0) {
                 var checkedCount = group.querySelectorAll('input:checked').length;
                 if (checkedCount >= maxSel) { showToast('最多选'+maxSel+'项', 'error'); return; }
               }
-              inp.checked = !inp.checked; label.classList.toggle('checked', inp.checked);
+              inp.checked = !inp.checked;
+              label.classList.toggle('checked', inp.checked);
+              if (maxSel > 0) updateMultiState(group, maxSel);
             }
             else { group.querySelectorAll('.opt-pill').forEach(function(l){ l.classList.remove('checked'); }); label.classList.add('checked'); }
             clearFieldError(fieldName);
@@ -307,6 +313,17 @@ function buildForm() {
 
 function clearFieldError(fn) { var el=document.querySelector('.q-item[data-field="'+fn+'"]'); if(el) el.classList.remove('has-error'); }
 function clearAllErrors() { document.querySelectorAll('.q-item.has-error').forEach(function(el){ el.classList.remove('has-error'); }); }
+
+function updateMultiState(group, maxSel) {
+  var pills = group.querySelectorAll('.opt-pill');
+  var checkedCount = group.querySelectorAll('input:checked').length;
+  var reached = (checkedCount >= maxSel);
+  pills.forEach(function(pill) {
+    var inp = pill.querySelector('input');
+    if (!inp.checked && reached) { pill.classList.add('disabled'); }
+    else { pill.classList.remove('disabled'); }
+  });
+}
 
 function validateStep(n) {
   clearAllErrors();
