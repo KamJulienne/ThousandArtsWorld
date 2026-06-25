@@ -288,7 +288,7 @@ function buildForm() {
 
       var errDiv = document.createElement('div');
       errDiv.className = 'field-error';
-      errDiv.textContent = isSort ? '请完整填写第1、2、3位排序（不能重复）' : isMulti ? '请至少选择 1 项' : '此项为必填';
+      errDiv.textContent = isSort ? '请完整填写第1、2、3位排序（不能重复）' : isMulti ? '请至少选择 1 项' : (required ? '此项为必填' : '');
       item.appendChild(errDiv);
       body.appendChild(item);
     });
@@ -313,9 +313,10 @@ function validateStep(n) {
     }
   });
   (cfg.texts||[]).forEach(function(name){
+    var item=document.querySelector('.q-item[data-field="'+name+'"]');
+    if(item && item.getAttribute('data-optional') === 'true') return;
     var el=document.querySelector('[name="'+name+'"]');
     if(el && !el.value.trim()){
-      var item=document.querySelector('.q-item[data-field="'+name+'"]');
       if(item){ item.classList.add('has-error'); if(!firstError) firstError=item; }
       valid=false;
     }
@@ -344,7 +345,7 @@ function validateStepSilent(n) {
   var cfg=STEP_FIELDS[n]; if(!cfg) return true;
   return (cfg.radios||[]).every(function(name){return !!document.querySelector('[name="'+name+'"]:checked');})
     && (cfg.checkboxes||[]).every(function(name){return !!document.querySelector('[name="'+name+'"]:checked');})
-    && (cfg.texts||[]).every(function(name){var el=document.querySelector('[name="'+name+'"]'); return el&&el.value.trim();})
+    && (cfg.texts||[]).every(function(name){var item=document.querySelector('.q-item[data-field="'+name+'"]');if(item && item.getAttribute('data-optional')==='true')return true;var el=document.querySelector('[name="'+name+'"]'); return el&&el.value.trim();})
     && (cfg.selects||[]).every(function(name){var el=document.querySelector('[name="'+name+'"]'); return el&&el.value;})
     && (cfg.ranking||[]).every(function(group){
         var vals=group.map(function(nm){var el=document.querySelector('[name="'+nm+'"]');return el?el.value:'';});
