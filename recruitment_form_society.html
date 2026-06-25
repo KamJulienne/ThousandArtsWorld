@@ -171,6 +171,7 @@ var totalSteps = Q.steps.length;
 var currentStep = 1;
 var multiFields = [];
 var sortFields = [];
+var maxSelByField = {};
 
 var STEP_FIELDS = {};
 
@@ -199,7 +200,8 @@ function buildForm() {
       var isSort = (q.type === 'sort');
       var isFill = (q.type === 'fill');
       var required = (q.required !== false);
-      var typeLabel = q.type === 'single' ? '单选' : q.type === 'multi' ? '多选（至少选1项）' : q.type === 'sort' ? '排序（123位都要选，不能重复）' : q.type === 'fill' ? (q.maxLength ? '填空（限'+q.maxLength+'字）' : '填空') : '';
+      var maxSel = (q.type === 'multi' && q.maxSelection > 0) ? q.maxSelection : 0;
+      var typeLabel = q.type === 'single' ? '单选' : q.type === 'multi' ? (maxSel > 0 ? '多选（最多选'+maxSel+'项）' : '多选（至少选1项）') : q.type === 'sort' ? '排序（123位都要选，不能重复）' : q.type === 'fill' ? (q.maxLength ? '填空（限'+q.maxLength+'字）' : '填空') : '';
 
       var item = document.createElement('div');
       item.className = 'q-item' + (required ? ' required' : '');
@@ -275,20 +277,26 @@ function buildForm() {
           label.innerHTML = '<input type="'+(isMulti?'checkbox':'radio')+'" name="'+fieldName+'" value="'+opt+'">'+opt;
           label.addEventListener('click', function() {
             var inp = label.querySelector('input');
-            if (isMulti) { inp.checked = !inp.checked; label.classList.toggle('checked', inp.checked); }
+            if (isMulti) {
+              if (!inp.checked && maxSel > 0) {
+                var checkedCount = group.querySelectorAll('input:checked').length;
+                if (checkedCount >= maxSel) { showToast('最多选'+maxSel+'项', 'error'); return; }
+              }
+              inp.checked = !inp.checked; label.classList.toggle('checked', inp.checked);
+            }
             else { group.querySelectorAll('.opt-pill').forEach(function(l){ l.classList.remove('checked'); }); label.classList.add('checked'); }
             clearFieldError(fieldName);
           });
           group.appendChild(label);
         });
         item.appendChild(group);
-        if (isMulti) { multiFields.push(fieldName); STEP_FIELDS[si+1].checkboxes.push(fieldName); }
+        if (isMulti) { multiFields.push(fieldName); STEP_FIELDS[si+1].checkboxes.push(fieldName); if (maxSel > 0) maxSelByField[fieldName] = maxSel; }
         else { STEP_FIELDS[si+1].radios.push(fieldName); }
       }
 
       var errDiv = document.createElement('div');
       errDiv.className = 'field-error';
-      errDiv.textContent = isSort ? '请完整填写第1、2、3位排序（不能重复）' : isMulti ? '请至少选择 1 项' : (required ? '此项为必填' : '');
+      errDiv.textContent = isSort ? '请完整填写第1、2、3位排序（不能重复）' : isMulti ? (maxSel > 0 ? '请选择 1~' + maxSel + ' 项' : '请至少选择 1 项') : (required ? '此项为必填' : '');
       item.appendChild(errDiv);
       body.appendChild(item);
     });
@@ -307,6 +315,14 @@ function validateStep(n) {
 
   (cfg.radios||[]).concat(cfg.checkboxes||[]).forEach(function(name){
     if (!document.querySelector('[name="'+name+'"]:checked')) {
+      var item=document.querySelector('.q-item[data-field="'+name+'"]');
+      if(item){ item.classList.add('has-error'); if(!firstError) firstError=item; }
+      valid=false;
+    }
+  });
+  (cfg.checkboxes||[]).forEach(function(name){
+    var limit = maxSelByField[name];
+    if (limit && document.querySelectorAll('[name="'+name+'"]:checked').length > limit) {
       var item=document.querySelector('.q-item[data-field="'+name+'"]');
       if(item){ item.classList.add('has-error'); if(!firstError) firstError=item; }
       valid=false;
