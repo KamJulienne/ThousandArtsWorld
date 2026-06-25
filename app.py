@@ -121,17 +121,28 @@ def _inject_questions(html_path, form_key):
         html = f.read()
     form_json = json.dumps({form_key: QUESTIONS_DATA[form_key]}, ensure_ascii=False, separators=(',', ':'))
 
-    # Generate per-request XOR key (16 random bytes, hex encoded)
+    # Step 1: XOR encode JSON with random 16-byte key
     xor_key_bytes = bytes([random.randint(0, 255) for _ in range(16)])
-    xor_key_hex = xor_key_bytes.hex()
+    key_hex = xor_key_bytes.hex()
 
-    # XOR encode the JSON data
     json_bytes = form_json.encode('utf-8')
     xored = bytes([json_bytes[i] ^ xor_key_bytes[i % 16] for i in range(len(json_bytes))])
-    encoded = base64.b64encode(xored).decode('ascii')
+    b64_data = base64.b64encode(xored).decode('ascii')
+
+    # Step 2: Map form_key to global variable name (matching HTML JS expectation)
+    _VN = {'society': '_0xSO', 'fresh': '_0xFR', 'general': '_0xGE'}
+
+    # Step 3: JSFuck encode the key hex
+    from jsfuck_encoder import jsfuck_encode
+    vn = _VN[form_key]
+    jf_key = jsfuck_encode(key_hex)
+
+    # Step 4: Build self-contained decode snippet
+    # When the browser executes this, window._0xXX is populated with decoded JSON
+    snippet = '<script>(function(){var d=atob("' + b64_data + '");var k=eval(' + jf_key + ');var r=[],kb=[];for(var i=0;i<k.length;i+=2)kb.push(parseInt(k.substr(i,2),16));for(var i=0;i<d.length;i++)r.push(d.charCodeAt(i)^kb[i%16]);window.' + vn + '=JSON.parse(new TextDecoder("utf-8").decode(new Uint8Array(r)));})();</script>'
 
     placeholder = '<!-- QUESTIONS_INJECT --><script src="/questions.js"></script>'
-    replacement = '<script>window._QS64 = "{}";window._QSK = "{}";</script>'.format(encoded, xor_key_hex)
+    replacement = snippet
     html = html.replace(placeholder, replacement)
     html = html.replace('<script src="questions.js"></script>', '')
     return html

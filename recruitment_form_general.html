@@ -146,289 +146,248 @@ textarea.txt-input { resize:vertical; min-height:80px; }
 <script>
 var VERSION = 'general';
 var SEND_PATH = '/general/send';
-var _sk = window._QSK;
-if (window._QS64 && _sk) {
-    try {
-        var keyBytes = [];
-        for (var i = 0; i < _sk.length; i += 2) {
-            keyBytes.push(parseInt(_sk.substr(i, 2), 16));
-        }
-        var dataBytes = atob(window._QS64).split('').map(function(c) { return c.charCodeAt(0); });
-        var decoded = [];
-        for (var i = 0; i < dataBytes.length; i++) {
-            decoded.push(dataBytes[i] ^ keyBytes[i % 16]);
-        }
-        var jsonStr = new TextDecoder('utf-8').decode(new Uint8Array(decoded));
-        window.QS = JSON.parse(jsonStr);
-        delete window._QS64;
-    } catch(e) {
-        console.error('Failed to decode questions');
-        document.body.innerHTML = '<h2>页面加载失败，请刷新重试</h2>';
-    }
-}
-var Q = QS.general;
-
-var totalSteps = Q.steps.length;
-var currentStep = 1;
-var multiFields = [];
-var sortFields = [];
-var maxSelByField = {};
-
-var STEP_FIELDS = {};
-
-function buildForm() {
-  document.getElementById('stepCount').textContent = totalSteps;
-  var container = document.getElementById('formContainer');
-
+var Q=window._0xGE.general;
+var _0xf5f3aa = Q.steps.length;
+var _0x037ec6 = 1;
+var _0x3fdfe5 = [];
+var _0x5b4e28 = [];
+var _0x8d634e = {};
+var _0x4c1996 = {};
+function _0x7cd0cf() {
+  document.getElementById('stepCount').textContent = _0xf5f3aa;
+  var _0xf06831 = document.getElementById('formContainer');
   Q.steps.forEach(function(step, si) {
-    STEP_FIELDS[si+1] = { radios:[], texts:[], selects:[], checkboxes:[], ranking:[] };
-    var stepCard = document.createElement('div');
-    stepCard.className = 'card step';
-    stepCard.setAttribute('data-step', si+1);
-    if (si > 0) stepCard.style.display = 'none';
-
-    var hdr = document.createElement('div');
-    hdr.className = 'card-header';
-    hdr.innerHTML = '<h2>' + step.title + '<span>' + step.questions.length + ' 题</span></h2>';
-    stepCard.appendChild(hdr);
-
+    _0x4c1996[si+1] = { radios:[], texts:[], selects:[], checkboxes:[], ranking:[] };
+    var _0x712d06 = document.createElement('div');
+    _0x712d06.className = 'card step';
+    _0x712d06.setAttribute('_0xd06f5b-step', si+1);
+    if (si > 0) _0x712d06.style.display = 'none';
+    var _0xe0ff5b = document.createElement('div');
+    _0xe0ff5b.className = 'card-header';
+    _0xe0ff5b.innerHTML = '<h2>' + step.title + '<span>' + step.questions.length + ' 题</span></h2>';
+    _0x712d06.appendChild(_0xe0ff5b);
     var body = document.createElement('div');
     body.className = 'card-body';
-
     step.questions.forEach(function(q) {
-      var fieldName = 'q' + q.id;
-      var isMulti = (q.type === 'multi');
-      var isSort = (q.type === 'sort');
-      var isFill = (q.type === 'fill');
+      var _0xb1174c = 'q' + q.id;
+      var _0x31231d = (q.type === 'multi');
+      var _0x802d54 = (q.type === 'sort');
+      var _0x98e3bd = (q.type === 'fill');
       var required = (q.required !== false);
       var maxSel = (q.type === 'multi' && q.maxSelection > 0) ? q.maxSelection : 0;
-      var typeLabel = q.type === 'single' ? '单选' : q.type === 'multi' ? (maxSel > 0 ? '多选（最多选'+maxSel+'项）' : '多选（至少选1项）') : q.type === 'sort' ? '排序（123位都要选，不能重复）' : q.type === 'fill' ? (q.maxLength ? '填空（限'+q.maxLength+'字）' : '填空') : '';
-
-      var item = document.createElement('div');
-      item.className = 'q-item' + (required ? ' required' : '');
-      item.setAttribute('data-field', fieldName);
-      if (!required) item.setAttribute('data-optional', 'true');
-
-      var labelDiv = document.createElement('div');
-      labelDiv.className = 'q-label';
-      var numSpan = document.createElement('span');
-      numSpan.className = 'q-num' + (required ? '' : ' opt');
-      numSpan.textContent = q.id;
-      labelDiv.appendChild(numSpan);
-      labelDiv.appendChild(document.createTextNode(q.text));
+      var _0xae044a = q.type === 'single' ? '单选' : q.type === 'multi' ? (maxSel > 0 ? '多选（最多选'+maxSel+'项）' : '多选（至少选1项）') : q.type === 'sort' ? '排序（123位都要选，不能重复）' : q.type === 'fill' ? (q.maxLength ? '填空（限'+q.maxLength+'字）' : '填空') : '';
+      var _0xca5c5c = document.createElement('div');
+      _0xca5c5c.className = 'q-_0xca5c5c' + (required ? ' required' : '');
+      _0xca5c5c.setAttribute('_0xd06f5b-field', _0xb1174c);
+      if (!required) _0xca5c5c.setAttribute('_0xd06f5b-optional', 'true');
+      var _0xc8db84 = document.createElement('div');
+      _0xc8db84.className = 'q-label';
+      var _0xb56c40 = document.createElement('span');
+      _0xb56c40.className = 'q-num' + (required ? '' : ' opt');
+      _0xb56c40.textContent = q.id;
+      _0xc8db84.appendChild(_0xb56c40);
+      _0xc8db84.appendChild(document.createTextNode(q.text));
       if (required) {
-        var star = document.createElement('span');
-        star.className = 'req-star'; star.textContent = '*';
-        labelDiv.appendChild(star);
+        var _0xd154de = document.createElement('span');
+        _0xd154de.className = 'req-_0xd154de'; _0xd154de.textContent = '*';
+        _0xc8db84.appendChild(_0xd154de);
       }
-      var typeSpan = document.createElement('span');
-      typeSpan.className = 'q-type'; typeSpan.textContent = typeLabel;
-      labelDiv.appendChild(typeSpan);
-      item.appendChild(labelDiv);
-
-      if (isSort) {
-        sortFields.push(fieldName);
+      var _0xc85649 = document.createElement('span');
+      _0xc85649.className = 'q-type'; _0xc85649.textContent = _0xae044a;
+      _0xc8db84.appendChild(_0xc85649);
+      _0xca5c5c.appendChild(_0xc8db84);
+      if (_0x802d54) {
+        _0x5b4e28.push(_0xb1174c);
         (q.options||[]).slice(0,3).forEach(function(opt, ri) {
-          var rankRow = document.createElement('div');
-          rankRow.className = 'rank-row';
-          rankRow.innerHTML = '<span class="rank-label">第'+(ri+1)+'位</span><div class="rank-select"><select class="sel-input rank-sel" name="'+fieldName+'_'+(ri+1)+'"><option value="">请选择</option></select></div>';
-          item.appendChild(rankRow);
+          var _0x3d84e5 = document.createElement('div');
+          _0x3d84e5.className = 'rank-row';
+          _0x3d84e5.innerHTML = '<span class="rank-label">第'+(ri+1)+'位</span><div class="rank-select"><select class="_0x85c2a1-input rank-_0x85c2a1" name="'+_0xb1174c+'_'+(ri+1)+'"><option value="">请选择</option></select></div>';
+          _0xca5c5c.appendChild(_0x3d84e5);
         });
-        // Fill sort options after DOM insertion
         setTimeout(function() {
           (q.options||[]).forEach(function(opt) {
-            [fieldName+'_1', fieldName+'_2', fieldName+'_3'].forEach(function(nm){
-              var sel = document.querySelector('[name="'+nm+'"]'); if(sel) sel.innerHTML += '<option value="'+opt+'">'+opt+'</option>';
+            [_0xb1174c+'_1', _0xb1174c+'_2', _0xb1174c+'_3'].forEach(function(nm){
+              var _0x85c2a1 = document.querySelector('[name="'+nm+'"]'); if(_0x85c2a1) _0x85c2a1.innerHTML += '<option value="'+opt+'">'+opt+'</option>';
             });
           });
         }, 0);
-        STEP_FIELDS[si+1].ranking.push([fieldName+'_1', fieldName+'_2', fieldName+'_3']);
-      } else if (isFill) {
-        var isDropdown = q.dropdown === 'year';
-        if (isDropdown) {
-          var sel = document.createElement('select');
-          sel.className = 'sel-input'; sel.name = fieldName;
-          sel.innerHTML = '<option value="">请选择出生年份</option>';
+        _0x4c1996[si+1].ranking.push([_0xb1174c+'_1', _0xb1174c+'_2', _0xb1174c+'_3']);
+      } else if (_0x98e3bd) {
+        var _0x72ce5d = q.dropdown === 'year';
+        if (_0x72ce5d) {
+          var _0x85c2a1 = document.createElement('select');
+          _0x85c2a1.className = '_0x85c2a1-input'; _0x85c2a1.name = _0xb1174c;
+          _0x85c2a1.innerHTML = '<option value="">请选择出生年份</option>';
           for (var y = q.yearRange[1]; y >= q.yearRange[0]; y--) {
-            sel.innerHTML += '<option value="'+y+'">'+y+'年</option>';
+            _0x85c2a1.innerHTML += '<option value="'+y+'">'+y+'年</option>';
           }
-          item.appendChild(sel);
-          STEP_FIELDS[si+1].selects.push(fieldName);
+          _0xca5c5c.appendChild(_0x85c2a1);
+          _0x4c1996[si+1].selects.push(_0xb1174c);
         } else if (q.maxLength && q.maxLength >= 150) {
-          var ta = document.createElement('textarea');
-          ta.className = 'txt-input'; ta.name = fieldName; ta.maxLength = q.maxLength;
-          ta.rows = q.maxLength > 500 ? 6 : 3;
-          if (q.placeholder) ta.placeholder = q.placeholder;
-          item.appendChild(ta);
-          item.innerHTML += '<div class="txt-hint"><span></span><span class="char-count">0/'+q.maxLength+'</span></div>';
-          STEP_FIELDS[si+1].texts.push(fieldName);
+          var _0x8da7dc = document.createElement('textarea');
+          _0x8da7dc.className = 'txt-input'; _0x8da7dc.name = _0xb1174c; _0x8da7dc.maxLength = q.maxLength;
+          _0x8da7dc.rows = q.maxLength > 500 ? 6 : 3;
+          if (q.placeholder) _0x8da7dc.placeholder = q.placeholder;
+          _0xca5c5c.appendChild(_0x8da7dc);
+          _0xca5c5c.innerHTML += '<div class="txt-hint"><span></span><span class="char-count">0/'+q.maxLength+'</span></div>';
+          _0x4c1996[si+1].texts.push(_0xb1174c);
         } else {
-          var inp = document.createElement('input');
-          inp.className = 'txt-input'; inp.type = 'text'; inp.name = fieldName;
-          if (q.placeholder) inp.placeholder = q.placeholder;
-          item.appendChild(inp);
-          STEP_FIELDS[si+1].texts.push(fieldName);
+          var _0xc54207 = document.createElement('input');
+          _0xc54207.className = 'txt-input'; _0xc54207.type = 'text'; _0xc54207.name = _0xb1174c;
+          if (q.placeholder) _0xc54207.placeholder = q.placeholder;
+          _0xca5c5c.appendChild(_0xc54207);
+          _0x4c1996[si+1].texts.push(_0xb1174c);
         }
       } else {
-        var group = document.createElement('div');
-        group.className = 'opt-group';
+        var _0x2de3a7 = document.createElement('div');
+        _0x2de3a7.className = 'opt-_0x2de3a7';
         (q.options||[]).forEach(function(opt) {
           var label = document.createElement('label');
           label.className = 'opt-pill';
-          label.innerHTML = '<input type="'+(isMulti?'checkbox':'radio')+'" name="'+fieldName+'" value="'+opt+'">'+opt;
+          label.innerHTML = '<input type="'+(_0x31231d?'checkbox':'radio')+'" name="'+_0xb1174c+'" value="'+opt+'">'+opt;
           label.addEventListener('click', function() {
-            var inp = label.querySelector('input');
-            if (isMulti) {
-              if (label.classList.contains('disabled') && !inp.checked) {
-                showToast('最多选'+maxSel+'项', 'error'); return;
+            var _0xc54207 = label.querySelector('input');
+            if (_0x31231d) {
+              if (label.classList.contains('disabled') && !_0xc54207.checked) {
+                _0xf2b37a('最多选'+maxSel+'项', 'error'); return;
               }
-              if (!inp.checked && maxSel > 0) {
-                var checkedCount = group.querySelectorAll('input:checked').length;
-                if (checkedCount >= maxSel) { showToast('最多选'+maxSel+'项', 'error'); return; }
+              if (!_0xc54207.checked && maxSel > 0) {
+                var _0x9d08b6 = _0x2de3a7.querySelectorAll('input:checked').length;
+                if (_0x9d08b6 >= maxSel) { _0xf2b37a('最多选'+maxSel+'项', 'error'); return; }
               }
-              inp.checked = !inp.checked;
-              label.classList.toggle('checked', inp.checked);
-              if (maxSel > 0) updateMultiState(group, maxSel);
+              _0xc54207.checked = !_0xc54207.checked;
+              label.classList.toggle('checked', _0xc54207.checked);
+              if (maxSel > 0) _0x131066(_0x2de3a7, maxSel);
             }
-            else { group.querySelectorAll('.opt-pill').forEach(function(l){ l.classList.remove('checked'); }); label.classList.add('checked'); }
-            clearFieldError(fieldName);
+            else { _0x2de3a7.querySelectorAll('.opt-pill').forEach(function(l){ l.classList.remove('checked'); }); label.classList.add('checked'); }
+            _0xd5f6a1(_0xb1174c);
           });
-          group.appendChild(label);
+          _0x2de3a7.appendChild(label);
         });
-        item.appendChild(group);
-        if (isMulti) { multiFields.push(fieldName); STEP_FIELDS[si+1].checkboxes.push(fieldName); if (maxSel > 0) maxSelByField[fieldName] = maxSel; }
-        else { STEP_FIELDS[si+1].radios.push(fieldName); }
+        _0xca5c5c.appendChild(_0x2de3a7);
+        if (_0x31231d) { _0x3fdfe5.push(_0xb1174c); _0x4c1996[si+1].checkboxes.push(_0xb1174c); if (maxSel > 0) _0x8d634e[_0xb1174c] = maxSel; }
+        else { _0x4c1996[si+1].radios.push(_0xb1174c); }
       }
-
-      var errDiv = document.createElement('div');
-      errDiv.className = 'field-error';
-      errDiv.textContent = isSort ? '请完整填写第1、2、3位排序（不能重复）' : isMulti ? (maxSel > 0 ? '请选择 1~' + maxSel + ' 项' : '请至少选择 1 项') : (required ? '此项为必填' : '');
-      item.appendChild(errDiv);
-      body.appendChild(item);
+      var _0x048a8d = document.createElement('div');
+      _0x048a8d.className = 'field-error';
+      _0x048a8d.textContent = _0x802d54 ? '请完整填写第1、2、3位排序（不能重复）' : _0x31231d ? (maxSel > 0 ? '请选择 1~' + maxSel + ' 项' : '请至少选择 1 项') : (required ? '此项为必填' : '');
+      _0xca5c5c.appendChild(_0x048a8d);
+      body.appendChild(_0xca5c5c);
     });
-    stepCard.appendChild(body);
-    container.appendChild(stepCard);
+    _0x712d06.appendChild(body);
+    _0xf06831.appendChild(_0x712d06);
   });
 }
-
-function clearFieldError(fn) { var el=document.querySelector('.q-item[data-field="'+fn+'"]'); if(el) el.classList.remove('has-error'); }
-function clearAllErrors() { document.querySelectorAll('.q-item.has-error').forEach(function(el){ el.classList.remove('has-error'); }); }
-
-function updateMultiState(group, maxSel) {
-  var pills = group.querySelectorAll('.opt-pill');
-  var checkedCount = group.querySelectorAll('input:checked').length;
-  var reached = (checkedCount >= maxSel);
-  pills.forEach(function(pill) {
-    var inp = pill.querySelector('input');
-    if (!inp.checked && reached) { pill.classList.add('disabled'); }
+function _0xd5f6a1(fn) { var _0xc93a8b=document.querySelector('.q-_0xca5c5c[_0xd06f5b-field="'+fn+'"]'); if(_0xc93a8b) _0xc93a8b.classList.remove('has-error'); }
+function _0x204ad2() { document.querySelectorAll('.q-_0xca5c5c.has-error').forEach(function(_0xc93a8b){ _0xc93a8b.classList.remove('has-error'); }); }
+function _0x131066(_0x2de3a7, maxSel) {
+  var _0x362ba8 = _0x2de3a7.querySelectorAll('.opt-pill');
+  var _0x9d08b6 = _0x2de3a7.querySelectorAll('input:checked').length;
+  var _0x64cea1 = (_0x9d08b6 >= maxSel);
+  _0x362ba8.forEach(function(pill) {
+    var _0xc54207 = pill.querySelector('input');
+    if (!_0xc54207.checked && _0x64cea1) { pill.classList.add('disabled'); }
     else { pill.classList.remove('disabled'); }
   });
 }
-
-function validateStep(n) {
-  clearAllErrors();
-  var cfg = STEP_FIELDS[n]; if (!cfg) return true;
-  var valid = true, firstError = null;
-
-  (cfg.radios||[]).concat(cfg.checkboxes||[]).forEach(function(name){
+function _0xe7ac68(n) {
+  _0x204ad2();
+  var _0xaced12 = _0x4c1996[n]; if (!_0xaced12) return true;
+  var _0x8facc7 = true, firstError = null;
+  (_0xaced12.radios||[]).concat(_0xaced12.checkboxes||[]).forEach(function(name){
     if (!document.querySelector('[name="'+name+'"]:checked')) {
-      var item=document.querySelector('.q-item[data-field="'+name+'"]');
-      if(item){ item.classList.add('has-error'); if(!firstError) firstError=item; }
-      valid=false;
+      var _0xca5c5c=document.querySelector('.q-_0xca5c5c[_0xd06f5b-field="'+name+'"]');
+      if(_0xca5c5c){ _0xca5c5c.classList.add('has-error'); if(!firstError) firstError=_0xca5c5c; }
+      _0x8facc7=false;
     }
   });
-  (cfg.checkboxes||[]).forEach(function(name){
-    var limit = maxSelByField[name];
+  (_0xaced12.checkboxes||[]).forEach(function(name){
+    var limit = _0x8d634e[name];
     if (limit && document.querySelectorAll('[name="'+name+'"]:checked').length > limit) {
-      var item=document.querySelector('.q-item[data-field="'+name+'"]');
-      if(item){ item.classList.add('has-error'); if(!firstError) firstError=item; }
-      valid=false;
+      var _0xca5c5c=document.querySelector('.q-_0xca5c5c[_0xd06f5b-field="'+name+'"]');
+      if(_0xca5c5c){ _0xca5c5c.classList.add('has-error'); if(!firstError) firstError=_0xca5c5c; }
+      _0x8facc7=false;
     }
   });
-  (cfg.texts||[]).forEach(function(name){
-    var item=document.querySelector('.q-item[data-field="'+name+'"]');
-    if(item && item.getAttribute('data-optional') === 'true') return;
-    var el=document.querySelector('[name="'+name+'"]');
-    if(el && !el.value.trim()){
-      if(item){ item.classList.add('has-error'); if(!firstError) firstError=item; }
-      valid=false;
+  (_0xaced12.texts||[]).forEach(function(name){
+    var _0xca5c5c=document.querySelector('.q-_0xca5c5c[_0xd06f5b-field="'+name+'"]');
+    if(_0xca5c5c && _0xca5c5c.getAttribute('_0xd06f5b-optional') === 'true') return;
+    var _0xc93a8b=document.querySelector('[name="'+name+'"]');
+    if(_0xc93a8b && !_0xc93a8b.value.trim()){
+      if(_0xca5c5c){ _0xca5c5c.classList.add('has-error'); if(!firstError) firstError=_0xca5c5c; }
+      _0x8facc7=false;
     }
   });
-  (cfg.selects||[]).forEach(function(name){
-    var el=document.querySelector('[name="'+name+'"]');
-    if(el && !el.value){
-      var item=document.querySelector('.q-item[data-field="'+name+'"]');
-      if(item){ item.classList.add('has-error'); if(!firstError) firstError=item; }
-      valid=false;
+  (_0xaced12.selects||[]).forEach(function(name){
+    var _0xc93a8b=document.querySelector('[name="'+name+'"]');
+    if(_0xc93a8b && !_0xc93a8b.value){
+      var _0xca5c5c=document.querySelector('.q-_0xca5c5c[_0xd06f5b-field="'+name+'"]');
+      if(_0xca5c5c){ _0xca5c5c.classList.add('has-error'); if(!firstError) firstError=_0xca5c5c; }
+      _0x8facc7=false;
     }
   });
-  (cfg.ranking||[]).forEach(function(group){
-    var vals=group.map(function(nm){ var el=document.querySelector('[name="'+nm+'"]'); return el?el.value:''; });
-    if(vals.some(function(v){return!v}) || (new Set(vals.filter(Boolean))).size!==vals.filter(Boolean).length){
-      var item=document.querySelector('.q-item[data-field="'+group[0].replace(/_\d+$/,"")+'"]');
-      if(item){ item.classList.add('has-error'); if(!firstError) firstError=item; }
-      valid=false;
+  (_0xaced12.ranking||[]).forEach(function(_0x2de3a7){
+    var _0xb0b964=_0x2de3a7.map(function(nm){ var _0xc93a8b=document.querySelector('[name="'+nm+'"]'); return _0xc93a8b?_0xc93a8b.value:''; });
+    if(_0xb0b964.some(function(v){return!v}) || (new Set(_0xb0b964.filter(Boolean))).size!==_0xb0b964.filter(Boolean).length){
+      var _0xca5c5c=document.querySelector('.q-_0xca5c5c[_0xd06f5b-field="'+_0x2de3a7[0].replace(/_\d+$/,"")+'"]');
+      if(_0xca5c5c){ _0xca5c5c.classList.add('has-error'); if(!firstError) firstError=_0xca5c5c; }
+      _0x8facc7=false;
     }
   });
-  if(!valid && firstError) firstError.scrollIntoView({behavior:'smooth',block:'center'});
-  return valid;
+  if(!_0x8facc7 && firstError) firstError.scrollIntoView({behavior:'smooth',block:'center'});
+  return _0x8facc7;
 }
-
-function validateStepSilent(n) {
-  var cfg=STEP_FIELDS[n]; if(!cfg) return true;
-  return (cfg.radios||[]).every(function(name){return !!document.querySelector('[name="'+name+'"]:checked');})
-    && (cfg.checkboxes||[]).every(function(name){return !!document.querySelector('[name="'+name+'"]:checked');})
-    && (cfg.texts||[]).every(function(name){var item=document.querySelector('.q-item[data-field="'+name+'"]');if(item && item.getAttribute('data-optional')==='true')return true;var el=document.querySelector('[name="'+name+'"]'); return el&&el.value.trim();})
-    && (cfg.selects||[]).every(function(name){var el=document.querySelector('[name="'+name+'"]'); return el&&el.value;})
-    && (cfg.ranking||[]).every(function(group){
-        var vals=group.map(function(nm){var el=document.querySelector('[name="'+nm+'"]');return el?el.value:'';});
-        return vals.every(Boolean) && (new Set(vals)).size===vals.length;
+function _0xe46afc(n) {
+  var _0xaced12=_0x4c1996[n]; if(!_0xaced12) return true;
+  return (_0xaced12.radios||[]).every(function(name){return !!document.querySelector('[name="'+name+'"]:checked');})
+    && (_0xaced12.checkboxes||[]).every(function(name){return !!document.querySelector('[name="'+name+'"]:checked');})
+    && (_0xaced12.texts||[]).every(function(name){var _0xca5c5c=document.querySelector('.q-_0xca5c5c[_0xd06f5b-field="'+name+'"]');if(_0xca5c5c && _0xca5c5c.getAttribute('_0xd06f5b-optional')==='true')return true;var _0xc93a8b=document.querySelector('[name="'+name+'"]'); return _0xc93a8b&&_0xc93a8b.value.trim();})
+    && (_0xaced12.selects||[]).every(function(name){var _0xc93a8b=document.querySelector('[name="'+name+'"]'); return _0xc93a8b&&_0xc93a8b.value;})
+    && (_0xaced12.ranking||[]).every(function(_0x2de3a7){
+        var _0xb0b964=_0x2de3a7.map(function(nm){var _0xc93a8b=document.querySelector('[name="'+nm+'"]');return _0xc93a8b?_0xc93a8b.value:'';});
+        return _0xb0b964.every(Boolean) && (new Set(_0xb0b964)).size===_0xb0b964.length;
       });
 }
-
-function showStep(n) {
+function _0x868644(n) {
   document.querySelectorAll('.step').forEach(function(s){ s.style.display='none'; });
-  var step=document.querySelector('.step[data-step="'+n+'"]');
+  var step=document.querySelector('.step[_0xd06f5b-step="'+n+'"]');
   if(step) step.style.display='';
-  currentStep=n;
-  document.getElementById('stepLabel').textContent='步骤 '+n+'/'+totalSteps;
-  document.getElementById('progressFill').style.width=(n/totalSteps*100)+'%';
+  _0x037ec6=n;
+  document.getElementById('stepLabel').textContent='步骤 '+n+'/'+_0xf5f3aa;
+  document.getElementById('progressFill').style.width=(n/_0xf5f3aa*100)+'%';
   document.getElementById('btnPrev').disabled=(n===1);
-  document.getElementById('btnNext').style.display=(n===totalSteps)?'none':'';
-  document.getElementById('btnSubmit').style.display=(n===totalSteps)?'':'none';
-  updateDots();
+  document.getElementById('btnNext').style.display=(n===_0xf5f3aa)?'none':'';
+  document.getElementById('btnSubmit').style.display=(n===_0xf5f3aa)?'':'none';
+  _0xb05dbd();
 }
-
-function updateDots() {
-  var dots=document.getElementById('stepDots'); dots.innerHTML='';
-  for(var i=1;i<=totalSteps;i++){
-    var dot=document.createElement('span');
-    dot.className='step-dot'+(i===currentStep?' active':'')+(validateStepSilent(i)?' done':'');
-    dot.title='步骤 '+i;
-    (function(s){ dot.addEventListener('click',function(){showStep(s);}); })(i);
-    dots.appendChild(dot);
+function _0xb05dbd() {
+  var _0x719b32=document.getElementById('stepDots'); _0x719b32.innerHTML='';
+  for(var i=1;i<=_0xf5f3aa;i++){
+    var _0x14d81e=document.createElement('span');
+    _0x14d81e.className='step-_0x14d81e'+(i===_0x037ec6?' active':'')+(_0xe46afc(i)?' done':'');
+    _0x14d81e.title='步骤 '+i;
+    (function(s){ _0x14d81e.addEventListener('click',function(){_0x868644(s);}); })(i);
+    _0x719b32.appendChild(_0x14d81e);
   }
 }
-
-function collectAnswers() {
-  var data={form_type:'general', applicant_name:document.querySelector('[name="applicant_name"]').value.trim()};
-  var fd=new FormData(document.getElementById('mainForm'));
-  fd.forEach(function(v,k){ if(k!=='applicant_name') data[k]=v; });
-  multiFields.forEach(function(name){
-    var checks=document.querySelectorAll('[name="'+name+'"]:checked');
-    if(checks.length) data[name]=Array.from(checks).map(function(c){return c.value;}).join(', ');
+function _0xe0185d() {
+  var _0xd06f5b={form_type:'general', applicant_name:document.querySelector('[name="applicant_name"]').value.trim()};
+  var _0x13d3fb=new FormData(document.getElementById('mainForm'));
+  _0x13d3fb.forEach(function(v,k){ if(k!=='applicant_name') _0xd06f5b[k]=v; });
+  _0x3fdfe5.forEach(function(name){
+    var _0x6bd4bd=document.querySelectorAll('[name="'+name+'"]:checked');
+    if(_0x6bd4bd.length) _0xd06f5b[name]=Array.from(_0x6bd4bd).map(function(c){return c.value;}).join(', ');
   });
-  return data;
+  return _0xd06f5b;
 }
-
 document.getElementById('mainForm').addEventListener('submit',function(e){
-  e.preventDefault(); clearAllErrors();
-  var nameEl=document.querySelector('[name="applicant_name"]'), name=nameEl?nameEl.value.trim():'';
-  if(!name){ var ni=document.querySelector('.q-item[data-field="applicant_name"]'); if(ni){ni.classList.add('has-error');ni.scrollIntoView({behavior:'smooth',block:'center'});} return; }
-  for(var s=1;s<=totalSteps;s++){ if(!validateStep(s)){ showStep(s); showToast('第 '+s+' 步有必填项未完成','error'); return; } }
-  var data=collectAnswers();
-  showToast('正在提交...','');
-  fetch(SEND_PATH,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+  e.preventDefault(); _0x204ad2();
+  var _0x923ee2=document.querySelector('[name="applicant_name"]'), name=_0x923ee2?_0x923ee2.value.trim():'';
+  if(!name){ var _0x91651b=document.querySelector('.q-_0xca5c5c[_0xd06f5b-field="applicant_name"]'); if(_0x91651b){_0x91651b.classList.add('has-error');_0x91651b.scrollIntoView({behavior:'smooth',block:'center'});} return; }
+  for(var s=1;s<=_0xf5f3aa;s++){ if(!_0xe7ac68(s)){ _0x868644(s); _0xf2b37a('第 '+s+' 步有必填项未完成','error'); return; } }
+  var _0xd06f5b=_0xe0185d();
+  _0xf2b37a('正在提交...','');
+  fetch(SEND_PATH,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(_0xd06f5b)})
     .then(function(r){return r.json();})
     .then(function(res){
       if(res.status==='sent'){
@@ -436,44 +395,39 @@ document.getElementById('mainForm').addEventListener('submit',function(e){
         document.querySelectorAll('.step').forEach(function(s){s.style.display='none';});
         document.querySelector('.progress-wrap').style.display='none';
         document.getElementById('btnPrev').parentElement.parentElement.style.display='none';
-        var se=document.getElementById('successPage'); se.style.display='';
-        se.querySelector('.success-name').textContent=name;
+        var _0xf8873d=document.getElementById('successPage'); _0xf8873d.style.display='';
+        _0xf8873d.querySelector('.success-name').textContent=name;
         window.scrollTo({top:0,behavior:'smooth'});
-      } else { showToast('提交失败：'+(res.error||'未知错误'),'error'); }
-    }).catch(function(){ showToast('网络错误，请重试','error'); });
+      } else { _0xf2b37a('提交失败：'+(res.error||'未知错误'),'error'); }
+    }).catch(function(){ _0xf2b37a('网络错误，请重试','error'); });
 });
-
 document.getElementById('btnNext').addEventListener('click',function(){
-  if(!validateStep(currentStep)){ showToast('当前步骤有必填项未完成','error'); return; }
-  if(currentStep<totalSteps) showStep(currentStep+1);
+  if(!_0xe7ac68(_0x037ec6)){ _0xf2b37a('当前步骤有必填项未完成','error'); return; }
+  if(_0x037ec6<_0xf5f3aa) _0x868644(_0x037ec6+1);
 });
-document.getElementById('btnPrev').addEventListener('click',function(){ if(currentStep>1) showStep(currentStep-1); });
-
+document.getElementById('btnPrev').addEventListener('click',function(){ if(_0x037ec6>1) _0x868644(_0x037ec6-1); });
 document.addEventListener('input',function(e){
   if(e.target.tagName==='TEXTAREA' && e.target.maxLength>0){
-    var cnt=e.target.parentElement.querySelector('.char-count');
-    if(cnt) cnt.textContent=e.target.value.length+'/'+e.target.maxLength;
+    var _0xffd1f9=e.target.parentElement.querySelector('.char-count');
+    if(_0xffd1f9) _0xffd1f9.textContent=e.target.value.length+'/'+e.target.maxLength;
   }
   if(e.target.classList.contains('txt-input')){
-    var item=e.target.closest('.q-item');
-    if(item){ var f=item.getAttribute('data-field'); if(f) clearFieldError(f); }
+    var _0xca5c5c=e.target.closest('.q-_0xca5c5c');
+    if(_0xca5c5c){ var f=_0xca5c5c.getAttribute('_0xd06f5b-field'); if(f) _0xd5f6a1(f); }
   }
 });
-
 document.addEventListener('change',function(e){
-  if(e.target.classList.contains('sel-input')){
-    var item=e.target.closest('.q-item');
-    if(item){ var f=item.getAttribute('data-field'); if(f) clearFieldError(f); }
+  if(e.target.classList.contains('_0x85c2a1-input')){
+    var _0xca5c5c=e.target.closest('.q-_0xca5c5c');
+    if(_0xca5c5c){ var f=_0xca5c5c.getAttribute('_0xd06f5b-field'); if(f) _0xd5f6a1(f); }
   }
 });
-
-function showToast(msg,cls){
+function _0xf2b37a(msg,cls){
   var t=document.getElementById('toast'); t.textContent=msg;
   t.className='toast '+(cls||''); t.classList.add('show');
   clearTimeout(t._timer); t._timer=setTimeout(function(){t.classList.remove('show');},3000);
 }
-
-buildForm(); showStep(1);
+_0x7cd0cf(); _0x868644(1);
 </script>
 </body>
 </html>
