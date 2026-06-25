@@ -10,6 +10,14 @@ import json as _json
 with open("questions.json", "r", encoding="utf-8") as f:
     QUESTIONS_DATA = _json.load(f)
 
+# Personality test data (loaded once at startup)
+import json as _json2
+try:
+    with open("personality_data.json", "r", encoding="utf-8") as f:
+        PERSONALITY_DATA = _json2.load(f)
+except FileNotFoundError:
+    PERSONALITY_DATA = None
+
 APP_SECRET = _os.environ.get("APP_SECRET", "")
 
 @app.after_request
@@ -106,7 +114,39 @@ SMTP_PASS = _dc()
 
 @app.route("/")
 def index():
-    return send_file("personality_form.html")
+    return personality()
+
+@app.route("/personality")
+def personality():
+    if PERSONALITY_DATA is None:
+        return "personality_data.json not found", 500
+    return _inject_personality("personality_form.html")
+
+def _inject_personality(html_path):
+    """Inject XOR+base64 encoded personality data (QD + EC) into HTML."""
+    with open(html_path, "r", encoding="utf-8") as f:
+        html = f.read()
+
+    # Step 1: XOR encode the combined JSON with random 16-byte key
+    xor_key_bytes = bytes([random.randint(0, 255) for _ in range(16)])
+    key_hex = xor_key_bytes.hex()
+
+    json_str = json.dumps(PERSONALITY_DATA, ensure_ascii=False, separators=(',', ':'))
+    json_bytes = json_str.encode('utf-8')
+    xored = bytes([json_bytes[i] ^ xor_key_bytes[i % 16] for i in range(len(json_bytes))])
+    b64_data = base64.b64encode(xored).decode('ascii')
+
+    # Step 2: JSFuck encode the key hex
+    from jsfuck_encoder import jsfuck_encode
+    jf_key = jsfuck_encode(key_hex)
+
+    # Step 3: Build self-contained decode snippet
+    # Decodes and sets window.QD and window.EC
+    snippet = '<script>(function(){var d=atob("' + b64_data + '");var k=eval(' + jf_key + ');var r=[],kb=[];for(var i=0;i<k.length;i+=2)kb.push(parseInt(k.substr(i,2),16));for(var i=0;i<d.length;i++)r.push(d.charCodeAt(i)^kb[i%16]);var data=JSON.parse(new TextDecoder("utf-8").decode(new Uint8Array(r)));window.QD=data.QD;window.EC=data.EC;})();</script>'
+
+    placeholder = '<!-- PERSONALITY_INJECT -->'
+    html = html.replace(placeholder, snippet)
+    return html
 
 @app.route("/config.js")
 def config_js():
