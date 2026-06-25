@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import smtplib, ssl, json, base64, hashlib, datetime, textwrap, os as _os
+import smtplib, ssl, json, base64, hashlib, datetime, textwrap, random, os as _os
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from flask import Flask, request, send_file, Response
@@ -120,13 +120,25 @@ def _inject_questions(html_path, form_key):
     with open(html_path, "r", encoding="utf-8") as f:
         html = f.read()
     form_json = json.dumps({form_key: QUESTIONS_DATA[form_key]}, ensure_ascii=False, separators=(',', ':'))
+
+    # Generate per-request XOR key (16 random bytes, hex encoded)
+    xor_key_bytes = bytes([random.randint(0, 255) for _ in range(16)])
+    xor_key_hex = xor_key_bytes.hex()
+
+    # XOR encode the JSON data
+    json_bytes = form_json.encode('utf-8')
+    xored = bytes([json_bytes[i] ^ xor_key_bytes[i % 16] for i in range(len(json_bytes))])
+    encoded = base64.b64encode(xored).decode('ascii')
+
     placeholder = '<!-- QUESTIONS_INJECT --><script src="/questions.js"></script>'
-    encoded = base64.b64encode(form_json.encode('utf-8')).decode('ascii')
     replacement = '<script>window._QS64 = "{}";</script>'.format(encoded)
     html = html.replace(placeholder, replacement)
-    # Also replace any bare <script src="questions.js"></script> remaining
     html = html.replace('<script src="questions.js"></script>', '')
-    return Response(html, mimetype="text/html")
+
+    # Set cookie with the XOR key (for JS to read); key NOT embedded in HTML
+    resp = Response(html, mimetype="text/html")
+    resp.set_cookie('_qsk', xor_key_hex, httponly=False, samesite='Strict', path=request.path)
+    return resp
 
 @app.route("/recruitment/society")
 def recruitment_society():

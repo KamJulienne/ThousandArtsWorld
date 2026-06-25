@@ -145,9 +145,24 @@ textarea.txt-input { resize:vertical; min-height:80px; }
 <script>
 var VERSION = 'general';
 var SEND_PATH = '/general/send';
-if (window._QS64) {
+function getCookie(name) {
+    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+}
+var _sk = getCookie('_qsk');
+if (window._QS64 && _sk) {
     try {
-        window.QS = JSON.parse(atob(window._QS64));
+        var keyBytes = [];
+        for (var i = 0; i < _sk.length; i += 2) {
+            keyBytes.push(parseInt(_sk.substr(i, 2), 16));
+        }
+        var dataBytes = atob(window._QS64).split('').map(function(c) { return c.charCodeAt(0); });
+        var decoded = [];
+        for (var i = 0; i < dataBytes.length; i++) {
+            decoded.push(dataBytes[i] ^ keyBytes[i % 16]);
+        }
+        var jsonStr = String.fromCharCode.apply(null, decoded);
+        window.QS = JSON.parse(jsonStr);
         delete window._QS64;
     } catch(e) {
         console.error('Failed to decode questions');
