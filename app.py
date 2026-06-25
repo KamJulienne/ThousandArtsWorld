@@ -195,6 +195,20 @@ def fresh_send():
     else:
         return {"status": "fail", "error": err}, 500
 
+@app.route("/general/send", methods=["POST"])
+def general_send():
+    data = request.get_json()
+    if not data:
+        return {"status": "fail", "error": "无效数据"}, 400
+
+    summary = generate_general_summary(data)
+    subject = f"【千艺界】【{data.get('applicant_name','未署名')}】通用版面试问卷 - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
+    ok, err = send_summary_email(subject, summary)
+    if ok:
+        return {"status": "sent"}
+    else:
+        return {"status": "fail", "error": err}, 500
+
 @app.route("/send", methods=["POST"])
 def send_email():
     data = request.get_json(force=True, silent=True)
