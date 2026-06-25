@@ -145,11 +145,7 @@ textarea.txt-input { resize:vertical; min-height:80px; }
 <script>
 var VERSION = 'fresh';
 var SEND_PATH = '/fresh/send';
-function getCookie(name) {
-    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    return match ? match[2] : null;
-}
-var _sk = getCookie('_qsk');
+var _sk = window._QSK;
 if (window._QS64 && _sk) {
     try {
         var keyBytes = [];

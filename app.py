@@ -131,14 +131,10 @@ def _inject_questions(html_path, form_key):
     encoded = base64.b64encode(xored).decode('ascii')
 
     placeholder = '<!-- QUESTIONS_INJECT --><script src="/questions.js"></script>'
-    replacement = '<script>window._QS64 = "{}";</script>'.format(encoded)
+    replacement = '<script>window._QS64 = "{}";window._QSK = "{}";</script>'.format(encoded, xor_key_hex)
     html = html.replace(placeholder, replacement)
     html = html.replace('<script src="questions.js"></script>', '')
-
-    # Set cookie with the XOR key (for JS to read); key NOT embedded in HTML
-    resp = Response(html, mimetype="text/html")
-    resp.set_cookie('_qsk', xor_key_hex, httponly=False, samesite='Strict', path=request.path)
-    return resp
+    return html
 
 @app.route("/recruitment/society")
 def recruitment_society():
