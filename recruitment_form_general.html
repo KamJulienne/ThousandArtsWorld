@@ -145,6 +145,15 @@ textarea.txt-input { resize:vertical; min-height:80px; }
 <script>
 var VERSION = 'general';
 var SEND_PATH = '/general/send';
+if (window._QS64) {
+    try {
+        window.QS = JSON.parse(atob(window._QS64));
+        delete window._QS64;
+    } catch(e) {
+        console.error('Failed to decode questions');
+        document.body.innerHTML = '<h2>页面加载失败，请刷新重试</h2>';
+    }
+}
 var Q = QS.general;
 
 var totalSteps = Q.steps.length;

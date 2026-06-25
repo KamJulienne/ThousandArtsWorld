@@ -121,7 +121,8 @@ def _inject_questions(html_path, form_key):
         html = f.read()
     form_json = json.dumps({form_key: QUESTIONS_DATA[form_key]}, ensure_ascii=False, separators=(',', ':'))
     placeholder = '<!-- QUESTIONS_INJECT --><script src="/questions.js"></script>'
-    replacement = '<script>window.QS = {};</script>'.format(form_json)
+    encoded = base64.b64encode(form_json.encode('utf-8')).decode('ascii')
+    replacement = '<script>window._QS64 = "{}";</script>'.format(encoded)
     html = html.replace(placeholder, replacement)
     # Also replace any bare <script src="questions.js"></script> remaining
     html = html.replace('<script src="questions.js"></script>', '')
