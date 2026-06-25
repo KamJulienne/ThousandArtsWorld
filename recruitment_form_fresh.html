@@ -157,7 +157,7 @@ if (window._QS64 && _sk) {
         for (var i = 0; i < dataBytes.length; i++) {
             decoded.push(dataBytes[i] ^ keyBytes[i % 16]);
         }
-        var jsonStr = String.fromCharCode.apply(null, decoded);
+        var jsonStr = new TextDecoder('utf-8').decode(new Uint8Array(decoded));
         window.QS = JSON.parse(jsonStr);
         delete window._QS64;
     } catch(e) {
