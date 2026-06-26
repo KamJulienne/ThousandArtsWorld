@@ -154,6 +154,7 @@ var _0xd8af64 = [];
 var _0x21416f = [];
 var _0x33f513 = {};
 var _0xe9a828 = {};
+var _0x4c8a7a='';
 function _0x50947d() {
   document.getElementById('stepCount').textContent = _0x86e0ac;
   var _0xe1e67f = document.getElementById('formContainer');
@@ -329,9 +330,17 @@ function _0x315ae2(n) {
   });
   (_0xfba079.ranking||[]).forEach(function(_0xa7487b){
     var _0x7926db=_0xa7487b.map(function(nm){ var _0x458546=document.querySelector('[name="'+nm+'"]'); return _0x458546?_0x458546.value:''; });
-    if(_0x7926db.some(function(v){return!v}) || (new Set(_0x7926db.filter(Boolean))).size!==_0x7926db.filter(Boolean).length){
+    var hasEmpty=_0x7926db.some(function(v){return!v;});
+    var hasDup=!hasEmpty && (new Set(_0x7926db)).size!==_0x7926db.length;
+    if(hasEmpty || hasDup){
       var _0x8f370f=document.querySelector('.q-_0x8f370f[_0x60b2b9-field="'+_0xa7487b[0].replace(/_\d+$/,"")+'"]');
-      if(_0x8f370f){ _0x8f370f.classList.add('has-error'); if(!firstError) firstError=_0x8f370f; }
+      if(_0x8f370f){
+        _0x8f370f.classList.add('has-error');
+        if(!firstError) firstError=_0x8f370f;
+        var _0xfe=_0x8f370f.querySelector('.field-error');
+        if(_0xfe) _0xfe.textContent=hasEmpty?'请完整填写第1、2、3位排序（不能重复）':'排序选项不能重复';
+        if(!_0x4c8a7a){var _0xqe=_0x8f370f.querySelector('.q-title');var _0xql=_0xqe?_0xqe.textContent.trim().replace(/\*$/,'').split('?')[0]:'';_0x4c8a7a=(_0xql?_0xql+'：':'')+(hasEmpty?'请选择全部排序位后再提交':'排序选项不能重复');}
+      }
       _0xfb1292=false;
     }
   });
@@ -384,7 +393,7 @@ function _0xa983b1() {
 document.getElementById('mainForm').addEventListener('submit',function(e){
   e.preventDefault(); _0x7f8dc5();
   var _0x706595=document.querySelector('[name="applicant_name"]'), name=_0x706595?_0x706595.value.trim():'';
-  if(!name){ var _0xe69db2=document.querySelector('.q-_0x8f370f[_0x60b2b9-field="applicant_name"]'); if(_0xe69db2){_0xe69db2.classList.add('has-error');_0xe69db2.scrollIntoView({behavior:'smooth',block:'center'});} return; }
+  if(!name){ alert('请填写姓名'); var _0xe69db2=document.querySelector('.q-_0x8f370f[_0x60b2b9-field="applicant_name"]'); if(_0xe69db2){_0xe69db2.classList.add('has-error');_0xe69db2.scrollIntoView({behavior:'smooth',block:'center'});} return; }
   for(var s=1;s<=_0x86e0ac;s++){ if(!_0x315ae2(s)){ _0x7be8a0(s); _0x8a2e35('第 '+s+' 步有必填项未完成','error'); return; } }
   var _0x60b2b9=_0xa983b1();
   _0x8a2e35('正在提交...','');
@@ -403,7 +412,8 @@ document.getElementById('mainForm').addEventListener('submit',function(e){
     }).catch(function(){ _0x8a2e35('网络错误，请重试','error'); });
 });
 document.getElementById('btnNext').addEventListener('click',function(){
-  if(!_0x315ae2(_0x8457bf)){ _0x8a2e35('当前步骤有必填项未完成','error'); return; }
+  _0x4c8a7a='';
+  if(!_0x315ae2(_0x8457bf)){ _0x8a2e35(_0x4c8a7a||'当前步骤有必填项未完成','error'); return; }
   if(_0x8457bf<_0x86e0ac) _0x7be8a0(_0x8457bf+1);
 });
 document.getElementById('btnPrev').addEventListener('click',function(){ if(_0x8457bf>1) _0x7be8a0(_0x8457bf-1); });
