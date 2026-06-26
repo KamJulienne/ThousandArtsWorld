@@ -153,6 +153,7 @@ var _0x037ec6 = 1;
 var _0x3fdfe5 = [];
 var _0x5b4e28 = [];
 var _0x8d634e = {};
+var _0xd06f5b = '_0xd06f5b';
 var _0x4c1996 = {};
 function _0x7cd0cf() {
   document.getElementById('stepCount').textContent = _0xf5f3aa;
@@ -271,7 +272,7 @@ function _0x7cd0cf() {
       }
       var _0x048a8d = document.createElement('div');
       _0x048a8d.className = 'field-error';
-      _0x048a8d.textContent = _0x802d54 ? '请完整填写第1、2、3位排序（不能重复）' : _0x31231d ? (maxSel > 0 ? '请选择 1~' + maxSel + ' 项' : '请至少选择 1 项') : (required ? '此项为必填' : '');
+      _0x048a8d.textContent = _0x802d54 ? '请完整填写第1、2、3位排序，且选项不能重复' : _0x31231d ? (maxSel > 0 ? '请选择 1~' + maxSel + ' 项' : '请至少选择 1 项') : (required ? '此项为必填' : '');
       _0xca5c5c.appendChild(_0x048a8d);
       body.appendChild(_0xca5c5c);
     });
@@ -293,7 +294,7 @@ function _0x131066(_0x2de3a7, maxSel) {
 }
 function _0xe7ac68(n) {
   _0x204ad2();
-  if(n===1){var _0x2f0db9=document.querySelector('[name="applicant_name"]');if(_0x2f0db9&&!_0x2f0db9.value.trim()){var _0x62f8e4=document.querySelector('.q-_0xca5c5c[_0xd06f5b-field="applicant_name"]');if(_0x62f8e4){_0x62f8e4.classList.add('has-error');_0x62f8e4.scrollIntoView({behavior:'smooth',block:'center'});}_0xf2b37a('请填写姓名','error');return false;}}
+  if(n===1){ var _0x2f0db9=document.querySelector('[name="applicant_name"]'); if(_0x2f0db9 && !_0x2f0db9.value.trim()){ var _0x62f8e4=document.querySelector('.q-item[data-field="applicant_name"]'); if(_0x62f8e4)_0x62f8e4.classList.add('has-error'); _0x2f0db9.focus(); return false; } }
   var _0xaced12 = _0x4c1996[n]; if (!_0xaced12) return true;
   var _0x8facc7 = true, firstError = null;
   (_0xaced12.radios||[]).concat(_0xaced12.checkboxes||[]).forEach(function(name){
@@ -340,7 +341,7 @@ function _0xe7ac68(n) {
   return _0x8facc7;
 }
 function _0xe46afc(n) {
-  if(n===1){var _0x5d7ba1=document.querySelector('[name="applicant_name"]');if(!_0x5d7ba1||!_0x5d7ba1.value.trim())return false;}
+  if(n===1){ var _0x5d7ba1=document.querySelector('[name="applicant_name"]'); if(_0x5d7ba1 && !_0x5d7ba1.value.trim()) return false; }
   var _0xaced12=_0x4c1996[n]; if(!_0xaced12) return true;
   return (_0xaced12.radios||[]).every(function(name){return !!document.querySelector('[name="'+name+'"]:checked');})
     && (_0xaced12.checkboxes||[]).every(function(name){return !!document.querySelector('[name="'+name+'"]:checked');})

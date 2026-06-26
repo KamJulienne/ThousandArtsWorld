@@ -153,6 +153,7 @@ var _0xbab62b = 1;
 var _0x499ebc = [];
 var _0xfb3d62 = [];
 var _0x3b5935 = {};
+var _0x241c62 = '_0x241c62';
 var _0xb1e9b1 = {};
 function _0xda6772() {
   document.getElementById('stepCount').textContent = _0x360f67;
@@ -271,7 +272,7 @@ function _0xda6772() {
       }
       var _0x24b655 = document.createElement('div');
       _0x24b655.className = 'field-error';
-      _0x24b655.textContent = _0x572d80 ? '请完整填写第1、2、3位排序（不能重复）' : _0x7d5f2f ? (maxSel > 0 ? '请选择 1~' + maxSel + ' 项' : '请至少选择 1 项') : (required ? '此项为必填' : '');
+      _0x24b655.textContent = _0x572d80 ? '请完整填写第1、2、3位排序，且选项不能重复' : _0x7d5f2f ? (maxSel > 0 ? '请选择 1~' + maxSel + ' 项' : '请至少选择 1 项') : (required ? '此项为必填' : '');
       _0x3066e9.appendChild(_0x24b655);
       body.appendChild(_0x3066e9);
     });
@@ -293,7 +294,7 @@ function _0xb05293(_0xdbb0bb, maxSel) {
 }
 function _0x8d25f3(n) {
   _0xce6fc0();
-  if(n===1){var _0x10a89c=document.querySelector('[name="applicant_name"]');if(_0x10a89c&&!_0x10a89c.value.trim()){var _0x47d26b=document.querySelector('.q-_0x3066e9[_0x241c62-field="applicant_name"]');if(_0x47d26b){_0x47d26b.classList.add('has-error');_0x47d26b.scrollIntoView({behavior:'smooth',block:'center'});}_0xdc8aeb('请填写姓名','error');return false;}}
+  if(n===1){ var _0x10a89c=document.querySelector('[name="applicant_name"]'); if(_0x10a89c && !_0x10a89c.value.trim()){ var _0x47d26b=document.querySelector('.q-item[data-field="applicant_name"]'); if(_0x47d26b)_0x47d26b.classList.add('has-error'); _0x10a89c.focus(); return false; } }
   var _0x4d0d13 = _0xb1e9b1[n]; if (!_0x4d0d13) return true;
   var _0xd4a42b = true, firstError = null;
   (_0x4d0d13.radios||[]).concat(_0x4d0d13.checkboxes||[]).forEach(function(name){
@@ -340,7 +341,7 @@ function _0x8d25f3(n) {
   return _0xd4a42b;
 }
 function _0xee2bd8(n) {
-  if(n===1){var _0x4ba33e=document.querySelector('[name="applicant_name"]');if(!_0x4ba33e||!_0x4ba33e.value.trim())return false;}
+  if(n===1){ var _0x4ba33e=document.querySelector('[name="applicant_name"]'); if(_0x4ba33e && !_0x4ba33e.value.trim()) return false; }
   var _0x4d0d13=_0xb1e9b1[n]; if(!_0x4d0d13) return true;
   return (_0x4d0d13.radios||[]).every(function(name){return !!document.querySelector('[name="'+name+'"]:checked');})
     && (_0x4d0d13.checkboxes||[]).every(function(name){return !!document.querySelector('[name="'+name+'"]:checked');})
