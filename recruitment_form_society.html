@@ -163,7 +163,7 @@ function _0xda6772() {
     var _0xb5018d = document.createElement('div');
     _0xb5018d.className = 'card step';
     _0xb5018d.setAttribute('_0x241c62-step', si+1);
-    if (si > 0) _0xb5018d.style.display = 'none';
+    _0xb5018d.style.display = 'none';
     var _0xe922fd = document.createElement('div');
     _0xe922fd.className = 'card-header';
     _0xe922fd.innerHTML = '<h2>' + step.title + '<span>' + step.questions.length + ' 题</span></h2>';
@@ -423,8 +423,13 @@ document.getElementById('btnNext').addEventListener('click',function(){
   _0x4c8a7a='';
   if(_0xbab62b===1){
     var _0xff94cb=document.querySelector('[name="applicant_name"]');
-    if(_0xff94cb && !_0xff94cb.value.trim()){ alert('请填写姓名'); return; }
-    _0xff94cb.readOnly=true; _0xff94cb.style.background='#f8f9fa'; _0xff94cb.style.cursor='not-allowed';
+    if(!_0xff94cb.readOnly){
+      if(!_0xff94cb.value.trim()){ alert('请填写姓名'); return; }
+      _0xff94cb.readOnly=true; _0xff94cb.style.background='#f8f9fa'; _0xff94cb.style.cursor='not-allowed';
+      document.querySelector('.progress-wrap').style.display='';
+      _0x13aeed(1);
+      return;
+    }
   }
   if(!_0x8d25f3(_0xbab62b)){ _0xdc8aeb(_0x4c8a7a||'当前步骤有必填项未完成','error'); return; }
   if(_0xbab62b<_0x360f67) _0x13aeed(_0xbab62b+1);
@@ -451,7 +456,7 @@ function _0xdc8aeb(msg,cls){
   t.className='toast '+(cls||''); t.classList.add('show');
   clearTimeout(t._timer); t._timer=setTimeout(function(){t.classList.remove('show');},3000);
 }
-_0xda6772(); _0x13aeed(1);
+_0xda6772(); document.querySelector('.progress-wrap').style.display='none';
 </script>
 </body>
 </html>
