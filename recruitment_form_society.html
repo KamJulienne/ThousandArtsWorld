@@ -401,7 +401,7 @@ function _0x8bb59b() {
 document.getElementById('mainForm').addEventListener('submit',function(e){
   e.preventDefault(); _0xce6fc0();
   var _0xff94cb=document.querySelector('[name="applicant_name"]'), name=_0xff94cb?_0xff94cb.value.trim():'';
-  if(!name){ alert('请填写姓名'); var _0xc5ceb0=document.querySelector('.q-item[data-field="applicant_name"]'); if(_0xc5ceb0){_0xc5ceb0.classList.add('has-error');_0xc5ceb0.scrollIntoView({behavior:'smooth',block:'center'});} return; }
+  if(!name){ alert('请填写姓名'); return; }
   for(var s=1;s<=_0x360f67;s++){ if(!_0x8d25f3(s)){ _0x13aeed(s); _0xdc8aeb('第 '+s+' 步有必填项未完成','error'); return; } }
   var _0x241c62=_0x8bb59b();
   _0xdc8aeb('正在提交...','');
