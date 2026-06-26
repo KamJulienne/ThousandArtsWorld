@@ -1,11 +1,10 @@
-# force redeploy 20260626221418
+# force redeploy 20260626221930
 services:
   - type: web
     name: thousand-arts-world
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: python app.py
+    startCommand: python -u app.py
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.0
-
