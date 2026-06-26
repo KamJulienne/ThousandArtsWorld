@@ -1,3 +1,4 @@
+# force redeploy 20260626221418
 services:
   - type: web
     name: thousand-arts-world
