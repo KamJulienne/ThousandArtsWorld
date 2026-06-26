@@ -293,6 +293,7 @@ function _0xce8afb(_0xa7487b, maxSel) {
 }
 function _0x315ae2(n) {
   _0x7f8dc5();
+  if(n===1){ var _0xe69db2=document.querySelector('[name="applicant_name"]'); if(_0xe69db2 && !_0xe69db2.value.trim()){ var _0x14dcbe=document.querySelector('.q-item[data-field="applicant_name"]'); if(_0x14dcbe)_0x14dcbe.classList.add('has-error'); _0xe69db2.focus(); return false; } }
   var _0xfba079 = _0xe9a828[n]; if (!_0xfba079) return true;
   var _0xfb1292 = true, firstError = null;
   (_0xfba079.radios||[]).concat(_0xfba079.checkboxes||[]).forEach(function(name){
@@ -339,6 +340,7 @@ function _0x315ae2(n) {
   return _0xfb1292;
 }
 function _0x2ea1fc(n) {
+  if(n===1){ var _0xe69db2=document.querySelector('[name="applicant_name"]'); if(_0xe69db2 && !_0xe69db2.value.trim()) return false; }
   var _0xfba079=_0xe9a828[n]; if(!_0xfba079) return true;
   return (_0xfba079.radios||[]).every(function(name){return !!document.querySelector('[name="'+name+'"]:checked');})
     && (_0xfba079.checkboxes||[]).every(function(name){return !!document.querySelector('[name="'+name+'"]:checked');})
@@ -384,7 +386,7 @@ function _0xa983b1() {
 document.getElementById('mainForm').addEventListener('submit',function(e){
   e.preventDefault(); _0x7f8dc5();
   var _0x706595=document.querySelector('[name="applicant_name"]'), name=_0x706595?_0x706595.value.trim():'';
-  if(!name){ var _0xe69db2=document.querySelector('.q-_0x8f370f[_0x60b2b9-field="applicant_name"]'); if(_0xe69db2){_0xe69db2.classList.add('has-error');_0xe69db2.scrollIntoView({behavior:'smooth',block:'center'});} return; }
+  if(!name){ var _0xe69db2=document.querySelector('.q-item[data-field="applicant_name"]'); if(_0xe69db2){_0xe69db2.classList.add('has-error');_0xe69db2.scrollIntoView({behavior:'smooth',block:'center'});} _0x8a2e35('请填写姓名','error'); return; }
   for(var s=1;s<=_0x86e0ac;s++){ if(!_0x315ae2(s)){ _0x7be8a0(s); _0x8a2e35('第 '+s+' 步有必填项未完成','error'); return; } }
   var _0x60b2b9=_0xa983b1();
   _0x8a2e35('正在提交...','');
