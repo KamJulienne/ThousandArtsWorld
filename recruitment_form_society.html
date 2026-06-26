@@ -293,6 +293,7 @@ function _0xb05293(_0xdbb0bb, maxSel) {
 }
 function _0x8d25f3(n) {
   _0xce6fc0();
+  if(n===1){var _0x10a89c=document.querySelector('[name="applicant_name"]');if(_0x10a89c&&!_0x10a89c.value.trim()){var _0x47d26b=document.querySelector('.q-_0x3066e9[_0x241c62-field="applicant_name"]');if(_0x47d26b){_0x47d26b.classList.add('has-error');_0x47d26b.scrollIntoView({behavior:'smooth',block:'center'});}_0xdc8aeb('请填写姓名','error');return false;}}
   var _0x4d0d13 = _0xb1e9b1[n]; if (!_0x4d0d13) return true;
   var _0xd4a42b = true, firstError = null;
   (_0x4d0d13.radios||[]).concat(_0x4d0d13.checkboxes||[]).forEach(function(name){
@@ -339,6 +340,7 @@ function _0x8d25f3(n) {
   return _0xd4a42b;
 }
 function _0xee2bd8(n) {
+  if(n===1){var _0x4ba33e=document.querySelector('[name="applicant_name"]');if(!_0x4ba33e||!_0x4ba33e.value.trim())return false;}
   var _0x4d0d13=_0xb1e9b1[n]; if(!_0x4d0d13) return true;
   return (_0x4d0d13.radios||[]).every(function(name){return !!document.querySelector('[name="'+name+'"]:checked');})
     && (_0x4d0d13.checkboxes||[]).every(function(name){return !!document.querySelector('[name="'+name+'"]:checked');})
@@ -384,7 +386,7 @@ function _0x8bb59b() {
 document.getElementById('mainForm').addEventListener('submit',function(e){
   e.preventDefault(); _0xce6fc0();
   var _0xff94cb=document.querySelector('[name="applicant_name"]'), name=_0xff94cb?_0xff94cb.value.trim():'';
-  if(!name){ var _0xc5ceb0=document.querySelector('.q-_0x3066e9[_0x241c62-field="applicant_name"]'); if(_0xc5ceb0){_0xc5ceb0.classList.add('has-error');_0xc5ceb0.scrollIntoView({behavior:'smooth',block:'center'});} return; }
+  if(!name){ _0xdc8aeb('请填写姓名','error'); var _0xc5ceb0=document.querySelector('.q-_0x3066e9[_0x241c62-field="applicant_name"]'); if(_0xc5ceb0){_0xc5ceb0.classList.add('has-error');_0xc5ceb0.scrollIntoView({behavior:'smooth',block:'center'});} return; }
   for(var s=1;s<=_0x360f67;s++){ if(!_0x8d25f3(s)){ _0x13aeed(s); _0xdc8aeb('第 '+s+' 步有必填项未完成','error'); return; } }
   var _0x241c62=_0x8bb59b();
   _0xdc8aeb('正在提交...','');
