@@ -344,6 +344,14 @@ function _0x315ae2(n) {
       _0xfb1292=false;
     }
   });
+  if(!_0xfb1292 && firstError && !_0x4c8a7a){
+    var _0xqe=firstError.querySelector('.q-title');
+    if(_0xqe){
+      var _0xql=_0xqe.textContent.trim().replace(/\*$/,'').split('?')[0];
+      var _0xfn=firstError.getAttribute('_0x60b2b9-field');
+      _0x4c8a7a=((_0xfba079.texts||[]).indexOf(_0xfn)>=0?'请填写':'请选择')+_0xql;
+    }
+  }
   if(!_0xfb1292 && firstError) firstError.scrollIntoView({behavior:'smooth',block:'center'});
   return _0xfb1292;
 }
