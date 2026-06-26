@@ -225,7 +225,7 @@ def society_send():
         return {"status": "fail", "error": "无效数据"}, 400
 
     summary = generate_society_summary(data)
-    subject = f"【千艺界】【{data.get('applicant_name','未署名')}】社招版面试问卷 - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
+    subject = f"【千艺界】【{data.get('applicant_name','未署�?)}】社招版面试问卷 - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
     ok, err = send_summary_email(subject, summary)
     if ok:
         return {"status": "sent"}
@@ -239,7 +239,7 @@ def fresh_send():
         return {"status": "fail", "error": "无效数据"}, 400
 
     summary = generate_fresh_summary(data)
-    subject = f"【千艺界】【{data.get('applicant_name','未署名')}】应届生版面试问卷 - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
+    subject = f"【千艺界】【{data.get('applicant_name','未署�?)}】应届生版面试问�?- {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
     ok, err = send_summary_email(subject, summary)
     if ok:
         return {"status": "sent"}
@@ -253,7 +253,7 @@ def general_send():
         return {"status": "fail", "error": "无效数据"}, 400
 
     summary = generate_general_summary(data)
-    subject = f"【千艺界】【{data.get('applicant_name','未署名')}】通用版面试问卷 - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
+    subject = f"【千艺界】【{data.get('applicant_name','未署�?)}】通用版面试问�?- {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
     ok, err = send_summary_email(subject, summary)
     if ok:
         return {"status": "sent"}
