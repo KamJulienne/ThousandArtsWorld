@@ -421,6 +421,11 @@ document.getElementById('mainForm').addEventListener('submit',function(e){
 });
 document.getElementById('btnNext').addEventListener('click',function(){
   _0x4c8a7a='';
+  if(_0x037ec6===1){
+    var _0x923ee2=document.querySelector('[name="applicant_name"]');
+    if(_0x923ee2 && !_0x923ee2.value.trim()){ alert('请填写姓名'); return; }
+    _0x923ee2.readOnly=true; _0x923ee2.style.background='#f8f9fa'; _0x923ee2.style.cursor='not-allowed';
+  }
   if(!_0xe7ac68(_0x037ec6)){ _0xf2b37a(_0x4c8a7a||'当前步骤有必填项未完成','error'); return; }
   if(_0x037ec6<_0xf5f3aa) _0x868644(_0x037ec6+1);
 });
