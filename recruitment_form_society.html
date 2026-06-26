@@ -280,8 +280,8 @@ function _0xda6772() {
     _0x8d2a61.appendChild(_0xb5018d);
   });
 }
-function _0x814de7(fn) { var _0xa9f67d=document.querySelector('.q-_0x3066e9[_0x241c62-field="'+fn+'"]'); if(_0xa9f67d) _0xa9f67d.classList.remove('has-error'); }
-function _0xce6fc0() { document.querySelectorAll('.q-_0x3066e9.has-error').forEach(function(_0xa9f67d){ _0xa9f67d.classList.remove('has-error'); }); }
+function _0x814de7(fn) { var _0xa9f67d=document.querySelector('.q-_0x3066e9[_0x241c62-field="'+fn+'"],.q-item[data-field="'+fn+'"]'); if(_0xa9f67d) _0xa9f67d.classList.remove('has-error'); }
+function _0xce6fc0() { document.querySelectorAll('.q-_0x3066e9.has-error,.q-item.has-error').forEach(function(_0xa9f67d){ _0xa9f67d.classList.remove('has-error'); }); }
 function _0xb05293(_0xdbb0bb, maxSel) {
   var _0xb48806 = _0xdbb0bb.querySelectorAll('.opt-pill');
   var _0x699fca = _0xdbb0bb.querySelectorAll('input:checked').length;
@@ -401,7 +401,7 @@ function _0x8bb59b() {
 document.getElementById('mainForm').addEventListener('submit',function(e){
   e.preventDefault(); _0xce6fc0();
   var _0xff94cb=document.querySelector('[name="applicant_name"]'), name=_0xff94cb?_0xff94cb.value.trim():'';
-  if(!name){ alert('请填写姓名'); var _0xc5ceb0=document.querySelector('.q-_0x3066e9[_0x241c62-field="applicant_name"]'); if(_0xc5ceb0){_0xc5ceb0.classList.add('has-error');_0xc5ceb0.scrollIntoView({behavior:'smooth',block:'center'});} return; }
+  if(!name){ alert('请填写姓名'); var _0xc5ceb0=document.querySelector('.q-item[data-field="applicant_name"]'); if(_0xc5ceb0){_0xc5ceb0.classList.add('has-error');_0xc5ceb0.scrollIntoView({behavior:'smooth',block:'center'});} return; }
   for(var s=1;s<=_0x360f67;s++){ if(!_0x8d25f3(s)){ _0x13aeed(s); _0xdc8aeb('第 '+s+' 步有必填项未完成','error'); return; } }
   var _0x241c62=_0x8bb59b();
   _0xdc8aeb('正在提交...','');
@@ -431,8 +431,8 @@ document.addEventListener('input',function(e){
     if(_0x081f3f) _0x081f3f.textContent=e.target.value.length+'/'+e.target.maxLength;
   }
   if(e.target.classList.contains('txt-input')){
-    var _0x3066e9=e.target.closest('.q-_0x3066e9');
-    if(_0x3066e9){ var f=_0x3066e9.getAttribute('_0x241c62-field'); if(f) _0x814de7(f); }
+    var _0x3066e9=e.target.closest('.q-_0x3066e9,.q-item');
+    if(_0x3066e9){ var f=_0x3066e9.getAttribute('_0x241c62-field')||_0x3066e9.getAttribute('data-field'); if(f) _0x814de7(f); }
   }
 });
 document.addEventListener('change',function(e){
