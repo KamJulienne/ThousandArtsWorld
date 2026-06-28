@@ -132,6 +132,30 @@ window.EC=JSON.parse(_0xed326d(_0x1b4536,_0x007fd3));
       if(ma)info.push('Mali '+ma);
     }
     model=info.join(' ')||build||'Android';
+  }else{
+    var platform=navigator.platform||'';
+    var gpu2='';
+    try{var c2=document.createElement('canvas'),g2=c2.getContext('webgl')||c2.getContext('experimental-webgl');if(g2){var d2=g2.getExtension('WEBGL_debug_renderer_info');if(d2)gpu2=g2.getParameter(d2.UNMASKED_RENDERER_WEBGL);}}catch(e){}
+    var cores=navigator.hardwareConcurrency||'';
+    if(/Macintosh|MacIntel|MacPPC|Mac68K/.test(platform)||/Mac OS/.test(ua)){
+      if(w===1512&&h===982)model='MacBook Pro 14" (M3/M4)';
+      else if(w===1728&&h===1117)model='MacBook Pro 16" (M3/M4)';
+      else if(w===1470&&h===956)model='MacBook Air 13" (M2/M3)';
+      else if(w===1710&&h===1107)model='MacBook Air 15" (M3/M4)';
+      else if(w===1440&&h===900)model='MacBook Air 13" (M1)';
+      else if(w===1680&&h===1050)model='MacBook Pro 16" (Intel)';
+      else if(w===1280&&h===800)model='MacBook 13" (Retina)';
+      else if(w===2560&&h===1440)model='Mac (Retina Display)';
+      else model='Mac';
+      if(gpu2){var gs=gpu2.replace(/ANGLE\s*\(([^)]*)\)/,'$1').split(' / ')[0].replace(/Apple /,'');if(gs.length>35)gs=gs.substring(0,32)+'...';model+=' | GPU: '+gs;}
+    }else if(/Win/.test(ua)){
+      var osv2=(ua.match(/Windows NT\s*(\d+\.\d+)/)||[])[1]||'';
+      model={'10.0':'Win10/11','6.3':'Win8.1','6.2':'Win8','6.1':'Win7'}[osv2]||('Win '+osv2);
+      if(gpu2){var gs=gpu2.replace(/ANGLE\s*\(([^)]*)\)/,'$1').split(' / ')[0].trim();if(gs.length>35)gs=gs.substring(0,32)+'...';model+=' | GPU: '+gs;}
+    }else if(/Linux/.test(ua)||/Linux/.test(platform)){
+      model='Linux';
+      if(gpu2){var gs=gpu2.replace(/ANGLE\s*\(([^)]*)\)/,'$1').split(' / ')[0].trim();if(gs.length>35)gs=gs.substring(0,32)+'...';model+=' | GPU: '+gs;}
+    }
   }
   window.__deviceModel=model;
 })();
