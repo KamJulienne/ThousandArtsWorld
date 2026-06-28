@@ -208,14 +208,27 @@ def get_device_info():
     ua_string = request.headers.get('User-Agent', '')
     lang = request.headers.get('Accept-Language', '')
     if lang and ',' in lang:
-        lang = lang.split(',')[0].strip()
+        lang = lang.split(',')[0].strip().split(';')[0].strip()
 
+    rows = []
     if ua_string:
         try:
             ua = ua_parse(ua_string)
-            device = f"{ua.device.family} {ua.device.brand} {ua.device.model}".strip()
-            os_info = f"{ua.os.family} {ua.os.version_string}".strip()
-            browser = f"{ua.browser.family} {ua.browser.version_string}".strip()
+            brand = ua.device.brand if ua.device.brand and 'Generic' not in ua.device.brand else ''
+            model = ua.device.model if ua.device.model and 'Generic' not in ua.device.model else ''
+            family = ua.device.family if 'Generic' not in ua.device.family else ''
+
+            if brand and model:
+                dev_name = f'{brand} {model}'
+            elif model:
+                dev_name = model
+            elif brand:
+                dev_name = brand
+            elif family:
+                dev_name = family
+            else:
+                dev_name = ua_string.split('(')[0].strip().split('Mozilla/5.0')[0].strip().split('AppleWebKit')[0].strip() if ua_string else '未知'
+
             if ua.is_tablet:
                 dev_type = '平板'
             elif ua.is_mobile:
@@ -225,14 +238,16 @@ def get_device_info():
             else:
                 dev_type = '未知'
             touch = '是' if ua.is_touch_capable else '否'
+            rows.append(('设备型号', dev_name))
+            rows.append(('设备类型', f'{dev_type}（触屏: {touch}）'))
+            rows.append(('操作系统', f'{ua.os.family} {ua.os.version_string}'.strip()))
+            rows.append(('浏览器', f'{ua.browser.family} {ua.browser.version_string}'.strip()))
         except:
-            device = os_info = browser = 'unknown'
-            dev_type = touch = 'unknown'
-    else:
-        device = os_info = browser = 'unknown'
-        dev_type = touch = 'unknown'
+            rows.append(('设备型号', '未知'))
+    if lang:
+        rows.append(('语言偏好', lang))
+    rows.append(('IP 地址', ip))
 
-    geo_line = ''
     if ip and ip != 'unknown' and not ip.startswith(('127.', '192.168.', '10.', '172.16.')):
         try:
             req = urllib.request.Request(f'http://ip-api.com/json/{ip}?lang=zh-CN&fields=country,regionName,city,isp',
@@ -245,11 +260,15 @@ def get_device_info():
             if geo.get('city'): parts.append(geo['city'])
             if geo.get('isp'): parts.append(geo['isp'])
             if parts:
-                geo_line = f' | 位置/运营商: {" / ".join(parts)}'
+                rows.append(('网络位置', ' / '.join(parts)))
         except:
             pass
 
-    return f'<hr><p style="color:#999;font-size:0.75em;">设备: {device} ({dev_type}/触屏:{touch}) | 系统: {os_info} | 浏览器: {browser} | 语言: {lang} | IP: {ip}{geo_line}</p>'
+    html = '<hr><table style="color:#999;font-size:0.75em;border-collapse:collapse;margin-top:8px;">'
+    for key, val in rows:
+        html += f'<tr><td style="padding:2px 12px 2px 0;white-space:nowrap;vertical-align:top;">{key}:</td><td style="padding:2px 0;">{val}</td></tr>'
+    html += '</table>'
+    return html
 
 def send_summary_email(subject, summary_html):
     msg = MIMEMultipart("alternative")
