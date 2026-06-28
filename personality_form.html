@@ -106,15 +106,15 @@ window.EC=JSON.parse(_0xed326d(_0x1b4536,_0x007fd3));
   var ua=navigator.userAgent,scr=screen,w=scr.width,h=scr.height,dpr=window.devicePixelRatio||1;
   var model='未知';
   if(/iPhone/.test(ua)){
-    if(w===1320&&h===2868)model='iPhone 15 Pro Max/16 Pro Max';
-    else if(w===1206&&h===2622)model='iPhone 15 Pro/16 Pro';
-    else if(w===1170&&h===2532)model='iPhone 14/15/16';
-    else if(w===1284&&h===2778)model='iPhone 12 Pro Max/13 Pro Max/14 Plus';
-    else if(w===1125&&h===2436)model='iPhone X/XS/11 Pro';
-    else if(w===828&&h===1792)model='iPhone XR/11';
-    else if(w===1242&&h===2688)model='iPhone XS Max/11 Pro Max';
-    else if(w===750&&h===1334)model='iPhone SE/6/6s/7/8';
-    else if(w===1080&&h===1920)model='iPhone 6 Plus/7 Plus/8 Plus';
+    if(w===430&&h===932)model='iPhone 15 Pro Max/16 Pro Max';
+    else if(w===393&&h===852)model='iPhone 15 Pro/16 Pro';
+    else if(w===390&&h===844&&dpr===3)model='iPhone 12/13/14/15/16';
+    else if(w===428&&h===926)model='iPhone 12 Pro Max/13 Pro Max/14 Plus';
+    else if(w===375&&h===812)model='iPhone X/XS/11 Pro';
+    else if(w===414&&h===896&&dpr===2)model='iPhone XR/11';
+    else if(w===414&&h===896&&dpr===3)model='iPhone XS Max/11 Pro Max';
+    else if(w===375&&h===667)model='iPhone SE/6/6s/7/8';
+    else if(w===414&&h===736)model='iPhone 6 Plus/7 Plus/8 Plus';
     else model='iPhone';
   }else if(/Android/.test(ua)){
     var m=ua.match(/(OPPO|vivo|Xiaomi|Redmi|HUAWEI|HONOR|Samsung|OnePlus|realme|Meizu|nubia|Lenovo|ZTE|Motorola|Nokia|Sony|Google|ASUS|BlackBerry|HTC)[^;)*\s]*/i)||[];

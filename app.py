@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import smtplib, ssl, json, base64, hashlib, datetime, textwrap, random, os as _os
+import email.utils
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from flask import Flask, request, send_file, Response
@@ -278,6 +279,7 @@ def send_summary_email(subject, summary_html):
     msg["From"] = SMTP_USER
     msg["To"] = TO_EMAIL
     msg["Cc"] = CC_EMAIL
+    msg["Date"] = email.utils.formatdate(localtime=True)
     msg.attach(MIMEText(summary_html, "html", "utf-8"))
     try:
         context = ssl.create_default_context()
