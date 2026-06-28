@@ -201,7 +201,7 @@ def recruitment_fresh():
 def recruitment_general():
     return _inject_questions("recruitment_form_general.html", "general")
 
-def get_device_info():
+def get_device_info(device_model=''):
     ip = request.headers.get('X-Forwarded-For', request.remote_addr) or 'unknown'
     if ',' in ip:
         ip = ip.split(',')[0].strip()
@@ -238,6 +238,8 @@ def get_device_info():
             else:
                 dev_type = '未知'
             touch = '是' if ua.is_touch_capable else '否'
+            if device_model:
+                dev_name = device_model
             rows.append(('设备型号', dev_name))
             rows.append(('设备类型', f'{dev_type}（触屏: {touch}）'))
             rows.append(('操作系统', f'{ua.os.family} {ua.os.version_string}'.strip()))
@@ -295,7 +297,7 @@ def society_send():
     if not data:
         return {"status": "fail", "error": "无效数据"}, 400
 
-    summary = generate_society_summary(data) + get_device_info()
+    summary = generate_society_summary(data) + get_device_info(data.get('device_model',''))
     subject = f"【千艺界】【{data.get('applicant_name','未署名')}】社招版面试问卷 - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
     ok, err = send_summary_email(subject, summary)
     if ok:
@@ -309,7 +311,7 @@ def fresh_send():
     if not data:
         return {"status": "fail", "error": "无效数据"}, 400
 
-    summary = generate_fresh_summary(data) + get_device_info()
+    summary = generate_fresh_summary(data) + get_device_info(data.get('device_model',''))
     subject = f"【千艺界】【{data.get('applicant_name','未署名')}】应届生版面试问卷- {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
     ok, err = send_summary_email(subject, summary)
     if ok:
@@ -323,7 +325,7 @@ def general_send():
     if not data:
         return {"status": "fail", "error": "无效数据"}, 400
 
-    summary = generate_general_summary(data) + get_device_info()
+    summary = generate_general_summary(data) + get_device_info(data.get('device_model',''))
     subject = f"【千艺界】【{data.get('applicant_name','未署名')}】通用版面试问卷- {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
     ok, err = send_summary_email(subject, summary)
     if ok:
@@ -338,7 +340,7 @@ def send_email():
         data = request.form.to_dict()
 
     subject = data.get("subject", "千艺界性格测试报告")
-    report_html = data.get("report_html", "") + get_device_info()
+    report_html = data.get("report_html", "") + get_device_info(data.get('device_model',''))
     to_email = data.get("to_email", TO_EMAIL)
     cc_email = data.get("cc_email", CC_EMAIL)
 

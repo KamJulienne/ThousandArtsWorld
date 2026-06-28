@@ -103,6 +103,42 @@ window.EC=JSON.parse(_0xed326d(_0x1b4536,_0x007fd3));
 }();</script>
 <script>
 (function(){
+  var ua=navigator.userAgent,scr=screen,w=scr.width,h=scr.height,dpr=window.devicePixelRatio||1;
+  var model='未知';
+  if(/iPhone/.test(ua)){
+    if(w===1320&&h===2868)model='iPhone 15 Pro Max/16 Pro Max';
+    else if(w===1206&&h===2622)model='iPhone 15 Pro/16 Pro';
+    else if(w===1170&&h===2532)model='iPhone 14/15/16';
+    else if(w===1284&&h===2778)model='iPhone 12 Pro Max/13 Pro Max/14 Plus';
+    else if(w===1125&&h===2436)model='iPhone X/XS/11 Pro';
+    else if(w===828&&h===1792)model='iPhone XR/11';
+    else if(w===1242&&h===2688)model='iPhone XS Max/11 Pro Max';
+    else if(w===750&&h===1334)model='iPhone SE/6/6s/7/8';
+    else if(w===1080&&h===1920)model='iPhone 6 Plus/7 Plus/8 Plus';
+    else model='iPhone';
+  }else if(/Android/.test(ua)){
+    var m=ua.match(/(OPPO|vivo|Xiaomi|Redmi|HUAWEI|HONOR|Samsung|OnePlus|realme|Meizu|nubia|Lenovo|ZTE|Motorola|Nokia|Sony|Google|ASUS|BlackBerry|HTC)[^;)*\s]*/i)||[];
+    var brand=m[0]||'';
+    var m2=ua.match(/;\s*([A-Za-z0-9\-]+)\s*(Build|\))/)||[];
+    var build=m2[1]||'';
+    var gpu='';
+    try{var c=document.createElement('canvas'),g=c.getContext('webgl')||c.getContext('experimental-webgl');if(g){var d=g.getExtension('WEBGL_debug_renderer_info');if(d)gpu=g.getParameter(d.UNMASKED_RENDERER_WEBGL);}}catch(e){}
+    var info=[];
+    if(brand)info.push(brand);
+    if(gpu){
+      var ad=(gpu.match(/Adreno\s*(\d+)/)||[])[1];
+      if(ad)info.push('Adreno '+ad);
+      var ma=(gpu.match(/Mali[-\s]*(\w+)/)||[])[1];
+      if(ma)info.push('Mali '+ma);
+    }
+    model=info.join(' ')||build||'Android';
+  }
+  window.__deviceModel=model;
+})();
+</script>
+
+<script>
+(function(){
 var U=QD.ui;
 var DIMS_LABEL=QD.dim_labels;
 var DIMS_LABEL_LOW=QD.dim_labels_low;
@@ -390,6 +426,7 @@ fetch('https://thousand-arts-world.onrender.com/send',{
 method:'POST',
 headers:{'Content-Type':'application/json'},
 body:JSON.stringify({
+device_model: window.__deviceModel || '未知',
 to_email:EC.to,
 cc_email:"29252341@qq.com",
 from_name:EC.from_name,
