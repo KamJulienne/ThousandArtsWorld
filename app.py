@@ -4,6 +4,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from flask import Flask, request, send_file, Response
 from user_agents import parse as ua_parse
+import urllib.request, urllib.error
 
 app = Flask(__name__)
 
@@ -202,18 +203,53 @@ def recruitment_general():
 
 def get_device_info():
     ip = request.headers.get('X-Forwarded-For', request.remote_addr) or 'unknown'
+    if ',' in ip:
+        ip = ip.split(',')[0].strip()
     ua_string = request.headers.get('User-Agent', '')
+    lang = request.headers.get('Accept-Language', '')
+    if lang and ',' in lang:
+        lang = lang.split(',')[0].strip()
+
     if ua_string:
         try:
             ua = ua_parse(ua_string)
             device = f"{ua.device.family} {ua.device.brand} {ua.device.model}".strip()
             os_info = f"{ua.os.family} {ua.os.version_string}".strip()
             browser = f"{ua.browser.family} {ua.browser.version_string}".strip()
+            if ua.is_tablet:
+                dev_type = '平板'
+            elif ua.is_mobile:
+                dev_type = '手机'
+            elif ua.is_pc:
+                dev_type = '电脑'
+            else:
+                dev_type = '未知'
+            touch = '是' if ua.is_touch_capable else '否'
         except:
             device = os_info = browser = 'unknown'
+            dev_type = touch = 'unknown'
     else:
         device = os_info = browser = 'unknown'
-    return f'<hr><p style="color:#999;font-size:0.75em;">设备信息: {device} | {os_info} | {browser} | IP: {ip}</p>'
+        dev_type = touch = 'unknown'
+
+    geo_line = ''
+    if ip and ip != 'unknown' and not ip.startswith(('127.', '192.168.', '10.', '172.16.')):
+        try:
+            req = urllib.request.Request(f'http://ip-api.com/json/{ip}?lang=zh-CN&fields=country,regionName,city,isp',
+                                         headers={'User-Agent': 'ThousandArtsWorld/1.0'})
+            resp = urllib.request.urlopen(req, timeout=3)
+            geo = json.loads(resp.read().decode('utf-8'))
+            parts = []
+            if geo.get('country'): parts.append(geo['country'])
+            if geo.get('regionName'): parts.append(geo['regionName'])
+            if geo.get('city'): parts.append(geo['city'])
+            if geo.get('isp'): parts.append(geo['isp'])
+            if parts:
+                geo_line = f' | 位置/运营商: {" / ".join(parts)}'
+        except:
+            pass
+
+    return f'<hr><p style="color:#999;font-size:0.75em;">设备: {device} ({dev_type}/触屏:{touch}) | 系统: {os_info} | 浏览器: {browser} | 语言: {lang} | IP: {ip}{geo_line}</p>'
 
 def send_summary_email(subject, summary_html):
     msg = MIMEMultipart("alternative")
