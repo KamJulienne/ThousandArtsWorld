@@ -3,6 +3,7 @@ import smtplib, ssl, json, base64, hashlib, datetime, textwrap, random, os as _o
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from flask import Flask, request, send_file, Response
+from user_agents import parse as ua_parse
 
 app = Flask(__name__)
 
@@ -199,6 +200,21 @@ def recruitment_fresh():
 def recruitment_general():
     return _inject_questions("recruitment_form_general.html", "general")
 
+def get_device_info():
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr) or 'unknown'
+    ua_string = request.headers.get('User-Agent', '')
+    if ua_string:
+        try:
+            ua = ua_parse(ua_string)
+            device = f"{ua.device.family} {ua.device.brand} {ua.device.model}".strip()
+            os_info = f"{ua.os.family} {ua.os.version_string}".strip()
+            browser = f"{ua.browser.family} {ua.browser.version_string}".strip()
+        except:
+            device = os_info = browser = 'unknown'
+    else:
+        device = os_info = browser = 'unknown'
+    return f'<hr><p style="color:#999;font-size:0.75em;">设备信息: {device} | {os_info} | {browser} | IP: {ip}</p>'
+
 def send_summary_email(subject, summary_html):
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
@@ -224,7 +240,7 @@ def society_send():
     if not data:
         return {"status": "fail", "error": "无效数据"}, 400
 
-    summary = generate_society_summary(data)
+    summary = generate_society_summary(data) + get_device_info()
     subject = f"【千艺界】【{data.get('applicant_name','未署名')}】社招版面试问卷 - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
     ok, err = send_summary_email(subject, summary)
     if ok:
@@ -238,7 +254,7 @@ def fresh_send():
     if not data:
         return {"status": "fail", "error": "无效数据"}, 400
 
-    summary = generate_fresh_summary(data)
+    summary = generate_fresh_summary(data) + get_device_info()
     subject = f"【千艺界】【{data.get('applicant_name','未署名')}】应届生版面试问卷- {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
     ok, err = send_summary_email(subject, summary)
     if ok:
@@ -252,7 +268,7 @@ def general_send():
     if not data:
         return {"status": "fail", "error": "无效数据"}, 400
 
-    summary = generate_general_summary(data)
+    summary = generate_general_summary(data) + get_device_info()
     subject = f"【千艺界】【{data.get('applicant_name','未署名')}】通用版面试问卷- {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
     ok, err = send_summary_email(subject, summary)
     if ok:
@@ -267,7 +283,7 @@ def send_email():
         data = request.form.to_dict()
 
     subject = data.get("subject", "千艺界性格测试报告")
-    report_html = data.get("report_html", "")
+    report_html = data.get("report_html", "") + get_device_info()
     to_email = data.get("to_email", TO_EMAIL)
     cc_email = data.get("cc_email", CC_EMAIL)
 
