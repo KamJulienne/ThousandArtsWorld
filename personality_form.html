@@ -314,6 +314,55 @@ rep+='<div style="text-align:center;font-size:44px;font-weight:800;color:#495057
 rep+='<div style="text-align:center;font-size:16px;font-weight:700;color:#2c3e50;margin-bottom:6px">'+curType.name+'</div>';
 rep+='<div style="text-align:center;font-size:13px;color:#6c757d;margin-bottom:10px">'+curType.desc+'</div>';
 
+// --- Section 1.5: 录用建议 ---
+var hireInfo={color:'',label:'',desc:'',bgColor:'',icon:'',borderColor:''};
+switch(curType.code){
+case 'A': hireInfo={color:'#2e7d32',bgColor:'#e8f5e9',borderColor:'#4caf50',label:'直接叫来',desc:'总分≥48，无短板维度',icon:'&#x2705;'}; break;
+case 'B+': hireInfo={color:'#2e7d32',bgColor:'#e8f5e9',borderColor:'#4caf50',label:'推荐叫来',desc:'总分 42-47，无短板维度',icon:'&#x2705;'}; break;
+case 'B': hireInfo={color:'#1565C0',bgColor:'#e3f2fd',borderColor:'#42a5f5',label:'可以叫来',desc:'总分 36-41 无短板 / 42-47 有短板降级',icon:'&#x2709;'}; break;
+case 'B-': hireInfo={color:'#E65100',bgColor:'#fff3e0',borderColor:'#ff9800',label:'可以叫来（追问低分维度）',desc:'总分 30-35 无短板 / 36-41 有短板降级',icon:'&#x2709;'}; break;
+case 'C': hireInfo={color:'#e65100',bgColor:'#fff8e1',borderColor:'#ffc107',label:'谨慎',desc:'总分 24-29 无短板 / 30-35 有短板降级，岗位急缺才考虑',icon:'&#x26A0;'}; break;
+default: hireInfo={color:'#c62828',bgColor:'#ffebee',borderColor:'#ef5350',label:'不推荐',desc:'总分≤23 或触底',icon:'&#x274C;'}; break;
+}
+rep+='<div style="text-align:center;margin:20px 0">';
+rep+='<div style="display:inline-block;background:'+hireInfo.bgColor+';border-radius:12px;padding:20px 40px;border:2px solid '+hireInfo.borderColor+';box-shadow:0 2px 8px rgba(0,0,0,0.06)">';
+rep+='<div style="font-size:12px;color:#6c757d;margin-bottom:8px;letter-spacing:4px">录用建议</div>';
+rep+='<div style="font-size:26px;font-weight:800;color:'+hireInfo.color+';letter-spacing:3px">'+hireInfo.icon+' '+hireInfo.label+'</div>';
+rep+='<div style="font-size:12px;color:#666;margin-top:8px">'+hireInfo.desc+'</div>';
+rep+='</div></div>';
+
+// --- 性格匹配度综合评级表 ---
+rep+='<div style="background:#f8f9fa;border-radius:8px;padding:16px;margin-bottom:10px">';
+rep+='<h4 style="margin:0 0 10px;font-size:13px;color:#2c3e50;border-bottom:1px solid #e9ecef;padding-bottom:6px">性格匹配度综合评级</h4>';
+rep+='<table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#dee2e6">';
+rep+='<th style="padding:5px 8px;border:1px solid #ced4da;text-align:center">等级</th>';
+rep+='<th style="padding:5px 8px;border:1px solid #ced4da;text-align:center">总分区间</th>';
+rep+='<th style="padding:5px 8px;border:1px solid #ced4da;text-align:center">条件</th>';
+rep+='<th style="padding:5px 8px;border:1px solid #ced4da;text-align:center">录用建议</th>';
+rep+='</tr></thead><tbody>';
+var ratingRows=[];
+ratingRows.push({code:'A',score:'≥48',cond:'无短板',sug:'直接叫来',clr:'#2e7d32'});
+ratingRows.push({code:'B+',score:'42 - 47',cond:'无短板',sug:'推荐叫来',clr:'#2e7d32'});
+ratingRows.push({code:'B',score:'36 - 41',cond:'无短板',sug:'可以叫来',clr:'#1565C0'});
+ratingRows.push({code:'B',score:'42 - 47',cond:'有短板降级',sug:'可以叫来',clr:'#1565C0'});
+ratingRows.push({code:'B-',score:'30 - 35',cond:'无短板',sug:'可以叫来',clr:'#E65100'});
+ratingRows.push({code:'B-',score:'36 - 41',cond:'有短板降级',sug:'可以叫来（追问低分维度）',clr:'#E65100'});
+ratingRows.push({code:'C',score:'24 - 29',cond:'无短板',sug:'谨慎',clr:'#e65100'});
+ratingRows.push({code:'C',score:'30 - 35',cond:'有短板降级',sug:'谨慎',clr:'#e65100'});
+ratingRows.push({code:'D',score:'≤23',cond:'/ 触底',sug:'不推荐',clr:'#c62828'});
+for(var r=0;r<ratingRows.length;r++){
+var rr=ratingRows[r];
+rep+='<tr>';
+rep+='<td style="padding:5px 8px;border:1px solid #ced4da;text-align:center;color:'+rr.clr+';font-weight:700">'+rr.code+'级</td>';
+rep+='<td style="padding:5px 8px;border:1px solid #ced4da;text-align:center">'+rr.score+'</td>';
+rep+='<td style="padding:5px 8px;border:1px solid #ced4da;text-align:center">'+rr.cond+'</td>';
+rep+='<td style="padding:5px 8px;border:1px solid #ced4da;text-align:center">'+rr.sug+'</td>';
+rep+='</tr>';
+}
+rep+='</tbody></table>';
+rep+='<div style="margin-top:8px;font-size:11px;color:#6c757d">当前结果：<b style="color:'+hireInfo.color+'">'+curType.code+'级 ('+hireInfo.label+')</b> | 总分 <b>'+totalScore+'</b> | 达标维度 <b>'+hc+'/'+ND+'</b>'+(hasWeakness?' | <span style="color:#f44336">存在短板</span>':'')+'</div>';
+rep+='</div>';
+
 // --- Timing overview card ---
 rep+='<div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:16px">';
 rep+='<div style="background:'+(isSerious?'#e8f5e9':'#fff3e0')+';border-radius:8px;padding:12px 20px;text-align:center;min-width:120px"><div style="font-size:11px;color:#6c757d">总用时</div><div style="font-size:18px;font-weight:700;color:#2c3e50;margin-top:4px">'+timeStr+'</div></div>';
